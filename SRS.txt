@@ -12,13 +12,37 @@
 1.2 Intended Audience:-
 		      This Software Is A Prototype For The Team Management System And It Is Useful To Corporates As Well As Educational Institutions.
 1.3 Project Scope:-
-		  It Aims To Catch Great Intrest Of Corporates By Providing Management Services And Easy User Experience Along With Some Extra Utilities.
+		  It Aims To Catch Great Interest Of Corporates By Providing Management Services And Easy User Experience Along With Some Extra Utilities.
 ========Overall Description========
 2.1 Product Perspective:-
+
 2.2 Product Features:-
+
 2.3 Operating Environment:-
-2.4 Design And Implementation Constraints
+
+2.4 Design And Implementation Constraints:-
+
 2.5 Dependencies:-
+
+========System Features========
+
+
+
+========Requirements========
+4.1 User Interfaces:-
+                   Front-End Software: 
+                   Back-End Software: 
+
+4.2 Hardware Interfaces:-
+                       Windows.
+4.3software Interfaces:-
+                      Operating System
+                      Database
+                      Python Version
+		
+
+
+
 
 
 
