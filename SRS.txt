@@ -1,4 +1,6 @@
-->Multi factor authentication for logging in to the application.
+                                                                    TEAM MANAGER SOFTWARE
+                                                                                                                                    
+->Multi factor authentication for logging in to the application. 
 
 ->It can serve multiple type of users including project managers, team leads, workers, HR, ...
 
