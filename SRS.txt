@@ -1,4 +1,19 @@
-                                                                    TEAM MANAGER SOFTWARE
+========TEAM MANAGER SOFTWARE========
+
+-> Table of contents:-
+1.Introduction
+2.Overall Description
+3.System features
+4.Requirements
+
+========Introduction========
+1.1 Purpose:-
+	     The pupose of this software is to build a system to manage team,project,tasks,meets etc. to ease the effort of multiple task management.
+1.2 Intended audience:-
+		      This software is a prototype for the team management system and it is useful to corporates as well as educational institutions.
+1.3 Project scope:-
+		  It aims to catch great intrest of corporates by providing management services and easy user experience along with some extra utilities.
+========Overall Description========
                                                                                                                                     
 ->Multi factor authentication for logging in to the application. 
 
