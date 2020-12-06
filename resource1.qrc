@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="logo">
+    <file>logo_2_rGp_icon.ico</file>
+    <file>LOGO@2.png</file>
+  </qresource>
+</RCC>
