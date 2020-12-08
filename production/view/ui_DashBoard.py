@@ -15,7 +15,7 @@ from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QRadialGradient)
 from PySide2.QtWidgets import *
 
-import resource1_rc
+import view.resource1_rc
 
 class Ui_DashBoard(object):
     def setupUi(self, DashBoard):
