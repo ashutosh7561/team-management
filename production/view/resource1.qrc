@@ -1,6 +1,19 @@
 <RCC>
   <qresource prefix="logo">
-    <file>logo_2_rGp_icon.ico</file>
-    <file>LOGO@2.png</file>
+    <file>logo@4.png</file>
+  </qresource>
+  <qresource prefix="usericon">
+    <file>usericon.png</file>
+  </qresource>
+  <qresource prefix="button">
+    <file>close.png</file>
+    <file>maximize.png</file>
+    <file>minimize.png</file>
+  </qresource>
+  <qresource prefix="user">
+    <file>icons1.png</file>
+  </qresource>
+  <qresource prefix="bg">
+    <file>meeting_BG.jpg</file>
   </qresource>
 </RCC>
