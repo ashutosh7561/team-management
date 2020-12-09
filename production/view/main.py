@@ -8,13 +8,13 @@ from PySide2.QtWidgets import *
 from controller.authenticator import authenticate
 
 ## ==> SPLASH SCREEN
-from ui_Splash_screen import Ui_SplashScreen
+from view.ui_Splash_screen import Ui_SplashScreen
 
 ## ==> MAIN WINDOW
-from ui_main_window import Ui_MainWindow
+from view.ui_main_window import Ui_MainWindow
 
 ## ==> Dashboard window
-from ui_DashBoard import Ui_DashBoard
+from view.ui_DashBoard import Ui_DashBoard
 
 ## ==> GLOBALS
 counter = 0
@@ -50,7 +50,7 @@ class MainWindow(QMainWindow):
         # shadow1(self.ui.label_4,5)
 
         # MAIN WINDOW LABEL
-        #QtCore.QTimer.singleShot(1500, lambda: self.ui.label_2.setText("<strong>THANK YOU</strong>"))
+        #QtCore.QTimer.singleShot(1500, lambda: self.ui.label_2.setText("THANK YOU"))
         # QtCore.QTimer.singleShot(1500, lambda: self.setStyleSheet("background-color: #222; color: #FFF"))
         self.ui.pushButton.clicked.connect(self.LoginFunc)
         self.ui.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
