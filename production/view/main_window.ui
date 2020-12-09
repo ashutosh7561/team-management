@@ -650,6 +650,12 @@ color: rgb(0, 0, 0);</string>
        <pointsize>14</pointsize>
       </font>
      </property>
+     <property name="focusPolicy">
+      <enum>Qt::NoFocus</enum>
+     </property>
+     <property name="layoutDirection">
+      <enum>Qt::LeftToRight</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
 border:1px solid rgb(0, 0, 0);
@@ -657,37 +663,6 @@ border:1px solid rgb(0, 0, 0);
      </property>
      <property name="inputMethodHints">
       <set>Qt::ImhNone</set>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton">
-     <property name="geometry">
-      <rect>
-       <x>260</x>
-       <y>370</y>
-       <width>121</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <pointsize>15</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::TabFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgba(255, 255, 255, 0);
-color: rgb(30, 59, 81);</string>
-     </property>
-     <property name="text">
-      <string>Employee</string>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
      </property>
     </widget>
     <widget class="QLineEdit" name="lineEdit_2">
@@ -706,39 +681,11 @@ color: rgb(30, 59, 81);</string>
       </font>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::TabFocus</enum>
+      <enum>Qt::NoFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
 border:1px solid rgb(0, 0, 0);</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="label_3">
-     <property name="geometry">
-      <rect>
-       <x>30</x>
-       <y>360</y>
-       <width>181</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>Calibri</family>
-       <pointsize>20</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgba(255, 255, 255, 0);
-color: rgb(30, 59, 81);</string>
-     </property>
-     <property name="text">
-      <string>Login as</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
      </property>
     </widget>
     <widget class="QLabel" name="label">
@@ -757,6 +704,9 @@ color: rgb(30, 59, 81);</string>
        <weight>50</weight>
        <bold>false</bold>
       </font>
+     </property>
+     <property name="focusPolicy">
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
@@ -804,32 +754,6 @@ color: rgb(30, 59, 81);
      </property>
      <property name="alignment">
       <set>Qt::AlignHCenter|Qt::AlignTop</set>
-     </property>
-    </widget>
-    <widget class="QRadioButton" name="radioButton_2">
-     <property name="geometry">
-      <rect>
-       <x>430</x>
-       <y>370</y>
-       <width>141</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <family>MS Sans Serif</family>
-       <pointsize>12</pointsize>
-      </font>
-     </property>
-     <property name="focusPolicy">
-      <enum>Qt::TabFocus</enum>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">background-color: rgba(255, 255, 255, 0);
-color: rgb(30, 59, 81);</string>
-     </property>
-     <property name="text">
-      <string>Manager</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_7">
@@ -882,8 +806,6 @@ color: rgb(186, 186, 186);</string>
      </property>
     </widget>
     <zorder>label</zorder>
-    <zorder>radioButton_2</zorder>
-    <zorder>label_3</zorder>
     <zorder>pushButton</zorder>
     <zorder>label_7</zorder>
     <zorder>pushButton_2</zorder>
@@ -891,7 +813,6 @@ color: rgb(186, 186, 186);</string>
     <zorder>label_4</zorder>
     <zorder>lineEdit_2</zorder>
     <zorder>lineEdit</zorder>
-    <zorder>radioButton</zorder>
     <zorder>label_8</zorder>
    </widget>
   </widget>
@@ -899,8 +820,6 @@ color: rgb(186, 186, 186);</string>
  <tabstops>
   <tabstop>lineEdit</tabstop>
   <tabstop>lineEdit_2</tabstop>
-  <tabstop>radioButton</tabstop>
-  <tabstop>radioButton_2</tabstop>
  </tabstops>
  <resources>
   <include location="resource1.qrc"/>

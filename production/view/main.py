@@ -86,20 +86,28 @@ class MainWindow(QMainWindow):
         # QtCore.QTimer.singleShot(1500, lambda: self.ui.label_2.setText("<strong>THANK YOU</strong>"))
         # QtCore.QTimer.singleShot(1500, lambda: self.setStyleSheet("background-color: #222; color: #FFF"))
         self.ui.pushButton.clicked.connect(self.LoginFunc)
-        self.ui.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.ui.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
 
     def LoginFunc(self):
-        username = self.ui.lineEdit.text()
-        password = self.ui.lineEdit_2.text()
+        username = self.ui.username_field.text()
+        password = self.ui.password_field.text()
         valid = authenticate(username, password)
-        if valid and self.ui.radioButton.isChecked():
+        if valid:
             self.main = Dashboard()
             self.main.show()
             print(valid)
+            self.main.ui.label_8.setText(username)
             self.close()
         else:
             print("Incorrect Credentials")
-            self.close()
+            self.ui.username_field.setText("")
+            self.ui.username_field.setStyleSheet(
+                """QLineEdit {border: 1px solid red }"""
+            )
+            self.ui.password_field.setText("")
+            self.ui.password_field.setStyleSheet(
+                """QLineEdit {border: 1px solid red }"""
+            )
 
 
 # SPLASH SCREEN
