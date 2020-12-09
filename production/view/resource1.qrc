@@ -1,19 +1,19 @@
 <RCC>
   <qresource prefix="logo">
-    <file>logo@4.png</file>
+    <file>res/logo@4.png</file>
   </qresource>
   <qresource prefix="usericon">
-    <file>usericon.png</file>
+    <file>res/usericon.png</file>
   </qresource>
   <qresource prefix="button">
-    <file>close.png</file>
-    <file>maximize.png</file>
-    <file>minimize.png</file>
+    <file>res/close.png</file>
+    <file>res/maximize.png</file>
+    <file>res/minimize.png</file>
   </qresource>
   <qresource prefix="user">
-    <file>icons1.png</file>
+    <file>res/icons1.png</file>
   </qresource>
   <qresource prefix="bg">
-    <file>meeting_BG.jpg</file>
+    <file>res/meeting_BG.jpg</file>
   </qresource>
 </RCC>

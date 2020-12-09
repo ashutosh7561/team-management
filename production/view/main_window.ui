@@ -50,7 +50,7 @@ border-radius: 40px;</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="resource1.qrc">:/logo/logo@4.png</pixmap>
+      <pixmap resource="resource1.qrc">:/logo/res/logo@4.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -75,7 +75,7 @@ border-radius: 40px;</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap>icons1.png</pixmap>
+      <pixmap resource="resource1.qrc">:/user/res/icons1.png</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>
@@ -767,7 +767,7 @@ border-radius: 10px;</string>
       <string/>
      </property>
      <property name="pixmap">
-      <pixmap resource="resource1.qrc">:/bg/meeting_BG.jpg</pixmap>
+      <pixmap resource="resource1.qrc">:/bg/res/meeting_BG.jpg</pixmap>
      </property>
      <property name="scaledContents">
       <bool>true</bool>

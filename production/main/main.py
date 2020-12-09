@@ -5,8 +5,6 @@ from PySide2.QtCore import (QCoreApplication, QPropertyAnimation, QDate, QDateTi
 from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont, QFontDatabase, QIcon, QKeySequence, QLinearGradient, QPalette, QPainter, QPixmap, QRadialGradient)
 from PySide2.QtWidgets import *
 
-from controller.authenticator import authenticate
-
 ## ==> SPLASH SCREEN
 from ui_Splash_screen import Ui_SplashScreen
 
@@ -56,18 +54,18 @@ class MainWindow(QMainWindow):
         self.ui.lineEdit_2.setEchoMode(QtWidgets.QLineEdit.Password)
 
     def LoginFunc(self):
-        username = self.ui.lineEdit.text()
-        password = self.ui.lineEdit_2.text()
-        valid = authenticate(username, password)
+        Username= self.ui.lineEdit.text()
+        Password= self.ui.lineEdit_2.text()
+        user="ashu"
+        Pass="test"
 
-        if valid and self.ui.radioButton.isChecked():
+        if Username== user and Password== Pass and self.ui.radioButton.isChecked():
+            print("Your username is->",Username,"your password is->",Password)
             self.main = Dashboard()
             self.main.show()
-            print(valid)
             self.close()
         else:
             print("Incorrect Credentials")
-            self.close()
 
 
 # SPLASH SCREEN
@@ -256,13 +254,12 @@ def shadow1(self,radius):
         shadow.setYOffset(0)
         shadow.setColor(QColor(0, 0, 0, 255))
         self.setGraphicsEffect(shadow)
+        
 
 
-def start_application():
-    app = QApplication(sys.argv)
-    window = SplashScreen()
-    sys.exit(app.exec_())
 
 
 if __name__ == "__main__":
-    start_application()
+    app = QApplication(sys.argv)
+    window = SplashScreen()
+    sys.exit(app.exec_())
