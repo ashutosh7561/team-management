@@ -1,9 +1,4 @@
 import sys
-from os.path import dirname, abspath
-
-d = dirname(dirname(abspath(__file__)))
-sys.path.append(d)
-
 import platform
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import (
@@ -83,7 +78,7 @@ class MainWindow(QMainWindow):
         # shadow1(self.ui.label_4,5)
 
         # MAIN WINDOW LABEL
-        # QtCore.QTimer.singleShot(1500, lambda: self.ui.label_2.setText("<strong>THANK YOU</strong>"))
+        # QtCore.QTimer.singleShot(1500, lambda: self.ui.label_2.setText("THANK YOU"))
         # QtCore.QTimer.singleShot(1500, lambda: self.setStyleSheet("background-color: #222; color: #FFF"))
         self.ui.pushButton.clicked.connect(self.LoginFunc)
         self.ui.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
