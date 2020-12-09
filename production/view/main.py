@@ -4,7 +4,6 @@ from os.path import dirname, abspath
 d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
-
 import platform
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import (
@@ -93,7 +92,6 @@ class MainWindow(QMainWindow):
         username = self.ui.lineEdit.text()
         password = self.ui.lineEdit_2.text()
         valid = authenticate(username, password)
-
         if valid and self.ui.radioButton.isChecked():
             self.main = Dashboard()
             self.main.show()
@@ -252,6 +250,19 @@ class Dashboard(QMainWindow):
         self.ui.close.clicked.connect(lambda: self.close())
         self.ui.max.clicked.connect(lambda: self.restore_or_maximize_window())
         self.ui.min.clicked.connect(lambda: self.showMinimized())
+
+        ##message page navigation
+        self.ui.pushButton_7.clicked.connect(self.setMessage)
+        self.ui.pushButton_23.clicked.connect(
+            lambda: self.ui.stackedWidget_2.setCurrentWidget(self.ui.member1)
+        )
+
+    def setMessage(self):
+        if self.ui.stackedWidget_2.currentWidget() == self.ui.member1:
+            self.ui.stackedWidget_2.setCurrentWidget(self.ui.welcome)
+
+        else:
+            self.ui.stackedWidget_2.setCurrentWidget(self.ui.welcome)
 
     def restore_or_maximize_window(self):
         global WINDOW_SIZE

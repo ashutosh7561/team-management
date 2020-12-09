@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'Splash_screenemZsxG.ui'
+## Form generated from reading UI file 'Splash_screenqqVpqk.ui'
 ##
 ## Created by: Qt User Interface Compiler version 5.14.1
 ##
@@ -67,7 +67,7 @@ class Ui_SplashScreen(object):
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(190, 20, 411, 280))
         self.label.setStyleSheet(u"background-color: rgba(255, 255, 255, 0);")
-        self.label.setPixmap(QPixmap(u":/logo/logo@4.png"))
+        self.label.setPixmap(QPixmap(u":/logo/res/logo@4.png"))
         self.label.setScaledContents(True)
         self.label.setAlignment(Qt.AlignCenter)
         self.progressBar = QProgressBar(self.dropShadowFrame)

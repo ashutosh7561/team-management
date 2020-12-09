@@ -1,0 +1,18 @@
+#00bcd4
+Settings Tab:
+	1.User settings:
+			1.my account
+			2. privacy and safety
+			3.Backup and restore
+			
+	2.App settings:
+		       1. Notification
+		 	2. Appearance
+			3. language
+			4. text and images
+			5.performance 
+			6.version and updates
+			7.scepter FAQ
+			8.chat settings
+	3. Log Out
+	4. social media
