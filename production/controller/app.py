@@ -67,10 +67,29 @@ def view(view_queue, controller_queue, model_queue, root_queue):
 def controller(view_queue, controller_queue, model_queue, root_queue):
     print("starting controller process")
     print("mock loading")
-    for i in range(4):
-        time.sleep(1)
+    msg = [
+        "Database",
+        "Files",
+        "Settings",
+        "Settings",
+        "Dependencies",
+        "Dependencies",
+        "Images",
+        "Projects",
+        "Calendar",
+        "Messages",
+        "Messages",
+    ]
+    for i in range(11):
+        time.sleep(0.5)
         print("loading...", i * 10)
-        view_queue.put(i * 10)
+        view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
+    view_queue.put(["load_complete", 1])
+    # for i in range(5):
+    #     time.sleep(1)
+    #     print("error loading")
+    #     view_queue.put(["load_error", i])
+    # view_queue.put(["stop_app", 1])
 
 
 def model(view_queue, controller_queue, model_queue, root_queue):

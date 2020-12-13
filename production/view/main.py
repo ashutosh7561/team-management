@@ -1,25 +1,28 @@
 import sys
-from os.path import dirname, abspath
+from os.path import abspath, dirname
 
 d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
 import platform
+import time
+
+from controller.authenticator import authenticate
 from PySide2 import QtCore, QtGui, QtWidgets
 from PySide2.QtCore import (
     QCoreApplication,
-    QPropertyAnimation,
     QDate,
     QDateTime,
+    QEvent,
     QMetaObject,
     QObject,
     QPoint,
+    QPropertyAnimation,
     QRect,
     QSize,
+    Qt,
     QTime,
     QUrl,
-    Qt,
-    QEvent,
 )
 from PySide2.QtGui import (
     QBrush,
@@ -31,28 +34,26 @@ from PySide2.QtGui import (
     QIcon,
     QKeySequence,
     QLinearGradient,
-    QPalette,
     QPainter,
+    QPalette,
     QPixmap,
     QRadialGradient,
 )
 from PySide2.QtWidgets import *
 
-from controller.authenticator import authenticate
-
-## ==> SPLASH SCREEN
-from view.ui_Splash_screen import Ui_SplashScreen
+## ==> Dashboard window
+from view.ui_DashBoard import Ui_DashBoard
 
 ## ==> MAIN WINDOW
 from view.ui_main_window import Ui_MainWindow
 
-## ==> Dashboard window
-from view.ui_DashBoard import Ui_DashBoard
+## ==> SPLASH SCREEN
+from view.ui_Splash_screen import Ui_SplashScreen
 
 ## ==> GLOBALS
 WINDOW_SIZE = 0
 
-# YOUR APPLICATION
+
 class LoginScreen(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -109,7 +110,6 @@ class LoginScreen(QMainWindow):
             )
 
 
-# SPLASH SCREEN
 class SplashScreen(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
@@ -128,29 +128,12 @@ class SplashScreen(QMainWindow):
 
         shadow1(self.ui.label, 20)
 
-        ## QTIMER ==> START
-        # self.timer = QtCore.QTimer()
-        # self.timer.timeout.connect(self.progress)
-        # TIMER IN MILLISECONDS
-        # self.timer.start(5)
-
         self.ui.label_3.setText("<strong>LOADING</strong>")
+        self.ui.progressBar.setValue(0)
 
-        QtCore.QTimer.singleShot(
-            1500, lambda: self.ui.label_3.setText("<strong>LOADING DATABASE</strong>")
-        )
-        QtCore.QTimer.singleShot(
-            3000,
-            lambda: self.ui.label_3.setText("<strong>LOADING USER INTERFACE</strong>"),
-        )
-
-    def set_progress_value(self, value):
+    def set_progress_value(self, value, message):
         self.ui.progressBar.setValue(value)
-        # if value > 100:
-        # self.timer.stop()
-        # self.main = MainWindow()
-        # self.main.show()
-        # self.close()
+        self.ui.label_3.setText(f"<strong>{message}</strong>")
 
 
 class Dashboard(QMainWindow):
@@ -284,23 +267,20 @@ def shadow1(self, radius):
     self.setGraphicsEffect(shadow)
 
 
-import time
-
-
 class ViewHandler:
     def __init__(self, view_queue, controller_queue, model_queue):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
 
-        self.CHECK_DURATION = 1000
+        self.CHECK_DURATION = 100
 
         self.app = QApplication(sys.argv)
-        # self.splash_screen = SplashScreen()
+        self.splash_screen = SplashScreen()
         self.login_window = LoginScreen()
-        # self.dashboard_window = Dashboard()
-        # self.main_window = self.splash_screen
-        self.main_window = self.login_window
+        self.dashboard_window = Dashboard()
+        self.main_window = self.splash_screen
+        # self.main_window = self.login_window
 
     def start_app(self):
         self.main_window.show()
@@ -310,25 +290,34 @@ class ViewHandler:
     def check_for_messages(self):
         # print("this will acts like a schedular which checks for messages")
         if not (self.view_queue.empty()):
-            val = self.view_queue.get()
-            print("value from view queue:", val)
-            self.model_queue.put(val)
+            message = self.view_queue.get()
+            self.identify_message(message)
+
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
 
-    def set_status(self, value):
-        self.status = value
-        print("setting status to :", value)
+    def identify_message(self, message):
+        if message[0] == "load_status":
+            print("setting progress bar value to", message[1])
+            self.set_status(message[1], message[2])
+        elif message[0] == "load_error":
+            if message[1] == 1:
+                print("error in database loading")
+            elif message[1] == 2:
+                print("error in setting loading")
+            elif message[1] == 3:
+                print("internet connection error")
+            else:
+                print("unknown error")
+        elif message[0] == "load_complete":
+            self.show_login_window()
+        elif message[0] == "stop_app":
+            self.stop_app()
+
+    def set_status(self, value, message):
+        self.splash_screen.set_progress_value(value, message)
 
     def stop_app(self):
-        self.window.close()
-
-    def load_status(self, value):
-        self.window.set_progress_value(value)
-
-    def start_splash_screen(self):
         self.main_window.close()
-        self.main_window = self.splash_screen
-        self.main_window.show()
 
     def show_login_window(self):
         self.main_window.close()
