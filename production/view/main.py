@@ -284,20 +284,40 @@ def shadow1(self, radius):
     self.setGraphicsEffect(shadow)
 
 
+import time
+
+
 class ViewHandler:
-    def __init__(self):
+    def __init__(self, view_queue, controller_queue, model_queue):
+        self.view_queue = view_queue
+        self.controller_queue = controller_queue
+        self.model_queue = model_queue
+
+        self.CHECK_DURATION = 1000
+
         self.app = QApplication(sys.argv)
         # self.splash_screen = SplashScreen()
-        self.window = QWidget()
-        self.window.setGeometry(0, 0, 500, 300)
-        self.window.setWindowTitle("PyQT Tuts!")
-        # self.login_window = LoginScreen()
+        self.login_window = LoginScreen()
         # self.dashboard_window = Dashboard()
         # self.main_window = self.splash_screen
+        self.main_window = self.login_window
 
     def start_app(self):
-        self.window.show()
+        self.main_window.show()
+        QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
         self.app.exec_()
+
+    def check_for_messages(self):
+        # print("this will acts like a schedular which checks for messages")
+        if not (self.view_queue.empty()):
+            val = self.view_queue.get()
+            print("value from view queue:", val)
+            self.model_queue.put(val)
+        QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
+
+    def set_status(self, value):
+        self.status = value
+        print("setting status to :", value)
 
     def stop_app(self):
         self.window.close()
