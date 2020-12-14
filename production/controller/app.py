@@ -58,9 +58,7 @@ def root():
 
 def view(view_queue, controller_queue, model_queue, root_queue):
     print("starting view process")
-    time.sleep(2)
     view = ViewHandler(view_queue, controller_queue, model_queue)
-    view.start_app()
     print("exit from app.exec_() event loop")
 
 
@@ -81,20 +79,15 @@ def controller(view_queue, controller_queue, model_queue, root_queue):
         "Messages",
     ]
     for i in range(11):
-        time.sleep(0.5)
+        time.sleep(0.3)
         print("loading...", i * 10)
         view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
+    print("load complete")
     view_queue.put(["load_complete", 1])
-    # for i in range(5):
-    #     time.sleep(1)
-    #     print("error loading")
-    #     view_queue.put(["load_error", i])
-    # view_queue.put(["stop_app", 1])
 
 
 def model(view_queue, controller_queue, model_queue, root_queue):
     print("starting model process")
-    time.sleep(20)
     while not (model_queue.empty()):
         print("value from model_queue:", model_queue.get())
 
@@ -103,28 +96,6 @@ if __name__ == "__main__":
     root_process = mp.Process(target=root)
     root_process.start()
     root_process.join()
-
-
-def mock_preloading():
-    # it will function as loading resources
-    # start loading
-    # start splash screen
-    view = ViewHandler()
-    gui_proc = mp.Process(target=ug)
-    gui_proc.start()
-    # it passes the percentage completion to view
-    # view.start_splash_screen()
-    for i in range(101):
-        print(i)
-        time.sleep(0.1)  # mock loading
-        # view.load_status(i)
-    view.stop_app()
-    # view.close_splash_screen()
-    # view.show_login_window()
-    # finished loading
-    # close splash_screen
-    # open login window
-    pass
 
 
 # if __name__ == "__main__":

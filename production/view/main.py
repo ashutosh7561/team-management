@@ -8,38 +8,39 @@ import platform
 import time
 
 from controller.authenticator import authenticate
-from PySide2 import QtCore, QtGui, QtWidgets
-from PySide2.QtCore import (
-    QCoreApplication,
-    QDate,
-    QDateTime,
-    QEvent,
-    QMetaObject,
-    QObject,
-    QPoint,
-    QPropertyAnimation,
-    QRect,
-    QSize,
-    Qt,
-    QTime,
-    QUrl,
-)
-from PySide2.QtGui import (
-    QBrush,
-    QColor,
-    QConicalGradient,
-    QCursor,
-    QFont,
-    QFontDatabase,
-    QIcon,
-    QKeySequence,
-    QLinearGradient,
-    QPainter,
-    QPalette,
-    QPixmap,
-    QRadialGradient,
-)
-from PySide2.QtWidgets import *
+
+# from PySide2 import QtCore, QtGui, QtWidgets
+# from PySide2.QtCore import (
+#     QCoreApplication,
+#     QDate,
+#     QDateTime,
+#     QEvent,
+#     QMetaObject,
+#     QObject,
+#     QPoint,
+#     QPropertyAnimation,
+#     QRect,
+#     QSize,
+#     Qt,
+#     QTime,
+#     QUrl,
+# )
+# from PySide2.QtGui import (
+#     QBrush,
+#     QColor,
+#     QConicalGradient,
+#     QCursor,
+#     QFont,
+#     QFontDatabase,
+#     QIcon,
+#     QKeySequence,
+#     QLinearGradient,
+#     QPainter,
+#     QPalette,
+#     QPixmap,
+#     QRadialGradient,
+# )
+# from PySide2.QtWidgets import *
 
 ## ==> Dashboard window
 from view.ui_DashBoard import Ui_DashBoard
@@ -50,24 +51,105 @@ from view.ui_main_window import Ui_MainWindow
 ## ==> SPLASH SCREEN
 from view.ui_Splash_screen import Ui_SplashScreen
 
+from PyQt5 import uic, QtWidgets
+from PyQt5.QtWidgets import *
+from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect
+
 ## ==> GLOBALS
 WINDOW_SIZE = 0
 
 
-class LoginScreen(QMainWindow):
+class TestWidget(QMainWindow):
     def __init__(self):
-        QMainWindow.__init__(self)
+        super().__init__()
+        if not self.objectName():
+            self.setObjectName("Form")
+        self.resize(814, 111)
+        self.label = QLabel(self)
+        self.label.setObjectName("label")
+        self.label.setGeometry(QRect(60, 0, 311, 91))
+        self.pushButton = QPushButton(self)
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.setGeometry(QRect(470, 30, 93, 28))
+
+        self.setWindowTitle(QCoreApplication.translate("Form", "Form", None))
+        self.label.setText(QCoreApplication.translate("Form", "TextLabel", None))
+        self.pushButton.setText(QCoreApplication.translate("Form", "PushButton", None))
+
+        QMetaObject.connectSlotsByName(self)
+
+
+class AdminPannel(QWidget):
+    def __init__(self, **kwargs):
+        super(AdminPannel, self).__init__(**kwargs)
+        uic.loadUi(
+            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\admin_pannel.ui",
+            self,
+        )
+        self.user_list.setWidgetResizable(True)
+        wig = QWidget()
+        box = QVBoxLayout()
+        for _ in range(100):
+            box.addWidget(CustWidget())
+        wig.setLayout(box)
+        self.user_list.setWidget(wig)
+
+
+class CustWidget(QMainWindow):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi(
+            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\users_table_entry_template.ui",
+            self,
+        )
+
+
+class Jar(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setGeometry(200, 200, 400, 400)
+        listBox = QVBoxLayout(self)
+        self.setLayout(listBox)
+
+        scroll = QScrollArea(self)
+        listBox.addWidget(scroll)
+        scroll.setWidgetResizable(True)
+        scrollContent = QWidget(scroll)
+
+        scrollLayout = QVBoxLayout(scrollContent)
+        scrollContent.setLayout(scrollLayout)
+        items = [CustWidget() for i in range(400)]
+        for item in items:
+            scrollLayout.addWidget(item)
+        scroll.setWidget(scrollContent)
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = AdminPannel()
+    win.show()
+    sys.exit(app.exec_())
+
+
+class Ui_Form(QWidget):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle(QCoreApplication.translate("Form", "Form", None))
+        self.label.setText(QCoreApplication.translate("Form", "TextLabel", None))
+        self.label = QLabel()
+        self.label.setObjectName("label")
+        self.label.setGeometry(QRect(150, 10, 311, 91))
+
+
+class LoginScreen(QMainWindow):
+    def __init__(self, **kwargs):
+        super(LoginScreen, self).__init__(**kwargs)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        ## UI ==> INTERFACE CODES
-        ########################################################################
-
-        ## REMOVE TITLE BAR
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        ## DROP SHADOW EFFECT
         self.shadow = QGraphicsDropShadowEffect(self)
         self.shadow.setBlurRadius(20)
         self.shadow.setXOffset(0)
@@ -78,13 +160,7 @@ class LoginScreen(QMainWindow):
         shadow1(self.ui.label_5, 40)
         shadow1(self.ui.label_6, 40)
         shadow1(self.ui.frame_2, 20)
-        # shadow1(self.ui.label_2,5)
-        # shadow1(self.ui.label_3,5)
-        # shadow1(self.ui.label_4,5)
 
-        # MAIN WINDOW LABEL
-        # QtCore.QTimer.singleShot(1500, lambda: self.ui.label_2.setText("THANK YOU"))
-        # QtCore.QTimer.singleShot(1500, lambda: self.setStyleSheet("background-color: #222; color: #FFF"))
         self.ui.pushButton.clicked.connect(self.LoginFunc)
         self.ui.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
 
@@ -254,11 +330,6 @@ class Dashboard(QMainWindow):
 
 
 def shadow1(self, radius):
-    # for child in self.findChildren(QMainWindow,"label_2"):
-    #     print("a")
-    #     # shadow = QGraphicsDropShadowEffect(blurRadius=5, xOffset=3, yOffset=3,Color=(QColor(0, 0, 0, 255)))
-    #     # child.setGraphicsEffect(shadow)
-
     shadow = QGraphicsDropShadowEffect(self)
     shadow.setBlurRadius(radius)
     shadow.setXOffset(0)
@@ -276,16 +347,20 @@ class ViewHandler:
         self.CHECK_DURATION = 100
 
         self.app = QApplication(sys.argv)
+        self.main_window = None
         self.splash_screen = SplashScreen()
         self.login_window = LoginScreen()
         self.dashboard_window = Dashboard()
-        self.main_window = self.splash_screen
-        # self.main_window = self.login_window
+
+        self.start_app()
 
     def start_app(self):
-        self.main_window.show()
+        self.show_splash_screen()
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
         self.app.exec_()
+
+    def stop_app(self):
+        self.main_window.close()
 
     def check_for_messages(self):
         # print("this will acts like a schedular which checks for messages")
@@ -309,6 +384,7 @@ class ViewHandler:
             else:
                 print("unknown error")
         elif message[0] == "load_complete":
+            self.close_splash_screen()
             self.show_login_window()
         elif message[0] == "stop_app":
             self.stop_app()
@@ -316,8 +392,13 @@ class ViewHandler:
     def set_status(self, value, message):
         self.splash_screen.set_progress_value(value, message)
 
-    def stop_app(self):
-        self.main_window.close()
+    def show_splash_screen(self):
+        self.main_window = self.splash_screen
+        self.CHECK_DURATION = 10
+        self.main_window.show()
+
+    def close_splash_screen(self):
+        self.CHECK_DURATION = 1000
 
     def show_login_window(self):
         self.main_window.close()
