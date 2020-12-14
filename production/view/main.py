@@ -89,8 +89,10 @@ class AdminPannel(QWidget):
         self.central_stack_frame.setCurrentWidget(self.credentials_page)
         self.credentials.clicked.connect(self.switch_to_credentials)
         self.access_rights.clicked.connect(self.switch_to_access_rights)
+        self.posts.clicked.connect(self.switch_to_posts)
 
         self.user_list.setWidgetResizable(True)
+        self.posts_list.setWidgetResizable(True)
         wig = QWidget()
         box = QVBoxLayout()
         for _ in range(100):
@@ -103,6 +105,35 @@ class AdminPannel(QWidget):
 
     def switch_to_access_rights(self):
         self.central_stack_frame.setCurrentWidget(self.access_rights_page)
+
+    def switch_to_posts(self):
+        # dummy posts data
+        post_data = [PostTemplate() for i in range(10)]
+        lis = QWidget()
+        bb = QVBoxLayout()
+        for i in post_data:
+            bb.addWidget(i)
+        lis.setLayout(bb)
+        self.posts_list.setWidget(lis)
+        self.central_stack_frame.setCurrentWidget(self.posts_page)
+
+
+class PostTemplate(QWidget):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi("production\\view\\post_template.ui", self)
+        self.post_name.clicked.connect(self.toggle_access_rights)
+        self.toggle = True
+        self.toggle_access_rights()
+
+    def toggle_access_rights(self):
+        if self.toggle:
+            self.temp = self.post_rights
+            self.post_rights.setParent(None)
+            self.toggle = False
+        else:
+            self.layout().addWidget(self.temp)
+            self.toggle = True
 
 
 class CustWidget(QMainWindow):
@@ -121,17 +152,20 @@ class Jar(QWidget):
         listBox = QVBoxLayout(self)
         self.setLayout(listBox)
 
-        scroll = QScrollArea(self)
-        listBox.addWidget(scroll)
-        scroll.setWidgetResizable(True)
-        scrollContent = QWidget(scroll)
+        # scroll = QScrollArea(self)
+        # listBox.addWidget(scroll)
+        # scroll.setWidgetResizable(True)
+        # scrollContent = QWidget(scroll)
 
-        scrollLayout = QVBoxLayout(scrollContent)
-        scrollContent.setLayout(scrollLayout)
-        items = [CustWidget() for i in range(400)]
-        for item in items:
-            scrollLayout.addWidget(item)
-        scroll.setWidget(scrollContent)
+        # scrollLayout = QVBoxLayout(scrollContent)
+        # scrollContent.setLayout(scrollLayout)
+        # items = [CustWidget() for i in range(400)]
+        # for item in items:
+        #     scrollLayout.addWidget(item)
+        # scroll.setWidget(scrollContent)
+
+        listBox.addWidget(PostTemplate())
+        listBox.addWidget(PostTemplate())
 
 
 if __name__ == "__main__":
