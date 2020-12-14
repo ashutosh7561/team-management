@@ -86,6 +86,10 @@ class AdminPannel(QWidget):
             "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\admin_pannel.ui",
             self,
         )
+        self.central_stack_frame.setCurrentWidget(self.credentials_page)
+        self.credentials.clicked.connect(self.switch_to_credentials)
+        self.access_rights.clicked.connect(self.switch_to_access_rights)
+
         self.user_list.setWidgetResizable(True)
         wig = QWidget()
         box = QVBoxLayout()
@@ -93,6 +97,12 @@ class AdminPannel(QWidget):
             box.addWidget(CustWidget())
         wig.setLayout(box)
         self.user_list.setWidget(wig)
+
+    def switch_to_credentials(self):
+        self.central_stack_frame.setCurrentWidget(self.credentials_page)
+
+    def switch_to_access_rights(self):
+        self.central_stack_frame.setCurrentWidget(self.access_rights_page)
 
 
 class CustWidget(QMainWindow):
