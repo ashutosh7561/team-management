@@ -53,7 +53,7 @@
       </size>
      </property>
      <property name="text">
-      <string>PushButton</string>
+      <string>Dummy Post Name</string>
      </property>
     </widget>
    </item>
@@ -87,42 +87,42 @@
       <item row="2" column="0">
        <widget class="QPushButton" name="access_right_3">
         <property name="text">
-         <string>PushButton</string>
+         <string>CUD Groups</string>
         </property>
        </widget>
       </item>
       <item row="0" column="0">
        <widget class="QPushButton" name="access_right_1">
         <property name="text">
-         <string>PushButton</string>
+         <string>CUD Projects</string>
         </property>
        </widget>
       </item>
       <item row="0" column="1">
        <widget class="QPushButton" name="access_right_2">
         <property name="text">
-         <string>PushButton</string>
+         <string>CUD Teams</string>
         </property>
        </widget>
       </item>
       <item row="2" column="1">
        <widget class="QPushButton" name="access_right_4">
         <property name="text">
-         <string>PushButton</string>
+         <string>CUD Todos</string>
         </property>
        </widget>
       </item>
       <item row="1" column="0">
        <widget class="QPushButton" name="access_right_5">
         <property name="text">
-         <string>PushButton</string>
+         <string>CUD Tickets</string>
         </property>
        </widget>
       </item>
       <item row="1" column="1">
        <widget class="QPushButton" name="access_right_6">
         <property name="text">
-         <string>PushButton</string>
+         <string>CUD Flags</string>
         </property>
        </widget>
       </item>
