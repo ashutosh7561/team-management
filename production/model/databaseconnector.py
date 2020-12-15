@@ -2,7 +2,10 @@ import sqlite3
 
 
 class DatabaseConnector:
-    def __init__(self, database="model/rbac.db"):
+    def __init__(
+        self,
+        database="C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\model\\rbac.db",
+    ):
         self.rbac_connection = sqlite3.connect(database)
 
     def get_user_password(self, user_id):

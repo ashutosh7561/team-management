@@ -51,7 +51,7 @@ from view.ui_main_window import Ui_MainWindow
 ## ==> SPLASH SCREEN
 from view.ui_Splash_screen import Ui_SplashScreen
 
-from PyQt5 import uic, QtWidgets
+from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect
 
@@ -121,7 +121,10 @@ class AdminPannel(QWidget):
 class PostTemplate(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi("production\\view\\post_template.ui", self)
+        uic.loadUi(
+            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\post_template.ui",
+            self,
+        )
         self.toggle = True
         self.access_rights_status = [True] * 6
 
@@ -225,13 +228,6 @@ class Jar(QWidget):
         listBox.addWidget(PostTemplate())
 
 
-if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    win = AdminPannel()
-    win.show()
-    sys.exit(app.exec_())
-
-
 class Ui_Form(QWidget):
     def __init__(self):
         super().__init__()
@@ -245,198 +241,116 @@ class Ui_Form(QWidget):
 class LoginScreen(QMainWindow):
     def __init__(self, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
+        uic.loadUi(
+            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\main_window.ui",
+            self,
+        )
+        # self.ui = Ui_MainWindow()
+        # self.ui.setupUi(self)
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(20)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 255))
-        self.ui.label.setGraphicsEffect(self.shadow)
+        # self.shadow = QGraphicsDropShadowEffect(self)
+        # self.shadow.setBlurRadius(20)
+        # self.shadow.setXOffset(0)
+        # self.shadow.setYOffset(0)
+        # self.shadow.setColor(QColor(0, 0, 0, 255))
+        # self.ui.label.setGraphicsEffect(self.shadow)
 
-        shadow1(self.ui.label_5, 40)
-        shadow1(self.ui.label_6, 40)
-        shadow1(self.ui.frame_2, 20)
+        # shadow1(self.ui.label_5, 40)
+        # shadow1(self.ui.label_6, 40)
+        # shadow1(self.ui.frame_2, 20)
 
-        self.ui.pushButton.clicked.connect(self.LoginFunc)
-        self.ui.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.login_btn.clicked.connect(self.LoginFunc)
+        # self.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
 
     def LoginFunc(self):
-        username = self.ui.username_field.text()
-        password = self.ui.password_field.text()
+        username = self.username_field.text()
+        password = self.password_field.text()
         valid = authenticate(username, password)
         if valid:
-            self.main = Dashboard()
+            if username == "11":
+                self.main = AdminPannel()
+            else:
+                self.main = Dashboard()
             self.main.show()
             print(valid)
-            self.main.ui.label_8.setText(username)
+            self.main.user_handle.setText(username)
             self.close()
         else:
             print("Incorrect Credentials")
-            self.ui.username_field.setText("")
-            self.ui.username_field.setStyleSheet(
-                """QLineEdit {border: 1px solid red }"""
-            )
-            self.ui.password_field.setText("")
-            self.ui.password_field.setStyleSheet(
-                """QLineEdit {border: 1px solid red }"""
-            )
+            self.username_field.setText("")
+            self.username_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
+            self.password_field.setText("")
+            self.password_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
 
 
 class SplashScreen(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
-        self.ui = Ui_SplashScreen()
-        self.ui.setupUi(self)
+        uic.loadUi(
+            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\Splash_screen.ui",
+            self,
+        )
+        # self.ui = Ui_SplashScreen()
+        # self.ui.setupUi(self)
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
 
-        self.shadow = QGraphicsDropShadowEffect(self)
-        self.shadow.setBlurRadius(20)
-        self.shadow.setXOffset(0)
-        self.shadow.setYOffset(0)
-        self.shadow.setColor(QColor(0, 0, 0, 255))
-        self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
+        # self.shadow = QGraphicsDropShadowEffect(self)
+        # self.shadow.setBlurRadius(20)
+        # self.shadow.setXOffset(0)
+        # self.shadow.setYOffset(0)
+        # self.shadow.setColor(QColor(0, 0, 0, 255))
+        # self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
 
-        shadow1(self.ui.label, 20)
+        # shadow1(self.ui.label, 20)
 
-        self.ui.label_3.setText("<strong>LOADING</strong>")
-        self.ui.progressBar.setValue(0)
+        self.label_3.setText("<strong>LOADING</strong>")
+        self.progressBar.setValue(0)
 
     def set_progress_value(self, value, message):
-        self.ui.progressBar.setValue(value)
-        self.ui.label_3.setText(f"<strong>{message}</strong>")
+        self.progressBar.setValue(value)
+        self.label_3.setText(f"<strong>{message}</strong>")
 
 
-class Dashboard(QMainWindow):
+class Dashboard(QWidget):
     def __init__(self):
-        QMainWindow.__init__(self)
-        self.ui = Ui_DashBoard()
-        self.ui.setupUi(self)
-
-        ## REMOVE TITLE BAR
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
-        ##shadow effect
-        shadow1(self.ui.label, 10)
-        shadow1(self.ui.pushButton, 5)
-        shadow1(self.ui.pushButton_2, 5)
-        shadow1(self.ui.pushButton_3, 5)
-        shadow1(self.ui.pushButton_4, 5)
-        shadow1(self.ui.pushButton_5, 5)
-        shadow1(self.ui.pushButton_6, 5)
-        shadow1(self.ui.pushButton_7, 5)
-        shadow1(self.ui.pushButton_8, 5)
-        shadow1(self.ui.pushButton_9, 5)
-        shadow1(self.ui.frame, 5)
-        shadow1(self.ui.frame_2, 5)
-        shadow1(self.ui.frame_3, 5)
-        shadow1(self.ui.frame_4, 5)
-        shadow1(self.ui.frame_5, 5)
-        shadow1(self.ui.frame_6, 5)
-        shadow1(self.ui.frame_7, 5)
-        shadow1(self.ui.frame_8, 5)
-        shadow1(self.ui.frame_9, 5)
-        shadow1(self.ui.frame_10, 5)
-        shadow1(self.ui.frame_12, 5)
-        shadow1(self.ui.frame_13, 5)
-        shadow1(self.ui.frame_14, 5)
-        shadow1(self.ui.frame_15, 5)
-        shadow1(self.ui.frame_16, 5)
-        shadow1(self.ui.frame_17, 5)
-        shadow1(self.ui.frame_18, 5)
-
-        ##navigation to pages
-        self.ui.pushButton.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Dashboard)
-        )
-        self.ui.pushButton_2.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Projects)
-        )
-        self.ui.pushButton_3.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Tickets)
-        )
-        self.ui.pushButton_4.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Boards)
-        )
-        self.ui.pushButton_5.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Calendar)
-        )
-        self.ui.pushButton_6.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Analysis)
-        )
-        self.ui.pushButton_7.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Messages)
-        )
-        self.ui.pushButton_8.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Worklog)
-        )
-        self.ui.pushButton_9.clicked.connect(
-            lambda: self.ui.stackedWidget.setCurrentWidget(self.ui.Settings)
+        super().__init__()
+        uic.loadUi(
+            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\root_window.ui",
+            self,
         )
 
-        ##window size buttons
-        self.ui.close.clicked.connect(lambda: self.close())
-        self.ui.max.clicked.connect(lambda: self.restore_or_maximize_window())
-        self.ui.min.clicked.connect(lambda: self.showMinimized())
-
-        ##message page navigation
-        self.ui.pushButton_7.clicked.connect(self.setMessage)
-        self.ui.pushButton_23.clicked.connect(
-            lambda: self.ui.stackedWidget_2.setCurrentWidget(self.ui.member1)
+        self.dashboard.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.dashboard_frame)
         )
-
-    def setMessage(self):
-        if self.ui.stackedWidget_2.currentWidget() == self.ui.member1:
-            self.ui.stackedWidget_2.setCurrentWidget(self.ui.welcome)
-
-        else:
-            self.ui.stackedWidget_2.setCurrentWidget(self.ui.welcome)
-
-    def restore_or_maximize_window(self):
-        global WINDOW_SIZE
-        win_status = WINDOW_SIZE
-        if win_status == 0:
-            WINDOW_SIZE = 1
-            self.showMaximized()
-        else:
-            WINDOW_SIZE = 0
-            self.showNormal()
-
-    ## move window
-
-    def moveWindow(self):
-
-        if self.isMaximized() == False:
-            if e.buttons() == Qt.LeftButton:
-                self.move(self.pos() + e.globalPos() - self.clickPosition)
-                self.clickPosition = e.globalPos()
-                e.accept()
-        self.ui.frame_3.mouseMoveEvent = moveWindow
-
-    def mousePressEvent(self, event):
-        self.clickPosition = event.globalPos()
-
-    def mouseMoveEvent(self, event):
-        delta = QPoint(event.globalPos() - self.clickPosition)
-        # print(delta)
-        self.move(self.x() + delta.x(), self.y() + delta.y())
-        self.clickPosition = event.globalPos()
-
-
-def shadow1(self, radius):
-    shadow = QGraphicsDropShadowEffect(self)
-    shadow.setBlurRadius(radius)
-    shadow.setXOffset(0)
-    shadow.setYOffset(0)
-    shadow.setColor(QColor(0, 0, 0, 255))
-    self.setGraphicsEffect(shadow)
+        self.projects.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.projects_frame)
+        )
+        self.tickets.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.tickets_frame)
+        )
+        self.boards.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.boards_frame)
+        )
+        self.calendar.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.calendar_frame)
+        )
+        self.analysis.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.analysis_frame)
+        )
+        self.messages.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.messages_frame)
+        )
+        self.worklog.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.worklog_frame)
+        )
+        self.settings.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(self.settings_frame)
+        )
 
 
 class ViewHandler:
@@ -510,3 +424,10 @@ class ViewHandler:
         self.main_window.close()
         self.main_window = self.dashboard_window
         self.main_window.show()
+
+
+if __name__ == "__main__":
+    app = QApplication(sys.argv)
+    win = Dashboard()
+    win.show()
+    sys.exit(app.exec_())

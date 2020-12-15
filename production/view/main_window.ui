@@ -154,7 +154,7 @@ color: rgb(0, 0, 0);</string>
       <string>Forgot Password</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="login_btn">
      <property name="geometry">
       <rect>
        <x>290</x>
@@ -635,7 +635,7 @@ color: rgb(0, 0, 0);</string>
       <bool>false</bool>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="username_field">
      <property name="geometry">
       <rect>
        <x>240</x>
@@ -644,6 +644,12 @@ color: rgb(0, 0, 0);</string>
        <height>41</height>
       </rect>
      </property>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="font">
       <font>
        <family>MS Sans Serif</family>
@@ -651,7 +657,7 @@ color: rgb(0, 0, 0);</string>
       </font>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
@@ -665,7 +671,7 @@ border:1px solid rgb(0, 0, 0);
       <set>Qt::ImhNone</set>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="password_field">
      <property name="geometry">
       <rect>
        <x>240</x>
@@ -681,7 +687,7 @@ border:1px solid rgb(0, 0, 0);
       </font>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
+      <enum>Qt::ClickFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">background-color: rgb(255, 255, 255);
@@ -806,20 +812,20 @@ color: rgb(186, 186, 186);</string>
      </property>
     </widget>
     <zorder>label</zorder>
-    <zorder>pushButton</zorder>
+    <zorder>login_btn</zorder>
     <zorder>label_7</zorder>
     <zorder>pushButton_2</zorder>
     <zorder>label_2</zorder>
     <zorder>label_4</zorder>
-    <zorder>lineEdit_2</zorder>
-    <zorder>lineEdit</zorder>
+    <zorder>password_field</zorder>
+    <zorder>username_field</zorder>
     <zorder>label_8</zorder>
    </widget>
   </widget>
  </widget>
  <tabstops>
-  <tabstop>lineEdit</tabstop>
-  <tabstop>lineEdit_2</tabstop>
+  <tabstop>username_field</tabstop>
+  <tabstop>password_field</tabstop>
  </tabstops>
  <resources>
   <include location="resource1.qrc"/>
