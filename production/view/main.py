@@ -122,11 +122,68 @@ class PostTemplate(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi("production\\view\\post_template.ui", self)
-        self.post_name.clicked.connect(self.toggle_access_rights)
         self.toggle = True
-        self.toggle_access_rights()
+        self.access_rights_status = [True] * 6
 
-    def toggle_access_rights(self):
+        self.post_name.clicked.connect(self.toggle_access_rights_list)
+        self.access_right_1.clicked.connect(self.toggle_access_right_1)
+        self.access_right_2.clicked.connect(self.toggle_access_right_2)
+        self.access_right_3.clicked.connect(self.toggle_access_right_3)
+        self.access_right_4.clicked.connect(self.toggle_access_right_4)
+        self.access_right_5.clicked.connect(self.toggle_access_right_5)
+        self.access_right_6.clicked.connect(self.toggle_access_right_6)
+
+        self.toggle_access_rights_list()
+
+    def toggle_access_right_1(self):
+        if self.access_rights_status[0]:
+            self.access_right_1.setStyleSheet("background-color: rgb(0, 255, 0)")
+            self.access_rights_status[0] = False
+        else:
+            self.access_right_1.setStyleSheet("background-color: rgb(255, 0, 0)")
+            self.access_rights_status[0] = True
+
+    def toggle_access_right_2(self):
+        if self.access_rights_status[1]:
+            self.access_right_2.setStyleSheet("background-color: rgb(0, 255, 0)")
+            self.access_rights_status[1] = False
+        else:
+            self.access_right_2.setStyleSheet("background-color: rgb(255, 0, 0)")
+            self.access_rights_status[1] = True
+
+    def toggle_access_right_3(self):
+        if self.access_rights_status[2]:
+            self.access_right_3.setStyleSheet("background-color: rgb(0, 255, 0)")
+            self.access_rights_status[2] = False
+        else:
+            self.access_right_3.setStyleSheet("background-color: rgb(255, 0, 0)")
+            self.access_rights_status[2] = True
+
+    def toggle_access_right_4(self):
+        if self.access_rights_status[3]:
+            self.access_right_4.setStyleSheet("background-color: rgb(0, 255, 0)")
+            self.access_rights_status[3] = False
+        else:
+            self.access_right_4.setStyleSheet("background-color: rgb(255, 0, 0)")
+            self.access_rights_status[3] = True
+
+    def toggle_access_right_5(self):
+        if self.access_rights_status[4]:
+            self.access_right_5.setStyleSheet("background-color: rgb(0, 255, 0)")
+            self.access_rights_status[4] = False
+        else:
+            self.access_right_5.setStyleSheet("background-color: rgb(255, 0, 0)")
+            self.access_rights_status[4] = True
+
+    def toggle_access_right_6(self):
+        if self.access_rights_status[5]:
+            self.access_right_6.setStyleSheet("background-color: rgb(0, 255, 0)")
+            self.access_rights_status[5] = False
+        else:
+            self.access_right_6.setStyleSheet("background-color: rgb(255, 0, 0)")
+            self.access_rights_status[5] = True
+
+    def toggle_access_rights_list(self):
         if self.toggle:
             self.temp = self.post_rights
             self.post_rights.setParent(None)
