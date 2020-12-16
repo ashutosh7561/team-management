@@ -60,10 +60,14 @@ def view(view_queue, controller_queue, model_queue, root_queue):
     print("starting view process")
     view = ViewHandler(view_queue, controller_queue, model_queue)
     print("exit from app.exec_() event loop")
+    controller_queue.put(["quit_application"])
+    model_queue.put(["quit_application"])
 
 
 def controller(view_queue, controller_queue, model_queue, root_queue):
     print("starting controller process")
+    # create ControllerHandler class similar to ViewHandler which
+    # will handle messages and other stuff
     print("mock loading")
     msg = [
         "Database",
@@ -84,12 +88,44 @@ def controller(view_queue, controller_queue, model_queue, root_queue):
         view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
     print("load complete")
     view_queue.put(["load_complete", 1])
+    flag = True
+
+    # event loop for controller to check for messages
+    while flag:
+        time.sleep(1)
+        if not (controller_queue.empty()):
+            msg = controller_queue.get()
+            if msg[0] == "credential_data_request":
+                print("credential data request from view handled by controller")
+                print("passing request to model")
+                model_queue.put(msg)
+            if msg[0] == "credential_data":
+                print("got data from model")
+                print("passing data to view")
+                view_queue.put(msg)
+            elif msg[0] == "quit_application":
+                flag = False
+    print("controller is quiting")
 
 
 def model(view_queue, controller_queue, model_queue, root_queue):
     print("starting model process")
-    while not (model_queue.empty()):
-        print("value from model_queue:", model_queue.get())
+    flag = True
+
+    # event loop for model to check for messages
+    while flag:
+        time.sleep(1)
+        if not (model_queue.empty()):
+            msg = model_queue.get()
+            if msg[0] == "credential_data_request":
+                print("credential data request from controller")
+                print("fetching data from database")
+                time.sleep(5)
+                print("sending data to controller")
+                controller_queue.put(["credential_data", 10])
+            elif msg[0] == "quit_application":
+                flag = False
+    print("model quiting")
 
 
 if __name__ == "__main__":
@@ -115,3 +151,10 @@ if __name__ == "__main__":
 # inteded reciever's queue. The reciever then gets the data from that queue.
 # mock_preloading()
 # pass
+
+
+# we are using multiple process because we want the application to run in background like a
+# daemon process which will be used to provide some functionality like reminders. If we do
+# not use seperate process then after quiting the application it wont be able to remind user.
+# here we use queues to pass messages. if we do not use multiple process then we would have
+# to pass controller/view/model objects.

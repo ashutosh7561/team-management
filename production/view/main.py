@@ -52,53 +52,52 @@ from view.ui_main_window import Ui_MainWindow
 from view.ui_Splash_screen import Ui_SplashScreen
 
 from PyQt5 import QtCore, QtWidgets, uic
-from PyQt5.QtWidgets import *
+from PyQt5.QtWidgets import (
+    QApplication,
+    QLabel,
+    QPushButton,
+    QVBoxLayout,
+    QWidget,
+    QMainWindow,
+)
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect
 
 ## ==> GLOBALS
 WINDOW_SIZE = 0
 
 
-class TestWidget(QMainWindow):
-    def __init__(self):
-        super().__init__()
-        if not self.objectName():
-            self.setObjectName("Form")
-        self.resize(814, 111)
-        self.label = QLabel(self)
-        self.label.setObjectName("label")
-        self.label.setGeometry(QRect(60, 0, 311, 91))
-        self.pushButton = QPushButton(self)
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton.setGeometry(QRect(470, 30, 93, 28))
-
-        self.setWindowTitle(QCoreApplication.translate("Form", "Form", None))
-        self.label.setText(QCoreApplication.translate("Form", "TextLabel", None))
-        self.pushButton.setText(QCoreApplication.translate("Form", "PushButton", None))
-
-        QMetaObject.connectSlotsByName(self)
-
-
 class AdminPannel(QWidget):
-    def __init__(self, **kwargs):
+    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
         super(AdminPannel, self).__init__(**kwargs)
+        self.view_queue = view_queue
+        self.controller_queue = controller_queue
+        self.model_queue = model_queue
         uic.loadUi(
             "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\admin_pannel.ui",
             self,
         )
-        self.central_stack_frame.setCurrentWidget(self.credentials_page)
+        self.switch_to_credentials()
         self.credentials.clicked.connect(self.switch_to_credentials)
         self.access_rights.clicked.connect(self.switch_to_access_rights)
         self.posts.clicked.connect(self.switch_to_posts)
+        self.add_entry.clicked.connect(self.populate_data)
 
         self.user_list.setWidgetResizable(True)
         self.posts_list.setWidgetResizable(True)
+        self.glob = 1
+
+    def populate_data(self):
+        self.controller_queue.put(["credential_data_request", 1])
+
+    def feed_data(self, l):
         wig = QWidget()
         box = QVBoxLayout()
-        for _ in range(100):
-            box.addWidget(CustWidget())
+        for _ in range(l + self.glob):
+            t = CustWidget()
+            box.addWidget(t)
         wig.setLayout(box)
         self.user_list.setWidget(wig)
+        self.glob += 2
 
     def switch_to_credentials(self):
         self.central_stack_frame.setCurrentWidget(self.credentials_page)
@@ -119,8 +118,11 @@ class AdminPannel(QWidget):
 
 
 class PostTemplate(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
+        super(PostTemplate, self).__init__(**kwargs)
+        self.view_queue = view_queue
+        self.controller_queue = controller_queue
+        self.model_queue = model_queue
         uic.loadUi(
             "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\post_template.ui",
             self,
@@ -196,7 +198,7 @@ class PostTemplate(QWidget):
             self.toggle = True
 
 
-class CustWidget(QMainWindow):
+class CustWidget(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi(
@@ -205,42 +207,12 @@ class CustWidget(QMainWindow):
         )
 
 
-class Jar(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setGeometry(200, 200, 400, 400)
-        listBox = QVBoxLayout(self)
-        self.setLayout(listBox)
-
-        # scroll = QScrollArea(self)
-        # listBox.addWidget(scroll)
-        # scroll.setWidgetResizable(True)
-        # scrollContent = QWidget(scroll)
-
-        # scrollLayout = QVBoxLayout(scrollContent)
-        # scrollContent.setLayout(scrollLayout)
-        # items = [CustWidget() for i in range(400)]
-        # for item in items:
-        #     scrollLayout.addWidget(item)
-        # scroll.setWidget(scrollContent)
-
-        listBox.addWidget(PostTemplate())
-        listBox.addWidget(PostTemplate())
-
-
-class Ui_Form(QWidget):
-    def __init__(self):
-        super().__init__()
-        self.setWindowTitle(QCoreApplication.translate("Form", "Form", None))
-        self.label.setText(QCoreApplication.translate("Form", "TextLabel", None))
-        self.label = QLabel()
-        self.label.setObjectName("label")
-        self.label.setGeometry(QRect(150, 10, 311, 91))
-
-
 class LoginScreen(QMainWindow):
-    def __init__(self, **kwargs):
+    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
+        self.view_queue = view_queue
+        self.controller_queue = controller_queue
+        self.model_queue = model_queue
         uic.loadUi(
             "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\main_window.ui",
             self,
@@ -271,13 +243,13 @@ class LoginScreen(QMainWindow):
         valid = authenticate(username, password)
         if valid:
             if username == "11":
-                self.main = AdminPannel()
+                self.view_queue.put(["switch_to_admin", username])
+                print("message for view handler to switch to admin")
             else:
-                self.main = Dashboard()
-            self.main.show()
+                self.view_queue.put(["switch_to_dashboard", 1])
+                print("message for view handler to switch to dashboard")
+                # self.main = Dashboard()
             print(valid)
-            self.main.user_handle.setText(username)
-            self.close()
         else:
             print("Incorrect Credentials")
             self.username_field.setText("")
@@ -287,8 +259,11 @@ class LoginScreen(QMainWindow):
 
 
 class SplashScreen(QMainWindow):
-    def __init__(self):
-        QMainWindow.__init__(self)
+    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
+        super(SplashScreen, self).__init__(**kwargs)
+        self.view_queue = view_queue
+        self.controller_queue = controller_queue
+        self.model_queue = model_queue
         uic.loadUi(
             "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\Splash_screen.ui",
             self,
@@ -317,8 +292,11 @@ class SplashScreen(QMainWindow):
 
 
 class Dashboard(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
+        super(Dashboard, self).__init__(**kwargs)
+        self.view_queue = view_queue
+        self.controller_queue = controller_queue
+        self.model_queue = model_queue
         uic.loadUi(
             "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\root_window.ui",
             self,
@@ -363,9 +341,18 @@ class ViewHandler:
 
         self.app = QApplication(sys.argv)
         self.main_window = None
-        self.splash_screen = SplashScreen()
-        self.login_window = LoginScreen()
-        self.dashboard_window = Dashboard()
+        self.splash_screen = SplashScreen(
+            self.view_queue, self.controller_queue, self.model_queue
+        )
+        self.login_window = LoginScreen(
+            self.view_queue, self.controller_queue, self.model_queue
+        )
+        self.dashboard_window = Dashboard(
+            self.view_queue, self.controller_queue, self.model_queue
+        )
+        self.admin_pannel = AdminPannel(
+            self.view_queue, self.controller_queue, self.model_queue
+        )
 
         self.start_app()
 
@@ -400,9 +387,26 @@ class ViewHandler:
                 print("unknown error")
         elif message[0] == "load_complete":
             self.close_splash_screen()
+            self.controller_queue.put("Some data from view handler")
             self.show_login_window()
         elif message[0] == "stop_app":
             self.stop_app()
+        elif message[0] == "switch_to_dashboard":
+            self.show_dashboard_window()
+        elif message[0] == "switch_to_admin":
+            self.show_admin_pannel(message[1])
+        elif message[0] == "credential_data":
+            self.show_credential_data(message[1])
+
+    def show_credential_data(self, l):
+        self.main_window.feed_data(l)
+
+    def show_admin_pannel(self, username):
+        self.main_window.close()
+        self.main_window = self.admin_pannel
+        self.main_window.user_handle.setText(username)
+        self.main_window.populate_data()
+        self.main_window.show()
 
     def set_status(self, value, message):
         self.splash_screen.set_progress_value(value, message)
@@ -428,6 +432,6 @@ class ViewHandler:
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    win = Dashboard()
+    win = AdminPannel()
     win.show()
     sys.exit(app.exec_())
