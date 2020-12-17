@@ -16,7 +16,7 @@ class ControllerHandler:
 
         print("controller handler up and running")
 
-        self.CHECK_DURATION = 1
+        self.CHECK_DURATION = 0.1
         self.flag = True
         self.check_for_messages()
 
@@ -30,13 +30,53 @@ class ControllerHandler:
 
     def identify_message(self, message):
         self.message_dict = {
+            "load_resources": self.load_resources,
             "admin_get_users_data": self.admin_get_users_data,
             "quit_application": self.quit_application,
+            "validate_credentials": self.validate_credentials,
+            "user_authenticated": self.authentication_status,
+            "admin_users_data": self.admin_users_data,
         }
         self.message_dict[message[0]](*message[1:])
 
+    def admin_users_data(self, data):
+        self.view_queue.put(["admin_users_data", data])
+
+    def authentication_status(self, is_valid, user_id):
+        if is_valid:
+            if user_id == "11":
+                self.view_queue.put(["valid_user", "admin", user_id])
+            else:
+                self.view_queue.put(["valid_user", "general", user_id])
+        else:
+            self.view_queue.put(["invalid_user"])
+
+    def validate_credentials(self, user_id, password):
+        self.model_queue.put(["validate_credentials", user_id, password])
+
+    def load_resources(self):
+        msg = [
+            "Database",
+            "Files",
+            "Settings",
+            "Settings",
+            "Dependencies",
+            "Dependencies",
+            "Images",
+            "Projects",
+            "Calendar",
+            "Messages",
+            "Messages",
+        ]
+        for i in range(11):
+            time.sleep(0.3)
+            print("loading...", i * 10)
+            self.view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
+        print("load complete")
+        self.view_queue.put(["load_complete"])
+
     def admin_get_users_data(self, *args):
-        print("users data request from", *args)
+        self.model_queue.put(["admin_get_users_data"])
 
     def quit_application(self):
         print("quit application request")
@@ -72,4 +112,5 @@ class ControllerHandlerTesting:
 
 
 if __name__ == "__main__":
-    ControllerHandlerTesting().test()
+    # ControllerHandlerTesting().test()
+    pass

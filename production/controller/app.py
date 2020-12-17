@@ -8,6 +8,8 @@ import time
 import multiprocessing as mp
 
 from view.main import ViewHandler
+from controller.controllerhandler import ControllerHandler
+from model.modelhandler import ModelHandler
 
 
 def root():
@@ -49,9 +51,9 @@ def root():
     controller_process.start()
     model_process.start()
 
-    view_process.join()
-    controller_process.join()
-    model_process.join()
+    # view_process.join()
+    # controller_process.join()
+    # model_process.join()
 
     print("doing cleanpup")
 
@@ -66,72 +68,20 @@ def view(view_queue, controller_queue, model_queue, root_queue):
 
 def controller(view_queue, controller_queue, model_queue, root_queue):
     print("starting controller process")
-    # create ControllerHandler class similar to ViewHandler which
-    # will handle messages and other stuff
-    print("mock loading")
-    msg = [
-        "Database",
-        "Files",
-        "Settings",
-        "Settings",
-        "Dependencies",
-        "Dependencies",
-        "Images",
-        "Projects",
-        "Calendar",
-        "Messages",
-        "Messages",
-    ]
-    for i in range(11):
-        time.sleep(0.3)
-        print("loading...", i * 10)
-        view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
-    print("load complete")
-    view_queue.put(["load_complete", 1])
-    flag = True
-
-    # event loop for controller to check for messages
-    while flag:
-        time.sleep(1)
-        if not (controller_queue.empty()):
-            msg = controller_queue.get()
-            if msg[0] == "credential_data_request":
-                print("credential data request from view handled by controller")
-                print("passing request to model")
-                model_queue.put(msg)
-            if msg[0] == "credential_data":
-                print("got data from model")
-                print("passing data to view")
-                view_queue.put(msg)
-            elif msg[0] == "quit_application":
-                flag = False
+    controller = ControllerHandler(view_queue, controller_queue, model_queue)
     print("controller is quiting")
 
 
 def model(view_queue, controller_queue, model_queue, root_queue):
     print("starting model process")
-    flag = True
-
-    # event loop for model to check for messages
-    while flag:
-        time.sleep(1)
-        if not (model_queue.empty()):
-            msg = model_queue.get()
-            if msg[0] == "credential_data_request":
-                print("credential data request from controller")
-                print("fetching data from database")
-                time.sleep(5)
-                print("sending data to controller")
-                controller_queue.put(["credential_data", 10])
-            elif msg[0] == "quit_application":
-                flag = False
+    model = ModelHandler(view_queue, controller_queue, model_queue)
     print("model quiting")
 
 
 if __name__ == "__main__":
     root_process = mp.Process(target=root)
     root_process.start()
-    root_process.join()
+    # root_process.join()
 
 
 # if __name__ == "__main__":

@@ -1,13 +1,14 @@
-import time
 import sys
-from os.path import dirname, abspath
+import time
+from os.path import abspath, dirname
 
 d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
 import multiprocessing as mp
 
-from model.validator import validate_user, get_access_rights
+from model.validator import get_access_rights, validate_user
+
 
 # Hanlders including Model, View, and Controller will only contain
 # functionality to check for messages, identify them and call
@@ -25,7 +26,7 @@ class ModelHandler:
 
         print("model handler up and running")
 
-        self.CHECK_DURATION = 0
+        self.CHECK_DURATION = 0.1
         self.flag = True
         self.check_for_messages()
 
@@ -63,9 +64,14 @@ class ModelHandler:
     def validate_credentials(self, user_id, password):
         if validate_user(user_id, password):
             self.controller_queue.put(["user_authenticated", True, user_id])
+        else:
+            self.controller_queue.put(["user_authenticated", False, user_id])
 
     def admin_get_users_data(self, *args):
         print("users data request from", *args)
+        print("fetching data from database")
+        time.sleep(2)
+        self.controller_queue.put(["admin_users_data", 10])
 
     def quit_application(self):
         print("quit application request")

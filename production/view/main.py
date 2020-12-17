@@ -87,7 +87,7 @@ class AdminPannel(QWidget):
         self.glob = 1
 
     def populate_data(self):
-        self.controller_queue.put(["credential_data_request", 1])
+        self.controller_queue.put(["admin_get_users_data"])
 
     def feed_data(self, l):
         wig = QWidget()
@@ -107,7 +107,10 @@ class AdminPannel(QWidget):
 
     def switch_to_posts(self):
         # dummy posts data
-        post_data = [PostTemplate() for i in range(10)]
+        post_data = [
+            PostTemplate(self.view_queue, self.controller_queue, self.model_queue)
+            for i in range(10)
+        ]
         lis = QWidget()
         bb = QVBoxLayout()
         for i in post_data:
@@ -238,24 +241,18 @@ class LoginScreen(QMainWindow):
         # self.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
 
     def LoginFunc(self):
+        self.start_time = time.time()
         username = self.username_field.text()
         password = self.password_field.text()
-        valid = authenticate(username, password)
-        if valid:
-            if username == "11":
-                self.view_queue.put(["switch_to_admin", username])
-                print("message for view handler to switch to admin")
-            else:
-                self.view_queue.put(["switch_to_dashboard", 1])
-                print("message for view handler to switch to dashboard")
-                # self.main = Dashboard()
-            print(valid)
-        else:
-            print("Incorrect Credentials")
-            self.username_field.setText("")
-            self.username_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
-            self.password_field.setText("")
-            self.password_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
+        self.controller_queue.put(["validate_credentials", username, password])
+
+    def invalid_user(self):
+        print(time.time() - self.start_time)
+        print("Incorrect Credentials")
+        self.username_field.setText("")
+        self.username_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
+        self.password_field.setText("")
+        self.password_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
 
 
 class SplashScreen(QMainWindow):
@@ -337,7 +334,9 @@ class ViewHandler:
         self.controller_queue = controller_queue
         self.model_queue = model_queue
 
-        self.CHECK_DURATION = 100
+        print("view handler up and running")
+
+        self.CHECK_DURATION = 1000
 
         self.app = QApplication(sys.argv)
         self.main_window = None
@@ -358,6 +357,7 @@ class ViewHandler:
 
     def start_app(self):
         self.show_splash_screen()
+        self.controller_queue.put(["load_resources"])
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
         self.app.exec_()
 
@@ -372,33 +372,38 @@ class ViewHandler:
 
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
 
-    def identify_message(self, message):
-        if message[0] == "load_status":
-            print("setting progress bar value to", message[1])
-            self.set_status(message[1], message[2])
-        elif message[0] == "load_error":
-            if message[1] == 1:
-                print("error in database loading")
-            elif message[1] == 2:
-                print("error in setting loading")
-            elif message[1] == 3:
-                print("internet connection error")
-            else:
-                print("unknown error")
-        elif message[0] == "load_complete":
-            self.close_splash_screen()
-            self.controller_queue.put("Some data from view handler")
-            self.show_login_window()
-        elif message[0] == "stop_app":
-            self.stop_app()
-        elif message[0] == "switch_to_dashboard":
-            self.show_dashboard_window()
-        elif message[0] == "switch_to_admin":
-            self.show_admin_pannel(message[1])
-        elif message[0] == "credential_data":
-            self.show_credential_data(message[1])
+    def load_status(self, progress_value, special_message):
+        print("setting progress bar value to", progress_value)
+        self.set_status(progress_value, special_message)
 
-    def show_credential_data(self, l):
+    def load_complete(self):
+        self.close_splash_screen()
+        self.show_login_window()
+
+    def identify_message(self, message):
+        self.message_dict = {
+            "load_status": self.load_status,
+            "load_complete": self.load_complete,
+            "stop_app": self.stop_app,
+            "switch_to_dashboard": self.show_dashboard_window,
+            "switch_to_admin": self.show_admin_pannel,
+            "admin_users_data": self.show_admin_users_data,
+            "valid_user": self.valid_user,
+            "invalid_user": self.invalid_user,
+        }
+
+        self.message_dict[message[0]](*message[1:])
+
+    def invalid_user(self):
+        self.main_window.invalid_user()
+
+    def valid_user(self, post, user_id):
+        if post == "admin":
+            self.show_admin_pannel(user_id)
+        elif post == "general":
+            self.show_dashboard_window()
+
+    def show_admin_users_data(self, l):
         self.main_window.feed_data(l)
 
     def show_admin_pannel(self, username):
@@ -413,7 +418,7 @@ class ViewHandler:
 
     def show_splash_screen(self):
         self.main_window = self.splash_screen
-        self.CHECK_DURATION = 10
+        self.CHECK_DURATION = 100
         self.main_window.show()
 
     def close_splash_screen(self):
