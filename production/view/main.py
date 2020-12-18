@@ -88,6 +88,7 @@ class AdminPannel(QWidget):
 
     def populate_data(self):
         self.controller_queue.put(["admin_get_users_data"])
+        self.start_time = time.time()
 
     def feed_data(self, l):
         wig = QWidget()
@@ -98,6 +99,7 @@ class AdminPannel(QWidget):
         wig.setLayout(box)
         self.user_list.setWidget(wig)
         self.glob += 2
+        print("total time taken to load data:", time.time() - self.start_time - 2)
 
     def switch_to_credentials(self):
         self.central_stack_frame.setCurrentWidget(self.credentials_page)
@@ -241,18 +243,18 @@ class LoginScreen(QMainWindow):
         # self.password_field.setEchoMode(QtWidgets.QLineEdit.Password)
 
     def LoginFunc(self):
-        self.start_time = time.time()
+        self.st = time.time()
         username = self.username_field.text()
         password = self.password_field.text()
         self.controller_queue.put(["validate_credentials", username, password])
 
     def invalid_user(self):
-        print(time.time() - self.start_time)
         print("Incorrect Credentials")
         self.username_field.setText("")
         self.username_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
         self.password_field.setText("")
         self.password_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
+        print("total time taken for validating credentials:", time.time() - self.st)
 
 
 class SplashScreen(QMainWindow):
@@ -336,7 +338,7 @@ class ViewHandler:
 
         print("view handler up and running")
 
-        self.CHECK_DURATION = 1000
+        self.CHECK_DURATION = 100
 
         self.app = QApplication(sys.argv)
         self.main_window = None
@@ -422,7 +424,7 @@ class ViewHandler:
         self.main_window.show()
 
     def close_splash_screen(self):
-        self.CHECK_DURATION = 1000
+        self.CHECK_DURATION = 100
 
     def show_login_window(self):
         self.main_window.close()

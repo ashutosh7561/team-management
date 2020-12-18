@@ -16,17 +16,13 @@ class ControllerHandler:
 
         print("controller handler up and running")
 
-        self.CHECK_DURATION = 0.1
         self.flag = True
         self.check_for_messages()
 
     def check_for_messages(self):
         while self.flag:
-            if not (self.controller_queue.empty()):
-                message = self.controller_queue.get()
-                self.identify_message(message)
-
-            time.sleep(self.CHECK_DURATION)
+            message = self.controller_queue.get()
+            self.identify_message(message)
 
     def identify_message(self, message):
         self.message_dict = {
