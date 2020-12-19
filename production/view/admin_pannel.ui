@@ -421,7 +421,7 @@
               <number>0</number>
              </property>
              <item>
-              <widget class="QLineEdit" name="lineEdit">
+              <widget class="QLineEdit" name="new_username">
                <property name="toolTip">
                 <string/>
                </property>
@@ -452,7 +452,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_2">
+              <widget class="QLineEdit" name="new_user_password">
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
@@ -465,7 +465,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_3">
+              <widget class="QLineEdit" name="new_user_post">
                <property name="echoMode">
                 <enum>QLineEdit::Normal</enum>
                </property>
@@ -481,7 +481,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_4">
+              <widget class="QLineEdit" name="new_user_special_rights">
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
@@ -494,7 +494,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QLineEdit" name="lineEdit_5">
+              <widget class="QLineEdit" name="new_user_other_data">
                <property name="alignment">
                 <set>Qt::AlignCenter</set>
                </property>
@@ -507,7 +507,7 @@
               </widget>
              </item>
              <item>
-              <widget class="QPushButton" name="add_entry">
+              <widget class="QPushButton" name="add_user">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                  <horstretch>0</horstretch>
@@ -563,8 +563,8 @@
               <rect>
                <x>0</x>
                <y>0</y>
-               <width>964</width>
-               <height>459</height>
+               <width>100</width>
+               <height>30</height>
               </rect>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_12"/>

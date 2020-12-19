@@ -7,7 +7,7 @@ sys.path.append(d)
 import platform
 import time
 
-from controller.authenticator import authenticate
+# from controller.authenticator import authenticate
 
 # from PySide2 import QtCore, QtGui, QtWidgets
 # from PySide2.QtCore import (
@@ -80,26 +80,39 @@ class AdminPannel(QWidget):
         self.credentials.clicked.connect(self.switch_to_credentials)
         self.access_rights.clicked.connect(self.switch_to_access_rights)
         self.posts.clicked.connect(self.switch_to_posts)
-        self.add_entry.clicked.connect(self.populate_data)
+        self.add_user.clicked.connect(self.add_new_user)
 
         self.user_list.setWidgetResizable(True)
         self.posts_list.setWidgetResizable(True)
         self.glob = 1
 
+    def add_new_user(self):
+        new_data = {}
+        new_data["username"] = self.new_username.text()
+        new_data["user_post"] = self.new_user_post.text()
+        new_data["user_password"] = self.new_user_password.text()
+        # new_data.append(self.new_user_special_rights.text())
+        # new_data.append(self.new_user_other_data.text())
+
+        self.controller_queue.put(["admin_add_new_user", new_data])
+
     def populate_data(self):
         self.controller_queue.put(["admin_get_users_data"])
         self.start_time = time.time()
 
-    def feed_data(self, l):
+    def feed_data(self, user_data_list):
         wig = QWidget()
         box = QVBoxLayout()
-        for _ in range(l + self.glob):
+        for user in user_data_list:
             t = CustWidget()
+            t.username.setText(str(user["username"]))
+            t.user_id.setText(str(user["user_id"]))
+            t.user_post.setText(str(user["user_post"]))
+            t.user_other_data.setText(str(user["user_other_data"]))
+            t.user_special_rights.setText(str(user["user_special_rights"]))
             box.addWidget(t)
         wig.setLayout(box)
         self.user_list.setWidget(wig)
-        self.glob += 2
-        print("total time taken to load data:", time.time() - self.start_time - 2)
 
     def switch_to_credentials(self):
         self.central_stack_frame.setCurrentWidget(self.credentials_page)
@@ -402,11 +415,11 @@ class ViewHandler:
     def valid_user(self, post, user_id):
         if post == "admin":
             self.show_admin_pannel(user_id)
-        elif post == "general":
+        elif post in ["general", "project_manager", "team_lead"]:
             self.show_dashboard_window()
 
-    def show_admin_users_data(self, l):
-        self.main_window.feed_data(l)
+    def show_admin_users_data(self, user_data_list):
+        self.main_window.feed_data(user_data_list)
 
     def show_admin_pannel(self, username):
         self.main_window.close()

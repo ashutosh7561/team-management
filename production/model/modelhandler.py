@@ -7,7 +7,8 @@ sys.path.append(d)
 
 import multiprocessing as mp
 
-from model.validator import get_access_rights, validate_user
+from model.databaseconnector import DatabaseConnector
+from model.validator import Validator
 
 
 # Hanlders including Model, View, and Controller will only contain
@@ -27,6 +28,8 @@ class ModelHandler:
         print("model handler up and running")
 
         self.flag = True
+        self.validator = Validator()
+        self.db = DatabaseConnector()
         self.check_for_messages()
 
     def check_for_messages(self):
@@ -39,35 +42,38 @@ class ModelHandler:
             "admin_get_users_data": self.admin_get_users_data,
             "quit_application": self.quit_application,
             "validate_credentials": self.validate_credentials,
-            "get_access_rights": self.get_access_rights,
-            "admin_create_user": self.create_new_user,
+            "get_access_rights": self.db.get_user_rights,
+            "admin_create_post": self.create_post,
+            "admin_change_post_rights": self.change_post_rights,
+            "change_user_password": self.validator.change_user_password,
+            "get_available_access_rights": self.db.get_available_access_rights,
+            "get_access_rights_for_post": self.db.get_access_rights_for_post,
+            "get_user_post": self.db.get_user_post,
+            "admin_add_new_user": self.validator.add_user,
         }
         self.message_dict[message[0]](*message[1:])
 
-    def create_new_user(
-        self,
-        username,
-        password,
-        post,
-    ):
+    def change_post_rights(self, post_name, associated_rights):
+        pass
+
+    def create_post(self, post_name, *args):
         pass
 
     def get_access_rights(self, user_id):
         self.controller_queue.put(
-            ["user_access_rights", user_id, get_access_rights(user_id)]
+            ["user_access_rights", user_id, self.validator.get_access_rights(user_id)]
         )
 
     def validate_credentials(self, user_id, password):
-        if validate_user(user_id, password):
-            self.controller_queue.put(["user_authenticated", True, user_id])
+        if self.validator.validate_user(user_id, password):
+            self.controller_queue.put(
+                ["user_authenticated", True, self.db.get_user_post(user_id), user_id]
+            )
         else:
-            self.controller_queue.put(["user_authenticated", False, user_id])
+            self.controller_queue.put(["user_authenticated", False, None, user_id])
 
     def admin_get_users_data(self, *args):
-        print("users data request from", *args)
-        print("fetching data from database")
-        time.sleep(2)
-        self.controller_queue.put(["admin_users_data", 10])
+        self.controller_queue.put(["admin_users_data", self.validator.get_users_data()])
 
     def quit_application(self):
         print("quit application request")

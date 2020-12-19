@@ -32,18 +32,21 @@ class ControllerHandler:
             "validate_credentials": self.validate_credentials,
             "user_authenticated": self.authentication_status,
             "admin_users_data": self.admin_users_data,
+            "admin_add_new_user": self.admin_add_new_user,
         }
         self.message_dict[message[0]](*message[1:])
+
+    def admin_add_new_user(self, *args):
+        self.model_queue.put(["admin_add_new_user", *args])
+        self.model_queue.put(["admin_get_users_data"])
 
     def admin_users_data(self, data):
         self.view_queue.put(["admin_users_data", data])
 
-    def authentication_status(self, is_valid, user_id):
+    def authentication_status(self, is_valid, post, user_id):
         if is_valid:
-            if user_id == "11":
-                self.view_queue.put(["valid_user", "admin", user_id])
-            else:
-                self.view_queue.put(["valid_user", "general", user_id])
+            print(post)
+            self.view_queue.put(["valid_user", post, user_id])
         else:
             self.view_queue.put(["invalid_user"])
 
@@ -72,7 +75,7 @@ class ControllerHandler:
         self.view_queue.put(["load_complete"])
 
     def admin_get_users_data(self, *args):
-        self.model_queue.put(["admin_get_users_data"])
+        self.model_queue.put(["admin_get_users_data", *args])
 
     def quit_application(self):
         print("quit application request")
