@@ -26,16 +26,12 @@ class Validator:
     def add_user(self, new_data):
         username = new_data["username"]
         user_post = new_data["user_post"]
-        hash_password = new_data["user_password"]
+        password_hash = hash_password(new_data["user_password"])
         if username in [None, "", "None"]:
             return
-        if user_post not in ["general", "project_manager", "team_lead", "admin"]:
+        if user_post not in ["general", "project_manager", "team_manager", "admin"]:
             return
-        self.db.add_user(
-            new_data["username"],
-            new_data["user_post"],
-            hash_password(new_data["user_password"]),
-        )
+        self.db.add_user(username, user_post, password_hash)
 
     def get_users_data(self):
         user_data_list = []
@@ -51,13 +47,24 @@ class Validator:
             user_data_list.append(t)
         return user_data_list
 
+    def create_post(self, post_id, post_desc, post_priority, access_rights=[]):
+        self.db.add_post(post_id, post_desc, post_priority)
+
+        for right in access_rights:
+            self.db.assign_access_right_to_post(post_id, right)
+
+    def change_post_rights(self, post_id, new_access_rights=[]):
+        old_access_rights = self.db.get_access_rights_by_post_id(post_id)
+        for right in old_access_rights:
+            self.db.delete_access_right_of_post(post_id, right)
+
+        for right in new_access_rights:
+            self.db.assign_access_right_to_post(post_id, right)
+
 
 if __name__ == "__main__":
-    # Validator().change_user_password(16, "phil")
-    # Validator().change_user_password(17, "moray")
-    # Validator().change_user_password(18, "garry")
-    # Validator().change_user_password(19, "ben")
-    # Validator().change_user_password(20, "dan")
-    # Validator().change_user_password(21, "paul")
-    # Validator().change_user_password(31, "asdf")
+    # Validator().change_post_rights("sm", ["CUDFlags", "CUDGroups"])
+    # Validator().create_post( "CEO", "CEO", 0, ["CUDGroups", "CUDFlags", "CUDTeams"]
+    # )
+    # Validator().create_post("CEO", "CEO", 0 )
     pass
