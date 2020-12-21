@@ -51,51 +51,30 @@
     <number>0</number>
    </property>
    <item>
-    <widget class="QLabel" name="username">
-     <property name="font">
-      <font>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="contextMenuPolicy">
-      <enum>Qt::CustomContextMenu</enum>
-     </property>
-     <property name="text">
-      <string>dummy_username</string>
-     </property>
-    </widget>
+    <widget class="CustLabel" name="username" native="true"/>
    </item>
    <item>
-    <widget class="QLabel" name="user_id">
-     <property name="text">
-      <string>dummy_user_id</string>
-     </property>
-    </widget>
+    <widget class="CustLabel" name="user_id" native="true"/>
    </item>
    <item>
-    <widget class="QLabel" name="user_post">
-     <property name="text">
-      <string>dummy_user_post</string>
-     </property>
-    </widget>
+    <widget class="CustLabel" name="user_post" native="true"/>
    </item>
    <item>
-    <widget class="QLabel" name="user_special_rights">
-     <property name="text">
-      <string>dummy_special_rights</string>
-     </property>
-    </widget>
+    <widget class="CustLabel" name="user_special_rights" native="true"/>
    </item>
    <item>
-    <widget class="QLabel" name="user_other_data">
-     <property name="text">
-      <string>dummy_other_data</string>
-     </property>
-    </widget>
+    <widget class="CustLabel" name="user_other_data" native="true"/>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>CustLabel</class>
+   <extends>QWidget</extends>
+   <header>test_qt</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

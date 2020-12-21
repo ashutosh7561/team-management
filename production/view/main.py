@@ -54,13 +54,16 @@ from view.ui_Splash_screen import Ui_SplashScreen
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtWidgets import (
     QApplication,
+    QHBoxLayout,
     QLabel,
+    QLineEdit,
+    QMainWindow,
     QPushButton,
+    QSizePolicy,
     QVBoxLayout,
     QWidget,
-    QMainWindow,
 )
-from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect
+from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
 
 ## ==> GLOBALS
 WINDOW_SIZE = 0
@@ -73,7 +76,7 @@ class AdminPannel(QWidget):
         self.controller_queue = controller_queue
         self.model_queue = model_queue
         uic.loadUi(
-            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\admin_pannel.ui",
+            r"./production/view/admin_pannel.ui",
             self,
         )
         self.switch_to_credentials()
@@ -105,14 +108,39 @@ class AdminPannel(QWidget):
         box = QVBoxLayout()
         for user in user_data_list:
             t = CustWidget()
-            t.username.setText(str(user["username"]))
-            t.user_id.setText(str(user["user_id"]))
-            t.user_post.setText(str(user["user_post"]))
-            t.user_other_data.setText(str(user["user_other_data"]))
-            t.user_special_rights.setText(str(user["user_special_rights"]))
+            t.username.putText(str(user["username"]))
+            t.user_id.putText(str(user["user_id"]))
+            t.user_post.putText(str(user["user_post"]))
+            t.user_other_data.putText(str(user["user_other_data"]))
+            t.user_special_rights.putText(str(user["user_special_rights"]))
+
+            t.user_data = user
+
+            t.username.callback = self.change_username
+            t.user_post.callback = self.change_user_post
             box.addWidget(t)
         wig.setLayout(box)
         self.user_list.setWidget(wig)
+
+    def change_username(self, cust_label, *args):
+        user_info = cust_label.parent().user_data
+
+        new_username = cust_label.myEdit.text()
+        user_id = user_info["user_id"]
+
+        self.model_queue.put(["change_username", new_username, user_id])
+        user_info["username"] = new_username
+        print("username changed to:", new_username)
+
+    def change_user_post(self, cust_label, *args):
+        user_info = cust_label.parent().user_data
+
+        new_user_post = cust_label.myEdit.text()
+        user_id = user_info["user_id"]
+
+        self.model_queue.put(["change_user_post", "zed_15", new_user_post])
+        user_info["user_post"] = new_user_post
+        print("user post changed to:", new_user_post)
 
     def switch_to_credentials(self):
         self.central_stack_frame.setCurrentWidget(self.credentials_page)
@@ -142,7 +170,7 @@ class PostTemplate(QWidget):
         self.controller_queue = controller_queue
         self.model_queue = model_queue
         uic.loadUi(
-            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\post_template.ui",
+            r"./production/view/post_template.ui",
             self,
         )
         self.toggle = True
@@ -216,13 +244,90 @@ class PostTemplate(QWidget):
             self.toggle = True
 
 
+class CustLabel(QWidget):
+    def __init__(self, parent=None):
+        super(CustLabel, self).__init__(parent)
+
+        # Create ui
+        self.myEdit = QLineEdit()
+        self.myEdit.hide()  # Hide line edit
+        self.myEdit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        self.myEdit.editingFinished.connect(self.textEdited)
+        self.myLabel = BuddyLabel(
+            self.myEdit
+        )  # Create our custom label, and assign myEdit as its buddy
+        # self.myLabel.setText("Nothing has been entered")
+        self.myEdit.setText(self.myLabel.text())
+        self.myLabel.setSizePolicy(
+            QSizePolicy.Fixed, QSizePolicy.Fixed
+        )  # Change vertical size policy so they both match and you don't get popping when switching
+
+        # Put them under a layout together
+        hLayout = QHBoxLayout()
+        hLayout.addWidget(self.myLabel)
+        hLayout.addWidget(self.myEdit)
+
+        # Add a line edit with a place holder
+        # self.myEdit2 = QLineEdit()
+        # self.myEdit2.setPlaceholderText("Nothing has been entered")
+        self.setFocus()  # By default this line edit may have focus and the place holder won't show up on load, so focus on the widget
+
+        # Create main layout
+        # mainLayout = QVBoxLayout()
+        # mainLayout.addLayout(hLayout)
+        # mainLayout.addWidget(self.myEdit2)
+        self.setLayout(hLayout)
+
+        # Resize and show!
+
+    def textEdited(self):
+        # If the input is left empty, revert back to the label showing
+        self.myLabel.setText(self.myEdit.text())
+        if not self.myEdit.text():
+            self.myLabel.setText("Nothing has been entered")
+        self.myEdit.hide()
+        self.myLabel.show()
+        self.callback()
+
+    def mousePressEvent(self, event):
+        self.myEdit.hide()
+        self.myLabel.setText(self.myEdit.text())
+        if not self.myEdit.text() or not self.myLabel.text():
+            self.myLabel.setText("Nothing has been entered")
+        self.myLabel.show()
+
+    def putText(self, label_text):
+        self.myLabel.setText(label_text)
+        self.myEdit.setText(label_text)
+
+    def bind_callback_to_return_press(self, callback):
+        self.callback = callback
+
+
+class BuddyLabel(QLabel):
+    def __init__(self, buddy, parent=None):
+        super(BuddyLabel, self).__init__(parent)
+        self.buddy = buddy
+
+    def mouseDoubleClickEvent(self, event):
+        self.hide()
+        self.buddy.show()
+        self.buddy.setFocus()
+
+
 class CustWidget(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi(
-            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\users_table_entry_template.ui",
+            r"./production/view/users_table_entry_template.ui",
             self,
         )
+        self.username.putText("dummy_name")
+        self.user_id.putText("dummy_user_id")
+        self.user_post.putText("dummy_user_post")
+        self.user_special_rights.putText("dummy_special_rights")
+        self.user_other_data.putText("dummy_other_data")
+        self.user_data = {}
 
 
 class LoginScreen(QMainWindow):
@@ -232,7 +337,7 @@ class LoginScreen(QMainWindow):
         self.controller_queue = controller_queue
         self.model_queue = model_queue
         uic.loadUi(
-            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\main_window.ui",
+            r"./production/view/main_window.ui",
             self,
         )
         # self.ui = Ui_MainWindow()
@@ -277,7 +382,7 @@ class SplashScreen(QMainWindow):
         self.controller_queue = controller_queue
         self.model_queue = model_queue
         uic.loadUi(
-            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\Splash_screen.ui",
+            r"./production/view/Splash_screen.ui",
             self,
         )
         # self.ui = Ui_SplashScreen()
@@ -310,7 +415,7 @@ class Dashboard(QWidget):
         self.controller_queue = controller_queue
         self.model_queue = model_queue
         uic.loadUi(
-            "C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\view\\root_window.ui",
+            r"./production/view/root_window.ui",
             self,
         )
 
@@ -452,6 +557,6 @@ class ViewHandler:
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    win = AdminPannel()
+    win = CustWidget()
     win.show()
     sys.exit(app.exec_())
