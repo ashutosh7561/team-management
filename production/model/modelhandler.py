@@ -50,6 +50,8 @@ class ModelHandler:
             "get_access_rights_for_post": self.db.get_access_rights_for_post,
             "get_user_post": self.db.get_user_post,
             "admin_add_new_user": self.validator.add_user,
+            "change_user_post": self.db.change_user_post,
+            "change_username": self.db.change_username,
         }
         self.message_dict[message[0]](*message[1:])
 

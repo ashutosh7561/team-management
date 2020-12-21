@@ -7,6 +7,8 @@ class DatabaseConnector:
         database="C:\\Users\\Ashutosh\\Desktop\\pp\\repo\\team-management\\production\\model\\rbac.db",
     ):
         self.rbac_connection = sqlite3.connect(database)
+        # for setting foreign key constraints to true
+        self.rbac_connection.execute("PRAGMA foreign_keys = 1")
 
     def get_user_password(self, user_id):
         query = f"SELECT user_data.password_hash from user_data where user_data.user_id='{user_id}';"
@@ -70,7 +72,7 @@ class DatabaseConnector:
         return arr[0]
 
     def get_users_data(self):
-        query = f"""SELECT user.name, user.user_id, role.desc FROM user, role WHERE 
+        query = f"""SELECT user.name, user.user_id, role.role_id FROM user, role WHERE 
                     user.role_id = role.role_id ORDER BY user.user_id;"""
         cursor = self.rbac_connection.execute(query)
         arr = []
@@ -144,20 +146,53 @@ class DatabaseConnector:
 
     def change_user_post(self, user_id, post_id):
         query = f"UPDATE user SET role_id = '{post_id}' WHERE user_id = '{user_id}';"
-        cursor = self.rbac_connection.execute(query)
-        self.rbac_connection.commit()
-        arr = []
-        for i in cursor:
-            arr.append(i[0])
+        try:
+            cursor = self.rbac_connection.execute(query)
+            self.rbac_connection.commit()
+            arr = []
+            for i in cursor:
+                arr.append(i[0])
+            return arr
+        except Exception as e:
+            print(e)
+            raise e
 
-        return arr
+    def change_username(self, new_username, user_id):
+        query_one = (
+            f"UPDATE user SET name = '{new_username}' WHERE user_id = '{user_id}';"
+        )
+        query_two = f"UPDATE user_data SET username = '{new_username}' WHERE user_id = '{user_id}';"
+
+        self.rbac_connection.execute("BEGIN")
+
+        try:
+            cursor = self.rbac_connection.execute(query_one)
+            cursor = self.rbac_connection.execute(query_two)
+            self.rbac_connection.commit()
+            arr = []
+            for i in cursor:
+                arr.append(i[0])
+            return arr
+        except Exception as e:
+            print(e)
+            self.rbac_connection.execute("ROLLBACK")
+            # due to auto commit this rollback is not required because if any
+            # exception occurs the changes are not yet commited
+        finally:
+            # do commit here
+            # self.rbac_connection.execute("COMMIT")
+            pass
+
+
+# must set autocommit of sqlite to false to avoid errors and full access control
 
 
 class DatabaseConnectorTesting:
     def __init__(self):
         self.db = DatabaseConnector()
         # print(self.db.get_post_id_from_post_name("master"))
-        # print(self.db.change_user_post("asdf", "admin"))
+        # print(self.db.change_user_post("zed_15", "new_post_rand"))
+        # print(self.db.change_username("zen", "zed_15"))
 
         # self.db.add_user("maron", "admin", "none")
         # self.db.add_post("org", "organizor", 7)
