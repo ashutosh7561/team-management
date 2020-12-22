@@ -39,12 +39,25 @@ class MessageSidebar(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi(r"./Newfolder/view/message_template_sidebar.ui", self)
+        self.chat_list.setWidgetResizable(True)
 
-    def add_group(self, name):
-        gt = ChatWidgetTemplate()
-        gt.chat_heading.setText(name)
+    def add_group(self, user_list):
+        wig = QWidget()
+        box = QVBoxLayout()
+        for i in user_list:
+            gt = ChatWidgetTemplate()
+            gt.chat_heading.setText(i)
+            box.addWidget(gt)
 
-        self.members_list.layout().addWidget(gt)
+        wig.setLayout(box)
+        self.chat_list.setWidget(wig)
+
+
+class ChatBoxTemplate(QWidget):
+    def __init__(self):
+        super().__init__()
+        uic.loadUi(r"./Newfolder/view/chat_box_template.ui", self)
+        self.chat_heading.setText("Alex")
 
 
 class Main(QWidget):
@@ -52,19 +65,33 @@ class Main(QWidget):
         super(Main, self).__init__()
         uic.loadUi(r"./Newfolder/view/message_template.ui", self)
         self.central_window.setCurrentWidget(self.message_initial)
+        print(self.central_window.addWidget(ChatBoxTemplate()))
+        # self.central_window.setCurrentIndex(1)
         t = MessageSidebar()
         user_list = [
             "adam knight",
+            "alex maroni",
+            "aron goodman",
             "asdf",
             "john wick",
             "ben colson",
+            "bill mann",
             "caleb curry",
+            "dan gran",
+            "garry mann",
             "jack ma",
+            "jacob darsen",
+            "moray jarry",
+            "morgan fitcher",
             "paul simson",
+            "peter ullman",
+            "phil phonies",
+            "smith larson",
+            "ulrich highman",
             "xenomorph",
+            "zen",
         ]
-        for i in user_list:
-            t.add_group(i)
+        t.add_group(user_list)
 
         print(self.sidebar.layout().addWidget(t))
 
