@@ -84,10 +84,30 @@ class ChatBoxTemplate(QWidget):
         self.vbox.addStretch()
         self.chat_message_list.setWidget(self.fbor)
 
+    def resizeEvent(self, event):
+        km = iter(self.fbor.children())
+        next(km)
+        for i in km:
+            wid = self.set_message_size(i.message_text)
+        super().resizeEvent(event)
+
+    def set_message_size(self, msg_widget):
+        msg_widget_width = (
+            msg_widget.fontMetrics().boundingRect(msg_widget.text()).width()
+        )
+
+        if msg_widget_width < self.width() * 0.66:
+            msg_widget.setWordWrap(False)
+        else:
+            msg_widget.setWordWrap(True)
+        msg_widget.updateGeometry()
+
     def send_message(self):
         msg_text = self.input_field.text()
         m = MessageTextTemplate()
         m.message_text.setText(msg_text)
+
+        self.set_message_size(m.message_text)
 
         self.vbox.addWidget(m)
 
