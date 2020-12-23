@@ -177,7 +177,7 @@
      <property name="widgetResizable">
       <bool>true</bool>
      </property>
-     <widget class="QWidget" name="scrollAreaWidgetContents">
+     <widget class="QWidget" name="scroll_area">
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -186,6 +186,7 @@
         <height>300</height>
        </rect>
       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3"/>
      </widget>
     </widget>
    </item>
@@ -326,7 +327,7 @@
           <number>0</number>
          </property>
          <item>
-          <widget class="QPushButton" name="pushButton">
+          <widget class="QPushButton" name="send">
            <property name="minimumSize">
             <size>
              <width>20</width>
