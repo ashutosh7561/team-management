@@ -88,28 +88,41 @@ class ChatBoxTemplate(QWidget):
         km = iter(self.fbor.children())
         next(km)
         for i in km:
-            wid = self.set_message_size(i.message_text)
+            wid = self.set_message_size(i)
         super().resizeEvent(event)
 
     def set_message_size(self, msg_widget):
-        msg_widget_width = (
-            msg_widget.fontMetrics().boundingRect(msg_widget.text()).width()
-        )
+        horizontal_spacer = msg_widget.children()[0].itemAt(0)
+        msg_text = msg_widget.message_text
+        msg_widget_width = msg_text.fontMetrics().boundingRect(msg_text.text()).width()
+        left_bound = self.width() * 0.66
 
-        if msg_widget_width < self.width() * 0.66:
-            msg_widget.setWordWrap(False)
+        if msg_widget_width < left_bound:
+            msg_text.setWordWrap(False)
+            horizontal_spacer.changeSize(
+                200, 20, QSizePolicy.MinimumExpanding, QSizePolicy.Minimum
+            )
         else:
-            msg_widget.setWordWrap(True)
-        msg_widget.updateGeometry()
+            msg_text.setWordWrap(True)
+            horizontal_spacer.changeSize(
+                200, 20, QSizePolicy.Fixed, QSizePolicy.Minimum
+            )
+        horizontal_spacer.invalidate()
+        msg_text.updateGeometry()
 
     def send_message(self):
         msg_text = self.input_field.text()
         m = MessageTextTemplate()
         m.message_text.setText(msg_text)
 
-        self.set_message_size(m.message_text)
+        self.set_message_size(m)
 
         self.vbox.addWidget(m)
+
+        scroll_bar = self.chat_message_list.verticalScrollBar()
+
+        scroll_bar.setMaximum(self.fbor.height())
+        scroll_bar.setValue(self.fbor.height())
 
 
 class Main(QWidget):
