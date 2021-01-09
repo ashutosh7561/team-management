@@ -1,5 +1,7 @@
 import socket
 import selectors
+import types
+from header import Message, RecieveMessage
 
 HOST = "127.0.0.1"
 PORT = 65432
@@ -11,15 +13,6 @@ sock.setblocking(False)
 
 sel = selectors.DefaultSelector()
 sel.register(sock, selectors.EVENT_READ, data=None)
-
-
-def callback():
-    print("socket of client")
-    msg = sock.recv(1024).decode("utf-8")
-    print(msg)
-
-
-import types
 
 
 def client_request(sock):
@@ -35,9 +28,11 @@ def handle_client(key, mask):
     data = key.data
 
     if mask & selectors.EVENT_READ:
-        msg = sock.recv(1024).decode("utf-8")
+        pt = RecieveMessage(sock)
+        # msg = sock.recv(1024).decode("utf-8")
+        msg = pt.get_message()
         if msg == "request data":
-            print("ok")
+            print("ok-----------\n")
             sock.sendall(bytes("here have your message", "utf-8"))
         if msg == "quit":
             print("closing connection")
@@ -47,11 +42,16 @@ def handle_client(key, mask):
             print("[Message from client]:", msg)
 
 
-while True:
-    events = sel.select(timeout=None)
-    for key, mask in events:
-        if key.data == None:
-            # new client request
-            client_request(key.fileobj)
-        else:
-            handle_client(key, mask)
+try:
+    while True:
+        events = sel.select(timeout=None)
+        for key, mask in events:
+            if key.data == None:
+                # new client request
+                client_request(key.fileobj)
+            else:
+                handle_client(key, mask)
+except Exception as e:
+    print("server going down:", e)
+finally:
+    sel.close()
