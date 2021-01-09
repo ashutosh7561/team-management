@@ -12,7 +12,6 @@ class RecieveMessage:
         self.sock = sock
         self.msg_enc = bytes()
         self.data_packets = []
-        self.process_header()
 
     def process_header(self):
         header_len_in_bytes = self.sock.recv(2)
@@ -28,6 +27,13 @@ class RecieveMessage:
         msg_data_hash = header["data_hash"]
         has_more = header["has_more"]
         index = header["index"]
+        close = header["close"]
+
+        if close:
+            return
+
+        if msg_len <= 0:
+            print("no message data")
 
         if msg_type == "txt":
             data = self.sock.recv(msg_len)
@@ -50,18 +56,148 @@ class RecieveMessage:
         return json_header
 
     def get_message(self):
+        self.process_header()
         return self.msg_enc.decode("utf-8")
+
+        p = Packet()
+        p.process_packet()
 
 
 class SendMessage:
-    def __init__(self, sock, packet_list):
+    def __init__(self, sock):
         self.sock = sock
+
+    def send_packet(self, packet_list):
         self.packet_list = packet_list
         for i in self.packet_list:
-            self.send_packet(i)
+            self.sock.sendall(i)
 
-    def send_packet(self, packet):
-        self.sock.sendall(packet)
+
+class Packet:
+    def __init__(self):
+        header = {
+            "msg_len": 0,
+            "content_type": None,
+            "content_encoding": None,
+            "data_hash": None,
+            "has_more": None,
+            "index": None,
+            "close": None,
+        }
+        self.packet_threshold = 128
+        self.header_threshold = 30
+        self.data_threshold = self.packet_threshold - self.header_threshold
+        self.encoding = "utf-8"
+
+    def make_packets(self, data, data_type):
+        packet_list = []
+        if data == "txt":
+            data = bytes(data, self.encoding)
+
+            if self.is_sufficient_len(data):
+                packet_list.append(
+                    self.add_header(data, "txt", self.encoding, False, 0)
+                )
+            else:
+                packet_list = self.split_packets(data)
+
+        # other data_type conditions like image or blob
+
+        return packet_list
+
+    def split_packets(self, data):
+        packet_list = []
+        no_of_packets = ceil(len(data) / self.data_threshold) - 1
+        for i in range(no_of_packets):
+            lower = i * self.data_threshold
+            upper = (i + 1) * self.data_threshold
+            packet_list.append(
+                self.add_header(data[lower:upper], "txt", self.encoding, True, i)
+            )
+
+        # last packet
+        i += 1
+        lower = i * self.data_threshold
+        # upper = (i + 1) * self.data_threshold
+        packet_list.append(
+            self.add_header(self.msg_data[lower::], "txt", self.encoding, False, i)
+        )
+
+        return packet_list
+
+    def is_sufficient_len(self, data):
+        if len(data) >= self.packet_threshold + self.header_threshold:
+            return False
+
+    def add_header(self, data, data_type, data_encoding, has_more, index):
+        header = {
+            "msg_len": 0,
+            "content_type": None,
+            "content_encoding": None,
+            "data_hash": None,
+            "has_more": None,
+            "index": None,
+            "close": False,
+        }
+        header["msg_len"] = len(data)
+        header["content_type"] = data_type
+        header["content_encoding"] = data_encoding
+        header["has_more"] = has_more
+        header["index"] = index
+
+        json_header_in_bytes = json.dumps(header).encode("utf-8")
+        # 2 byte(int) header indicating length of header
+        header_len_in_bytes = struct.pack(">H", len(json_header_in_bytes))
+
+        packet = header_len_in_bytes + json_header_in_bytes + data
+        return packet
+
+    def decode_header(self, sock):
+        header_len_in_bytes = sock.recv(2)
+        header_len = struct.unpack(">H", header_len_in_bytes)[0]
+        header = sock.recv(header_len)
+        header = self.decode_json_header(header)
+        return header
+
+    def decode_json_header(self, header_in_bytes):
+        encoding = self.encoding
+        tiow = io.TextIOWrapper(
+            io.BytesIO(header_in_bytes), encoding=encoding, newline=""
+        )
+        json_header = json.load(tiow)
+        tiow.close()
+        return json_header
+
+    def process_packet(self, sock):
+        data_packets = []
+        final_data = bytes()
+
+        has_more = True
+        while has_more:
+            header = self.decode_header(sock)
+            msg_len, has_more, close = self.read_header(header, sock)
+            if not close:
+                data_packets.append(self.read_data(sock, msg_len))
+
+        for i in data_packets:
+            final_data += i
+
+        return final_data.decode(self.encoding)
+
+    def read_header(self, header):
+        msg_len = header["msg_len"]
+        msg_type = header["content_type"]
+        msg_encoding = header["content_encoding"]
+        msg_data_hash = header["data_hash"]
+        has_more = header["has_more"]
+        index = header["index"]
+        close = header["close"]
+
+        if msg_type == "txt":
+            return msg_len, has_more, close
+
+    def read_data(self, sock, msg_len):
+        return sock.recv(msg_len)
 
 
 class Message:
@@ -73,6 +209,7 @@ class Message:
             "data_hash": None,
             "has_more": None,
             "index": None,
+            "close": None,
         }
         self.packet_threshold = 128
         self.header_threshold = 30
@@ -85,9 +222,6 @@ class Message:
 
         # self.encode_msg_data()
         # self.add_header()
-
-    def encode_data(self, data):
-        return data.encode("utf-8")
 
     def split(self):
         no_of_packets = ceil(len(self.msg_data) / self.data_threshold)

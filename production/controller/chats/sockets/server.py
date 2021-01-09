@@ -1,7 +1,8 @@
 import socket
 import selectors
 import types
-from header import Message, RecieveMessage
+from collections import namedtuple
+from header import Message, RecieveMessage, SendMessage
 
 HOST = "127.0.0.1"
 PORT = 65432
@@ -14,23 +15,28 @@ sock.setblocking(False)
 sel = selectors.DefaultSelector()
 sel.register(sock, selectors.EVENT_READ, data=None)
 
+DataFormat = namedtuple("send_head", "recieve_head")
+
 
 def client_request(sock):
     con, addr = sock.accept()
     con.setblocking(False)
     events = selectors.EVENT_READ
-    data = types.SimpleNamespace(addr=addr, inb=b"", outb="")
+    send_head = SendMessage(con)
+    recieve_head = RecieveMessage(con)
+    data = DataFormat(send_head, recieve_head)
     sel.register(con, events, data)
 
 
 def handle_client(key, mask):
     sock = key.fileobj
-    data = key.data
+    send_head, recieve_head = key.data.send_head, key.data.recieve_head
 
     if mask & selectors.EVENT_READ:
-        pt = RecieveMessage(sock)
+        # pt = RecieveMessage(sock)
+        msg = recieve_head.get_message()
         # msg = sock.recv(1024).decode("utf-8")
-        msg = pt.get_message()
+        # msg = pt.get_message()
         if msg == "request data":
             print("ok-----------\n")
             sock.sendall(bytes("here have your message", "utf-8"))

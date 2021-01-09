@@ -22,7 +22,8 @@ while flag:
         ms = "qwertyuiopasdfghjklmnbvcxz" * 40
 
     msg = Message(ms, "txt")
-    sm = SendMessage(sock, msg.packet_list)
+    sm = SendMessage(sock)
+    sm.send_packet(msg.packet_list)
     # sock.sendall(msg.msg)
     if user_msg == "quit":
         sock.close()
