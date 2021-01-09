@@ -14,38 +14,38 @@ sock.setblocking(False)
 sel = selectors.DefaultSelector()
 sel.register(sock, selectors.EVENT_READ, data=None)
 
-sock_list = []
 
-
-def client_request(sock):
+def register_client(sock):
     con, addr = sock.accept()
-    sock_list.append(con)
-    print("available connection:", sock_list)
     con.setblocking(False)
     events = selectors.EVENT_READ
     data = Packet(con)
     sel.register(con, events, data)
 
 
-def handle_client(key, mask):
+group_one = {"alex": [], "jacob": [], "peter": []}
+
+
+def identify_message(msg):
+    if type(msg) is dict:
+        print("dict it is")
+        print(msg)
+    # if "credentials" in msg:
+    #     msg = msg[16:]
+    #     user_id, password = msg.split(",")
+    #     user_id = user_id.strip(" '\"\[\]\{\}")
+    #     password = password.strip(" '\"\[\]\{\}")
+
+
+def handle_client_request(key, mask):
     sock = key.fileobj
     head = key.data
 
     if mask & selectors.EVENT_READ:
         try:
             msg = head.read_data()
-            if msg == "request data":
-                print("ok-----------\n")
-                sock.sendall(bytes("here have your message", "utf-8"))
-            if msg == "quit":
-                print("closing connection")
-                sel.unregister(sock)
-                sock.close()
-            if msg == "send":
-                print("admin access ********")
-                sock_list[0].sendall(bytes("admin notification", "utf-8"))
-            else:
-                print("[Message from client]:", msg)
+            identify_message(msg)
+            print("[Message from client]:", msg)
         except Exception as e:
             print(e)
             print("no data from client")
@@ -62,9 +62,9 @@ try:
             if key.data == None:
                 # new client request
                 print("new client connection")
-                client_request(key.fileobj)
+                register_client(key.fileobj)
             else:
-                handle_client(key, mask)
+                handle_client_request(key, mask)
 except Exception as e:
     print("server going down:", e)
 finally:
