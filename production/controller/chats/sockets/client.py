@@ -19,13 +19,23 @@ sel.register(sock, selectors.EVENT_READ, data="client")
 p = Packet(sock)
 
 
+def identify_message(msg, head):
+    if type(msg) is dict:
+        print("special message from server")
+        if "identify_user" in msg:
+            print("server requesting for credentials")
+            head.send_data({"credentials": [user_id, password]}, "obj")
+    else:
+        print("[Server Response]:", msg)
+
+
 def handle_wr(key, mask):
     global p
     sock = key.fileobj
     if mask & selectors.EVENT_READ:
         try:
             server_msg = p.read_data()
-            print("[Server Response]:", server_msg)
+            identify_message(server_msg, p)
         except Exception as e:
             print("no data from server")
             print("server might have closed connection")
@@ -68,9 +78,7 @@ def con():
 
 def chat():
     global flag, shared_memory
-    user_id = str(input("user_id:"))
-    password = str(input("password:"))
-    shared_memory.append({"credetials": [user_id, password]})
+    shared_memory.append({"credentials": [user_id, password]})
     flag = True
     do_more = True
     while do_more:
@@ -83,6 +91,8 @@ def chat():
 
 
 if __name__ == "__main__":
+    user_id = str(input("user_id:"))
+    password = str(input("password:"))
     ui_thread = threading.Thread(target=chat)
     con_thread = threading.Thread(target=con)
 

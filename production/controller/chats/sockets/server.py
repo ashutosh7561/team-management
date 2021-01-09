@@ -21,20 +21,48 @@ def register_client(sock):
     events = selectors.EVENT_READ
     data = Packet(con)
     sel.register(con, events, data)
+    first = {"identify_user": ["user_id", "password"]}
+    data.send_data(first, "obj")
 
 
 group_one = {"alex": [], "jacob": [], "peter": []}
+group_one_database = {"alex": [], "jacob": [], "peter": []}
+
+client_sockets = {}
 
 
-def identify_message(msg):
+def identify_message(msg, head):
     if type(msg) is dict:
-        print("dict it is")
-        print(msg)
-    # if "credentials" in msg:
-    #     msg = msg[16:]
-    #     user_id, password = msg.split(",")
-    #     user_id = user_id.strip(" '\"\[\]\{\}")
-    #     password = password.strip(" '\"\[\]\{\}")
+        print("special message from client")
+        if "credentials" in msg:
+            credentials = msg["credentials"]
+            user_id = credentials[0]
+            password = credentials[1]
+
+            head.bind_socket(user_id)
+
+            # sel.modify(head.sock, selectors.EVENT_READ, data=head)
+
+            if user_id in group_one.keys():
+                client_sockets[user_id] = head
+
+    elif type(msg) is str:
+        user_id = head.user_id
+        if user_id in group_one.keys():
+            group_one_database[user_id].append(msg)
+        for i in group_one:
+            if i != user_id:
+                group_one[i].append(msg)
+        for i in group_one:
+            while len(group_one[i]) > 0:
+                ms = group_one[i].pop(0)
+                client_sockets[i].send_data(ms, "txt")
+        print("recepients:", group_one)
+        print("group database:", group_one_database)
+
+        # for i in client_sockets.keys():
+        #     if i != head.user_id:
+        #         client_sockets[i].send_data(msg, "txt")
 
 
 def handle_client_request(key, mask):
@@ -44,7 +72,7 @@ def handle_client_request(key, mask):
     if mask & selectors.EVENT_READ:
         try:
             msg = head.read_data()
-            identify_message(msg)
+            identify_message(msg, head)
             print("[Message from client]:", msg)
         except Exception as e:
             print(e)
