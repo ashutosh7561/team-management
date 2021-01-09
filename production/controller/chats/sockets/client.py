@@ -1,6 +1,6 @@
 import socket
 import time
-from header import Message, SendMessage
+from header import Packet
 
 HOST = "127.0.0.1"
 PORT = 65432
@@ -8,23 +8,35 @@ PORT = 65432
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 sock.connect((HOST, PORT))
 
+
+def reconnect():
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((HOST, PORT))
+
+    u = input("reconnected")
+
+
 flag = True
 while flag:
     user_msg = input()
+    ms = "qwertyuiopasdfghjklmnbvcxz" * 40
+
     if user_msg == "":
         flag = False
+        sock.close()
+        time.sleep(5)
+        reconnect()
         break
     elif user_msg == "quit":
         ms = "quit"
     elif user_msg == "request data":
         ms = "request data"
-    else:
-        ms = "qwertyuiopasdfghjklmnbvcxz" * 40
+    elif user_msg == "admin":
+        ms = input()
 
-    msg = Message(ms, "txt")
-    sm = SendMessage(sock)
-    sm.send_packet(msg.packet_list)
-    # sock.sendall(msg.msg)
+    p = Packet(sock)
+    p.send_data(ms, "txt")
+
     if user_msg == "quit":
         sock.close()
         break
