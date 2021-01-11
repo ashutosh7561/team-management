@@ -36,7 +36,9 @@ def try_sending_buffer_msg(head):
 
     for group in rcv_msg_list:
         for message in rcv_msg_list[group]:
-            head.send_data(f"{group}: {message}", "obj")
+            dat = {"chat_id": group, "message": message}
+            dat = {"buffer_msg": dat}
+            head.send_data(dat, "obj")
 
 
 def clear_msg_buffer(head):

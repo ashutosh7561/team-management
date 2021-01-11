@@ -6,6 +6,7 @@ sys.path.append(d)
 
 import platform
 import time
+from queue import Queue
 
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtWidgets import (
@@ -27,7 +28,7 @@ from view.messagetexttemplate import (
     MessageTextRecieveTemplate,
 )
 
-# from controller.chats.sockets.client import ServerCon
+from controller.chats.sockets.client import ServerCon
 
 
 class ChatWidgetTemplate(QWidget):
@@ -90,9 +91,12 @@ class MessageSidebar(QWidget):
 
 
 class ChatBoxTemplate(QWidget):
-    def __init__(self, chat_heading):
+    def __init__(self, servcon, chat_heading):
         super().__init__()
         uic.loadUi(r"./production/view/chat_box_template.ui", self)
+
+        self.servcon = servcon
+
         self.chat_heading.setText(chat_heading)
         self.send.clicked.connect(self.send_message)
         self.bt.clicked.connect(self.recieve_message)
@@ -182,8 +186,7 @@ class ChatBoxTemplate(QWidget):
 
         self.vbox.addWidget(m)
         self.scroll_to_last()
-        # print(msg_text, self.chat_heading.text())
-        # con.send_some(msg_text, self.chat_heading.text())
+        self.servcon.send_some(msg_text, self.chat_heading.text())
 
     def scroll_to_last(self):
 
@@ -192,8 +195,8 @@ class ChatBoxTemplate(QWidget):
         scroll_bar.setMaximum(self.fbor.height())
         scroll_bar.setValue(self.fbor.height())
 
-    def recieve_message(self):
-        msg_text = self.input_field.text()
+    def recieve_message(self, msg_text):
+        # msg_text = self.input_field.text()
         m = MessageTextRecieveTemplate()
         m.message_text.setText(msg_text)
 
@@ -203,11 +206,16 @@ class ChatBoxTemplate(QWidget):
 
 
 class Main(QWidget):
-    def __init__(self):
+    def __init__(self, read_queue, servcon):
         super(Main, self).__init__()
         uic.loadUi(r"./production/view/message_template.ui", self)
+
+        self.CHECK_DURATION = 1000
+        self.read_queue = read_queue
+        self.servcon = servcon
+
         self.central_window.setCurrentWidget(self.message_initial)
-        print(self.central_window.addWidget(ChatBoxTemplate("Alex")))
+        # print(self.central_window.addWidget(ChatBoxTemplate(self.servcon, "Alex")))
         # self.central_window.setCurrentIndex(1)
         self.message_sidebar = MessageSidebar()
         user_list = [
@@ -244,6 +252,26 @@ class Main(QWidget):
         self.message_sidebar.show_contacts.clicked.connect(self.start_screen)
         self.message_sidebar.show_groups.clicked.connect(self.chat_box_screen)
 
+        QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
+
+    def identify_message(self, message):
+        if isinstance(message, dict):
+            if "buffer_msg" in message:
+                msg_info = message["buffer_msg"]
+
+                chat_id = msg_info["chat_id"]
+                msg_text = msg_info["message"]
+
+                wg = self.chat_list_widgets[chat_id]
+                wg.recieve_message(msg_text)
+
+    def check_for_messages(self):
+        if not (self.read_queue.empty()):
+            message = self.read_queue.get()
+            self.identify_message(message)
+
+        QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
+
     def start_screen(self):
         self.central_window.setCurrentWidget(self.message_initial)
 
@@ -253,7 +281,7 @@ class Main(QWidget):
     def populate_chat_widgets(self, user_list):
         self.chat_list_widgets = {}
         for i in user_list:
-            wg = ChatBoxTemplate(i)
+            wg = ChatBoxTemplate(self.servcon, i)
             self.chat_list_widgets[i] = wg
             self.central_window.addWidget(wg)
 
@@ -263,11 +291,16 @@ class Main(QWidget):
 
 
 if __name__ == "__main__":
+    queue_one = Queue()  # used for sending messages
+    queue_two = Queue()  # used for receiving messages
+
     user_id = input()
     password = input()
-    # con = ServerCon()
-    # con.connect_to_server(user_id, password)
+
+    con = ServerCon(queue_one, queue_two)
+    con.start_connection_thread(user_id, password)
+
     app = QApplication(sys.argv)
-    win = Main()
+    win = Main(queue_two, con)
     win.show()
     sys.exit(app.exec_())
