@@ -2,6 +2,7 @@ import socket
 import selectors
 import types
 from header import Packet
+from chatdbconnector import *
 
 HOST = "127.0.0.1"
 PORT = 65432
@@ -25,44 +26,61 @@ def register_client(sock):
     data.send_data(first, "obj")
 
 
-group_one = {"alex": [], "jacob": [], "peter": []}
-group_one_database = {"alex": [], "jacob": [], "peter": []}
-
 client_sockets = {}
+
+
+def try_sending_buffer_msg(head):
+    user_id = head.user_id
+    ob = head.ob
+    rcv_msg_list = ob.get_messages()
+
+    for group in rcv_msg_list:
+        for message in rcv_msg_list[group]:
+            head.send_data(f"{group}: {message}", "obj")
+
+
+def clear_msg_buffer(head):
+    user_id = head.user_id
+    ob = head.ob
+
+    rcv_msg_list = ob.get_messages()
+
+    for group in rcv_msg_list:
+        ob.clear_buffer(user_id, group)
 
 
 def identify_message(msg, head):
     if type(msg) is dict:
-        print("special message from client")
         if "credentials" in msg:
             credentials = msg["credentials"]
             user_id = credentials[0]
             password = credentials[1]
 
-            head.bind_socket(user_id)
+            ob = UserStandard(user_id)
+            head.bind_socket(user_id, ob)
 
-            # sel.modify(head.sock, selectors.EVENT_READ, data=head)
+            in_progress = False
+            client_sockets[user_id] = [head, in_progress]
 
-            if user_id in group_one.keys():
-                client_sockets[user_id] = head
+        elif "msg" in msg:
+            chat_id = msg["chat_id"]
+            msg_data = msg["msg_data"]
 
-    elif type(msg) is str:
-        user_id = head.user_id
-        if user_id in group_one.keys():
-            group_one_database[user_id].append(msg)
-        for i in group_one:
-            if i != user_id:
-                group_one[i].append(msg)
-        for i in group_one:
-            while len(group_one[i]) > 0:
-                ms = group_one[i].pop(0)
-                client_sockets[i].send_data(ms, "txt")
-        print("recepients:", group_one)
-        print("group database:", group_one_database)
+            ob = head.ob
+            ob.send_message(chat_id, msg_data)
+            recipient_list = ob.get_recipient_list(chat_id)
+            for i in recipient_list:
+                try:
+                    is_online = client_sockets[i]
+                    if is_online:
+                        client_sockets[i][1] = False
+                except:
+                    pass
 
-        # for i in client_sockets.keys():
-        #     if i != head.user_id:
-        #         client_sockets[i].send_data(msg, "txt")
+        elif "msg_recieved" in msg:
+            clear_msg_buffer(head)
+            user_id = head.user_id
+            client_sockets[user_id][1] = False
 
 
 def handle_client_request(key, mask):
@@ -73,19 +91,29 @@ def handle_client_request(key, mask):
         try:
             msg = head.read_data()
             identify_message(msg, head)
-            print("[Message from client]:", msg)
         except Exception as e:
             print(e)
             print("no data from client")
             print("client might have closed connection")
+            del client_sockets[head.user_id]
             sock.close()
             sel.unregister(sock)
             print("closed socket")
 
 
+def checkout():
+    for i in client_sockets:
+        head = client_sockets[i][0]
+        in_progress = client_sockets[i][1]
+        if not in_progress:
+            try_sending_buffer_msg(head)
+            client_sockets[i][1] = True
+
+
 try:
     while True:
-        events = sel.select(timeout=None)
+        events = sel.select(timeout=1)
+        checkout()
         for key, mask in events:
             if key.data == None:
                 # new client request

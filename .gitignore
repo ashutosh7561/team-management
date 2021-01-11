@@ -2,4 +2,4 @@ venv/
 __pycache__/
 .vscode/
 Newfolder/
-chats.db
+production/controller/chats/sockets/chats.db

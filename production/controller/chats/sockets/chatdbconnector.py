@@ -1,4 +1,5 @@
 import sqlite3
+import pickle
 
 
 class ChatDatabaseConnector:
@@ -71,10 +72,42 @@ class ChatDatabaseConnector:
         except Exception as e:
             print(e)
 
+    def get_associated_groups(self, user_id):
+        query = "SELECT chat_id FROM chat_data WHERE user_id = (?);"
+        try:
+            self.cursor.execute(
+                query,
+                (user_id,),
+            )
+            rows = self.cursor.fetchall()
+            arr = []
+            for i in rows:
+                arr.append(i[0])
+            return arr
+        except Exception as e:
+            print(e)
+            return []
+        finally:
+            self.rbac_connection.text_factory = str
+
+    def clear_buffer(self, user_id, chat_id):
+        data = pickle.dumps([])
+        query = "UPDATE chat_data SET recieve_msg = (?) WHERE user_id = (?) AND chat_id = (?);"
+        try:
+            cursor = self.cursor.execute(
+                query,
+                (
+                    data,
+                    user_id,
+                    chat_id,
+                ),
+            )
+            self.rbac_connection.commit()
+        except Exception as e:
+            print(e)
+
 
 # must set autocommit of sqlite to false to avoid errors and full access control
-
-import pickle
 
 
 class UserStandard:
@@ -115,6 +148,21 @@ class UserStandard:
         for recipient in recipient_list:
             self.write_to_buffer(recipient, chat_id, msg)
 
+    def get_messages(self):
+        group_list = self.ch.get_associated_groups(self.user_id)
+        msg_list = {}
+        for i in group_list:
+            msg_list[i] = self.get_user_buffer(self.user_id, i)
+        return msg_list
+
+    def clear_buffer(self, user_id, chat_id):
+        self.ch.clear_buffer(user_id, chat_id)
+
 
 if __name__ == "__main__":
+    o = UserStandard("adam_12")
+    print(o.get_messages())
+
+    # c = UserStandard("dan_20")
+    # c.send_message("group_two", "msg from dan_20")
     pass

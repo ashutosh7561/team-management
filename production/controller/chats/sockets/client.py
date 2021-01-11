@@ -5,28 +5,32 @@ import time
 from header import Packet
 import pickle
 
-HOST = "127.0.0.1"
-PORT = 65432
+# this flag can be set to true by some other thread which accepts input from user
+flag = False
+shared_memory = []
+p = None
+sel = None
 
-sel = selectors.DefaultSelector()
 
+def check_for_input():
+    global flag
+    if flag:
+        user_msg = shared_memory.pop()
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.setblocking(False)
-sock.connect_ex((HOST, PORT))
-sel.register(sock, selectors.EVENT_READ, data="client")
-
-p = Packet(sock)
+        if type(user_msg) is str:
+            pac = {"msg": True, "chat_id": "group_one", "msg_data": user_msg}
+            p.send_data(pac, "obj")
+        flag = False
 
 
 def identify_message(msg, head):
     if type(msg) is dict:
-        print("special message from server")
         if "identify_user" in msg:
-            print("server requesting for credentials")
             head.send_data({"credentials": [user_id, password]}, "obj")
     else:
-        print("[Server Response]:", msg)
+        print(msg)
+        ok_msg = {"msg_recieved": True}
+        p.send_data(ok_msg, "obj")
 
 
 def handle_wr(key, mask):
@@ -44,32 +48,29 @@ def handle_wr(key, mask):
             print("closed socket")
 
 
-# this flag can be set to true by some other thread which accepts input from user
-flag = False
-shared_memory = []
+def start_connection():
+    HOST = "127.0.0.1"
+    PORT = 65432
 
+    global sel
+    sel = selectors.DefaultSelector()
 
-def check_for_input():
-    global flag
-    if flag:
-        user_msg = shared_memory.pop()
-        if type(user_msg) is dict:
-            p.send_data(user_msg, "obj")
-        elif type(user_msg) is str:
-            p.send_data(user_msg, "txt")
-        flag = False
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setblocking(False)
+    sock.connect_ex((HOST, PORT))
+    sel.register(sock, selectors.EVENT_READ, data="client")
 
-
-def con():
+    global p
+    p = Packet(sock)
     try:
         while True:
             events = sel.select(timeout=1)
-            check_for_input()
             if events:
                 for key, mask in events:
                     handle_wr(key, mask)
             if not sel.get_map():
                 break
+            check_for_input()
     except Exception as e:
         print("client closing:", e)
     finally:
@@ -78,8 +79,6 @@ def con():
 
 def chat():
     global flag, shared_memory
-    shared_memory.append({"credentials": [user_id, password]})
-    flag = True
     do_more = True
     while do_more:
         x = input()
@@ -94,7 +93,7 @@ if __name__ == "__main__":
     user_id = str(input("user_id:"))
     password = str(input("password:"))
     ui_thread = threading.Thread(target=chat)
-    con_thread = threading.Thread(target=con)
+    con_thread = threading.Thread(target=start_connection)
 
     ui_thread.start()
     con_thread.start()
