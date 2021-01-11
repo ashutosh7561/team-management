@@ -27,11 +27,25 @@ from view.messagetexttemplate import (
     MessageTextRecieveTemplate,
 )
 
+# from controller.chats.sockets.client import ServerCon
+
 
 class ChatWidgetTemplate(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi(r"./production/view/chat_widget.ui", self)
+        self.chat_heading.clicked.connect(self.callback)
+
+    def callback(self):
+        chat_id = self.chat_heading.text()
+        a = self
+        while not isinstance(a, Main) and True:
+            try:
+                a = a.parent()
+            except:
+                pass
+        if isinstance(a, Main):
+            a.change_chat(chat_id)
 
 
 class MessageCentral(QWidget):
@@ -76,10 +90,10 @@ class MessageSidebar(QWidget):
 
 
 class ChatBoxTemplate(QWidget):
-    def __init__(self):
+    def __init__(self, chat_heading):
         super().__init__()
         uic.loadUi(r"./production/view/chat_box_template.ui", self)
-        self.chat_heading.setText("Alex")
+        self.chat_heading.setText(chat_heading)
         self.send.clicked.connect(self.send_message)
         self.bt.clicked.connect(self.recieve_message)
         self.fbor = QWidget()
@@ -168,6 +182,8 @@ class ChatBoxTemplate(QWidget):
 
         self.vbox.addWidget(m)
         self.scroll_to_last()
+        # print(msg_text, self.chat_heading.text())
+        # con.send_some(msg_text, self.chat_heading.text())
 
     def scroll_to_last(self):
 
@@ -191,10 +207,11 @@ class Main(QWidget):
         super(Main, self).__init__()
         uic.loadUi(r"./production/view/message_template.ui", self)
         self.central_window.setCurrentWidget(self.message_initial)
-        print(self.central_window.addWidget(ChatBoxTemplate()))
+        print(self.central_window.addWidget(ChatBoxTemplate("Alex")))
         # self.central_window.setCurrentIndex(1)
         self.message_sidebar = MessageSidebar()
         user_list = [
+            "group_one",
             "adam knight",
             "alex maroni",
             "aron goodman",
@@ -217,6 +234,9 @@ class Main(QWidget):
             "xenomorph",
             "zen",
         ]
+
+        self.populate_chat_widgets(user_list)
+
         self.message_sidebar.add_group(user_list)
 
         self.sidebar.layout().addWidget(self.message_sidebar)
@@ -230,8 +250,23 @@ class Main(QWidget):
     def chat_box_screen(self):
         self.central_window.setCurrentIndex(1)
 
+    def populate_chat_widgets(self, user_list):
+        self.chat_list_widgets = {}
+        for i in user_list:
+            wg = ChatBoxTemplate(i)
+            self.chat_list_widgets[i] = wg
+            self.central_window.addWidget(wg)
+
+    def change_chat(self, chat_id):
+        wg = self.chat_list_widgets[chat_id]
+        self.central_window.setCurrentWidget(wg)
+
 
 if __name__ == "__main__":
+    user_id = input()
+    password = input()
+    # con = ServerCon()
+    # con.connect_to_server(user_id, password)
     app = QApplication(sys.argv)
     win = Main()
     win.show()

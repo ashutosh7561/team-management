@@ -12,11 +12,25 @@ class ChatDatabaseConnector:
         # for setting foreign key constraints to true
         self.rbac_connection.execute("PRAGMA foreign_keys = 1")
 
-    def create_group(self, group_id):
-        pass
+    def add_members_to_group(self, chat_id, user_id):
+        dummy = pickle.dumps([])
+        query = "INSERT INTO user_chats(chat_id, user_id, sent_msg, recieve_msg) VALUES (?, ?, ?, ?);"
+        try:
+            self.cursor.execute(
+                query,
+                (
+                    chat_id,
+                    user_id,
+                    dummy,
+                    dummy,
+                ),
+            )
+            self.rbac_connection.commit()
+        except Exception as e:
+            print(e)
 
-    def add_members_to_group(self, user_id, group_id):
-        pass
+    def create_group(self, chat_id, chat_admin_user_id):
+        self.add_members_to_group(chat_id, chat_admin_user_id)
 
     def get_group_members(self, chat_id):
         query = "SELECT user_chats.user_id FROM user_chats WHERE chat_id=(?);"
@@ -157,6 +171,12 @@ class UserStandard:
 
     def clear_buffer(self, user_id, chat_id):
         self.ch.clear_buffer(user_id, chat_id)
+
+    def create_group(self, chat_id, chat_admin_user_id):
+        self.ch.create_group(chat_id, chat_admin_user_id)
+
+    def add_members_to_group(self, chat_id, user_id):
+        self.ch.add_members_to_group(chat_id, user_id)
 
 
 if __name__ == "__main__":
