@@ -43,6 +43,13 @@
        <height>450</height>
       </size>
      </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(30, 59, 81);	
+color: rgb(255, 255, 255);
+border: none;
+border-radius:3px;
+</string>
+     </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
      </property>
@@ -115,6 +122,13 @@ QPushButton:pressed{
        <width>2340</width>
        <height>450</height>
       </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(30, 59, 81);	
+color: rgb(255, 255, 255);
+border: none;
+border-radius:3px;
+</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -218,6 +232,13 @@ QPushButton:pressed{
        <family>Calibri</family>
        <pointsize>10</pointsize>
       </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background-color: rgb(30, 59, 81);	
+color: rgb(255, 255, 255);
+border: none;
+border-radius:3px;
+</string>
      </property>
      <property name="text">
       <string>Get Started</string>

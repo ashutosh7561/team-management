@@ -29,7 +29,11 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(85, 255, 127)</string>
+      <string notr="true">background-color: rgb(230, 136, 136);
+color: rgb(255, 255, 255);
+border: none;
+border-radius:3px;
+</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -59,7 +63,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(85, 255, 0)</string>
+         <string notr="true">background-color: rgb(30, 59, 81);	</string>
         </property>
         <property name="text">
          <string/>
@@ -90,7 +94,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(85, 255, 0)</string>
+         <string notr="true">background-color: rgb(30, 59, 81);	</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -150,7 +154,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(85, 255, 0)</string>
+         <string notr="true">background-color: rgb(30, 59, 81);	</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -166,7 +170,7 @@
    <item>
     <widget class="QScrollArea" name="chat_message_list">
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 255, 255)</string>
+      <string notr="true">background-color: rgb(250, 250, 250);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -185,8 +189,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>708</width>
-        <height>298</height>
+        <width>712</width>
+        <height>311</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3"/>
@@ -214,7 +218,7 @@
       </size>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(170, 170, 255)</string>
+      <string notr="true">background-color: rgb(230, 136, 136);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -233,18 +237,18 @@
         </property>
         <property name="minimumSize">
          <size>
-          <width>70</width>
-          <height>0</height>
+          <width>130</width>
+          <height>50</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>140</width>
-          <height>16777215</height>
+          <width>130</width>
+          <height>50</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: rgb(255, 85, 255)</string>
+         <string notr="true">background-color: rgb(30, 59, 81);	</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::StyledPanel</enum>
@@ -253,10 +257,36 @@
          <enum>QFrame::Raised</enum>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <property name="topMargin">
+          <number>5</number>
+         </property>
+         <property name="bottomMargin">
+          <number>5</number>
+         </property>
          <item>
           <widget class="QPushButton" name="bt">
+           <property name="minimumSize">
+            <size>
+             <width>90</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>90</width>
+             <height>40</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>15</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
-            <string>width</string>
+            <string>Reply</string>
            </property>
           </widget>
          </item>
@@ -291,11 +321,15 @@
         <property name="focusPolicy">
          <enum>Qt::ClickFocus</enum>
         </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255, 255, 255);</string>
+        </property>
         <property name="frame">
          <bool>true</bool>
         </property>
         <property name="placeholderText">
-         <string>Message...</string>
+         <string>Type your message here</string>
         </property>
        </widget>
       </item>
@@ -314,7 +348,7 @@
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color:rgb(255, 204, 85)</string>
+         <string notr="true">background-color: rgb(30, 59, 81);	</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::NoFrame</enum>
@@ -342,8 +376,8 @@
           <widget class="QPushButton" name="send">
            <property name="minimumSize">
             <size>
-             <width>20</width>
-             <height>0</height>
+             <width>90</width>
+             <height>40</height>
             </size>
            </property>
            <property name="maximumSize">
@@ -352,11 +386,19 @@
              <height>16777215</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>15</pointsize>
+            </font>
+           </property>
            <property name="autoFillBackground">
             <bool>false</bool>
            </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
-            <string>send</string>
+            <string>Send</string>
            </property>
            <property name="iconSize">
             <size>

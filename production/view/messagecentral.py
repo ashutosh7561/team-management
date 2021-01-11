@@ -33,7 +33,7 @@ from view.messagetexttemplate import (
 class ChatWidgetTemplate(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"./production/view/chat_widget.ui", self)
+        uic.loadUi(r"C:/Users/Asus/Desktop/team-management/production/view/chat_widget.ui", self)
         self.chat_heading.clicked.connect(self.callback)
 
     def callback(self):
@@ -51,13 +51,13 @@ class ChatWidgetTemplate(QWidget):
 class MessageCentral(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi(r"./production/view/message_template_initial.ui", self)
+        uic.loadUi(r"C:/Users/Asus/Desktop/team-management/production/view/message_template_initial.ui", self)
 
 
 class MessageSidebar(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"./production/view/message_template_sidebar.ui", self)
+        uic.loadUi(r"C:/Users/Asus/Desktop/team-management/production/view/message_template_sidebar.ui", self)
         self.contact_list.setWidgetResizable(True)
         self.group_list.setWidgetResizable(True)
         self.personal_chat_list.setWidgetResizable(True)
@@ -92,7 +92,7 @@ class MessageSidebar(QWidget):
 class ChatBoxTemplate(QWidget):
     def __init__(self, chat_heading):
         super().__init__()
-        uic.loadUi(r"./production/view/chat_box_template.ui", self)
+        uic.loadUi(r"C:/Users/Asus/Desktop/team-management/production/view/chat_box_template.ui", self)
         self.chat_heading.setText(chat_heading)
         self.send.clicked.connect(self.send_message)
         self.bt.clicked.connect(self.recieve_message)
@@ -205,7 +205,7 @@ class ChatBoxTemplate(QWidget):
 class Main(QWidget):
     def __init__(self):
         super(Main, self).__init__()
-        uic.loadUi(r"./production/view/message_template.ui", self)
+        uic.loadUi(r"C:/Users/Asus/Desktop/team-management/production/view/message_template.ui", self)
         self.central_window.setCurrentWidget(self.message_initial)
         print(self.central_window.addWidget(ChatBoxTemplate("Alex")))
         # self.central_window.setCurrentIndex(1)
@@ -263,8 +263,8 @@ class Main(QWidget):
 
 
 if __name__ == "__main__":
-    user_id = input()
-    password = input()
+    # user_id = input()
+    # password = input()
     # con = ServerCon()
     # con.connect_to_server(user_id, password)
     app = QApplication(sys.argv)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
-    <height>46</height>
+    <width>304</width>
+    <height>58</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,17 +22,29 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="minimumSize">
+      <size>
+       <width>80</width>
+       <height>40</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="font">
       <font>
        <family>Comic Sans MS</family>
-       <pointsize>10</pointsize>
+       <pointsize>20</pointsize>
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(85, 85, 255)</string>
+      <string notr="true">background-color: rgb(214, 214, 214);</string>
      </property>
      <property name="text">
-      <string>This is the recieved message. This is the recieved message. This is the recieved message</string>
+      <string>This</string>
      </property>
      <property name="wordWrap">
       <bool>true</bool>
