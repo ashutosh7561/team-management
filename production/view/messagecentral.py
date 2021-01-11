@@ -34,7 +34,10 @@ from controller.chats.sockets.client import ServerCon
 class ChatWidgetTemplate(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"./production/view/chat_widget.ui", self)
+        uic.loadUi(
+            r"C:/Users/Asus/Desktop/team-management/production/view/chat_widget.ui",
+            self,
+        )
         self.chat_heading.clicked.connect(self.callback)
 
     def callback(self):
@@ -52,13 +55,19 @@ class ChatWidgetTemplate(QWidget):
 class MessageCentral(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi(r"./production/view/message_template_initial.ui", self)
+        uic.loadUi(
+            r"C:/Users/Asus/Desktop/team-management/production/view/message_template_initial.ui",
+            self,
+        )
 
 
 class MessageSidebar(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi(r"./production/view/message_template_sidebar.ui", self)
+        uic.loadUi(
+            r"C:/Users/Asus/Desktop/team-management/production/view/message_template_sidebar.ui",
+            self,
+        )
         self.contact_list.setWidgetResizable(True)
         self.group_list.setWidgetResizable(True)
         self.personal_chat_list.setWidgetResizable(True)

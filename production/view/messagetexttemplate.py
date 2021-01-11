@@ -26,7 +26,7 @@ from PyQt5.QtGui import QFont
 class MessageTextTemplate(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi(r"./production/view/message_text_template.ui", self)
+        uic.loadUi(r"C:/Users/Asus/Desktop/team-management/production/view/message_text_template.ui", self)
 
     def self_evaluate(self):
         horizontal_spacer = self.children()[0].itemAt(0)
@@ -56,7 +56,7 @@ class MessageTextTemplate(QWidget):
 class MessageTextRecieveTemplate(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi(r"./production/view/message_text_recieve_template.ui", self)
+        uic.loadUi(r"C:/Users/Asus/Desktop/team-management/production/view/message_text_recieve_template.ui", self)
 
 
 if __name__ == "__main__":
