@@ -35,7 +35,7 @@ class ChatWidgetTemplate(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi(
-            r"C:/Users/Asus/Desktop/team-management/production/view/chat_widget.ui",
+            r"./production/view/chat_widget.ui",
             self,
         )
         self.chat_heading.clicked.connect(self.callback)
@@ -56,7 +56,7 @@ class MessageCentral(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         uic.loadUi(
-            r"C:/Users/Asus/Desktop/team-management/production/view/message_template_initial.ui",
+            r"./production/view/message_template_initial.ui",
             self,
         )
 
@@ -65,7 +65,7 @@ class MessageSidebar(QWidget):
     def __init__(self):
         super().__init__()
         uic.loadUi(
-            r"C:/Users/Asus/Desktop/team-management/production/view/message_template_sidebar.ui",
+            r"./production/view/message_template_sidebar.ui",
             self,
         )
         self.contact_list.setWidgetResizable(True)
@@ -188,6 +188,10 @@ class ChatBoxTemplate(QWidget):
 
     def send_message(self):
         msg_text = self.input_field.text()
+        self.load_send_message(msg_text)
+        self.servcon.send_some(msg_text, self.chat_heading.text())
+
+    def load_send_message(self, msg_text):
         m = MessageTextTemplate()
         m.message_text.setText(msg_text)
 
@@ -195,7 +199,6 @@ class ChatBoxTemplate(QWidget):
 
         self.vbox.addWidget(m)
         self.scroll_to_last()
-        self.servcon.send_some(msg_text, self.chat_heading.text())
 
     def scroll_to_last(self):
 
@@ -204,8 +207,7 @@ class ChatBoxTemplate(QWidget):
         scroll_bar.setMaximum(self.fbor.height())
         scroll_bar.setValue(self.fbor.height())
 
-    def recieve_message(self, msg_text):
-        # msg_text = self.input_field.text()
+    def load_recieve_message(self, msg_text):
         m = MessageTextRecieveTemplate()
         m.message_text.setText(msg_text)
 
@@ -219,7 +221,7 @@ class Main(QWidget):
         super(Main, self).__init__()
         uic.loadUi(r"./production/view/message_template.ui", self)
 
-        self.CHECK_DURATION = 1000
+        self.CHECK_DURATION = 50
         self.read_queue = read_queue
         self.servcon = servcon
 
@@ -269,7 +271,8 @@ class Main(QWidget):
                 msg_info = message["buffer_msg"]
 
                 chat_id = msg_info["chat_id"]
-                msg_text = msg_info["message"]
+                msg_sender_id = msg_info["message"]["sender_id"]
+                msg_text = msg_info["message"]["msg"]
 
                 wg = self.chat_list_widgets[chat_id]
                 wg.recieve_message(msg_text)

@@ -20,11 +20,22 @@ class ServerCon:
     def check_for_input(self):
         if not (self.read_queue.empty()):
             message = self.read_queue.get()
-            user_msg = message[0]
-            chat_id = message[1]
+            sender_id = message[0]
+            user_msg = message[1]
+            chat_id = message[2]
 
             if type(user_msg) is str:
-                pac = {"msg": True, "chat_id": chat_id, "msg_data": user_msg}
+                pac = {
+                    "msg": True,
+                    "sender_id": sender_id,
+                    "chat_id": chat_id,
+                    "msg_data": user_msg,
+                }
+                pac = {
+                    "msg": True,
+                    "chat_id": chat_id,
+                    "msg_data": {"sender_id": sender_id, "msg": user_msg},
+                }
                 self.p.send_data(pac, "obj")
 
     def identify_message(self, msg, head):
