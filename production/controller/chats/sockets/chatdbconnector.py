@@ -127,12 +127,12 @@ class ChatDatabaseConnector:
 class UserStandard:
     def __init__(self, user_id):
         self.user_id = user_id
-        self.ch = ChatDatabaseConnector()
+        self.db_connector = ChatDatabaseConnector()
 
     def get_recipient_list(self, chat_id):
         # extra guard try-except can be removed
         try:
-            recipient_list = set(self.ch.get_group_members(chat_id))
+            recipient_list = set(self.db_connector.get_group_members(chat_id))
             if self.user_id in recipient_list:
                 recipient_list.remove(self.user_id)
                 return recipient_list
@@ -143,7 +143,7 @@ class UserStandard:
 
     def get_user_buffer(self, user_id, chat_id):
         try:
-            bf = self.ch.get_user_buffer(user_id, chat_id)
+            bf = self.db_connector.get_user_buffer(user_id, chat_id)
             bf = bf[0]
             bf = pickle.loads(bf)
             return bf
@@ -155,7 +155,7 @@ class UserStandard:
         bf = self.get_user_buffer(recipient_id, chat_id)
         bf.append(msg)
         bf = pickle.dumps(bf)
-        self.ch.write_to_buffer(chat_id, recipient_id, bf)
+        self.db_connector.write_to_buffer(chat_id, recipient_id, bf)
 
     def send_message(self, chat_id, msg):
         recipient_list = self.get_recipient_list(chat_id)
@@ -163,26 +163,46 @@ class UserStandard:
             self.write_to_buffer(recipient, chat_id, msg)
 
     def get_messages(self):
-        group_list = self.ch.get_associated_groups(self.user_id)
+        group_list = self.db_connector.get_associated_groups(self.user_id)
         msg_list = {}
         for i in group_list:
             msg_list[i] = self.get_user_buffer(self.user_id, i)
         return msg_list
 
     def clear_buffer(self, user_id, chat_id):
-        self.ch.clear_buffer(user_id, chat_id)
+        self.db_connector.clear_buffer(user_id, chat_id)
 
     def create_group(self, chat_id, chat_admin_user_id):
-        self.ch.create_group(chat_id, chat_admin_user_id)
+        self.db_connector.create_group(chat_id, chat_admin_user_id)
 
     def add_members_to_group(self, chat_id, user_id):
-        self.ch.add_members_to_group(chat_id, user_id)
+        self.db_connector.add_members_to_group(chat_id, user_id)
 
 
 if __name__ == "__main__":
-    o = UserStandard("adam_12")
+    o = UserStandard("peter_13")
     print(o.get_messages())
+    # o.clear_buffer("peter_13", "group_two")
 
     # c = UserStandard("dan_20")
-    # c.send_message("group_two", "msg from dan_20")
+    # c.send_message("group_two", {"sender_id": "dan_20", "message": "raw_data"})
+
+    o = UserStandard("dan_20")
+    print(o.get_messages())
+    # o.clear_buffer("dan_20", "group_two")
+
+    o = UserStandard("zed_15")
+    print(o.get_messages())
+    # o.clear_buffer("zed_15", "group_two")
+
+    o = UserStandard("adam_12")
+    print(o.get_messages())
+    # o.clear_buffer("adam_12", "group_two")
+
+    o = UserStandard("alex_11")
+    print(o.get_messages())
+    # o.clear_buffer("alex_11", "group_one")
+
+    # o = UserStandard("adam_12")
+    # o.send_message("group_one", {"sender_id": "adam_12", "message": "message from adam"})
     pass

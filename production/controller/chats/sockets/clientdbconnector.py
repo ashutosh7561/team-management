@@ -117,6 +117,7 @@ class ClientDBHandler:
         chat_messages = pickle.loads(self.clientdb.get_chat_messages(chat_id))
 
         for message in chat_messages:
+            print(message)
             if self.user_id in message:
                 print("render send message")
             else:
@@ -127,8 +128,9 @@ class ClientDBHandler:
 
 
 if __name__ == "__main__":
-    o = ClientDBHandler("alex_10")
-    o.get_chat_messages("group_one")
+    o = ClientDBHandler("adam_12")
+    print(o.get_chat_messages("group_one"))
+    print(o.get_chat_messages("group_two"))
 
     # k = ClientDatabaseConnector()
 

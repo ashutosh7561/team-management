@@ -7,26 +7,33 @@ from chatdbconnector import *
 HOST = "127.0.0.1"
 PORT = 65432
 
-sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-sock.bind((HOST, PORT))
-sock.listen()
-sock.setblocking(False)
+event_handler = selectors.DefaultSelector()
 
-sel = selectors.DefaultSelector()
-sel.register(sock, selectors.EVENT_READ, data=None)
+main_listening_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+main_listening_socket.bind((HOST, PORT))
+main_listening_socket.setblocking(False)
+main_listening_socket.listen(5)
+event_handler.register(main_listening_socket, selectors.EVENT_READ, data=None)
+
+active_client_sockets = {}
 
 
-def register_client(sock):
-    con, addr = sock.accept()
-    con.setblocking(False)
-    events = selectors.EVENT_READ
-    data = Packet(con)
-    sel.register(con, events, data)
+def create_secure_connection(client_socket):
+    print("do tls handshake")
+
+
+def register_new_client(client_handle):
+    client_socket, address = client_handle.accept()
+    client_socket.setblocking(False)
+    respond_to = selectors.EVENT_READ
+    data = Packet(client_socket)
+
+    event_handler.register(client_socket, events=respond_to, data=data)
+
+    create_secure_connection(client_socket)
+
     first = {"identify_user": ["user_id", "password"]}
     data.send_data(first, "obj")
-
-
-client_sockets = {}
 
 
 def try_sending_buffer_msg(head):
@@ -62,7 +69,7 @@ def identify_message(msg, head):
             head.bind_socket(user_id, ob)
 
             in_progress = False
-            client_sockets[user_id] = [head, in_progress]
+            active_client_sockets[user_id] = [head, in_progress]
 
         elif "msg" in msg:
             chat_id = msg["chat_id"]
@@ -73,20 +80,20 @@ def identify_message(msg, head):
             recipient_list = ob.get_recipient_list(chat_id)
             for i in recipient_list:
                 try:
-                    is_online = client_sockets[i]
+                    is_online = active_client_sockets[i]
                     if is_online:
-                        client_sockets[i][1] = False
+                        active_client_sockets[i][1] = False
                 except:
                     pass
 
         elif "msg_recieved" in msg:
             clear_msg_buffer(head)
             user_id = head.user_id
-            client_sockets[user_id][1] = False
+            active_client_sockets[user_id][1] = False
 
 
 def handle_client_request(key, mask):
-    sock = key.fileobj
+    client_socket = key.fileobj
     head = key.data
 
     if mask & selectors.EVENT_READ:
@@ -97,33 +104,36 @@ def handle_client_request(key, mask):
             print(e)
             print("no data from client")
             print("client might have closed connection")
-            del client_sockets[head.user_id]
-            sock.close()
-            sel.unregister(sock)
+            del active_client_sockets[head.user_id]
+            client_socket.close()
+            event_handler.unregister(client_socket)
             print("closed socket")
 
 
-def checkout():
-    for i in client_sockets:
-        head = client_sockets[i][0]
-        in_progress = client_sockets[i][1]
+def check_for_updates():
+    for i in active_client_sockets:
+        head = active_client_sockets[i][0]
+        in_progress = active_client_sockets[i][1]
         if not in_progress:
             try_sending_buffer_msg(head)
-            client_sockets[i][1] = True
+            active_client_sockets[i][1] = True
 
 
-try:
-    while True:
-        events = sel.select(timeout=1)
-        checkout()
-        for key, mask in events:
-            if key.data == None:
-                # new client request
-                print("new client connection")
-                register_client(key.fileobj)
-            else:
-                handle_client_request(key, mask)
-except Exception as e:
-    print("server going down:", e)
-finally:
-    sel.close()
+def start_server():
+    try:
+        while True:
+            events = event_handler.select(timeout=1)
+            check_for_updates()
+            for key, mask in events:
+                if key.data == None:
+                    register_new_client(key.fileobj)
+                else:
+                    handle_client_request(key, mask)
+    except Exception as e:
+        print("server going down:", e)
+    finally:
+        event_handler.close()
+
+
+if __name__ == "__main__":
+    start_server()
