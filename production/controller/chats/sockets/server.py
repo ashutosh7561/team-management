@@ -1,8 +1,23 @@
 import socket
 import selectors
 import types
-from header import Packet
-from chatdbconnector import *
+
+try:
+    from header import Packet
+except:
+    try:
+        from controller.chats.sockets.header import Packet
+    except Exception as e:
+        print(e)
+
+try:
+    from chatdbconnector import *
+except:
+    try:
+        from controller.chats.sockets.chatdbconnector import *
+    except Exception as e:
+        print(e)
+
 
 HOST = "127.0.0.1"
 PORT = 65432

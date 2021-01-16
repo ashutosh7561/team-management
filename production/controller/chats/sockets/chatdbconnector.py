@@ -1,13 +1,27 @@
 import sqlite3
 import pickle
+import os
+
+PATH_ONE = r"./chats.db"
+PATH_TWO = r"./production/controller/chats/sockets/chats.db"
 
 
 class ChatDatabaseConnector:
-    def __init__(
-        self,
-        database=r"./chats.db",
-    ):
-        self.rbac_connection = sqlite3.connect(database)
+    def check_for_file(self):
+        if os.path.isfile(PATH_ONE):
+            return PATH_ONE
+        elif os.path.isfile(PATH_TWO):
+            return PATH_TWO
+        else:
+            raise FileNotFoundError
+
+    def __init__(self):
+        try:
+            database = self.check_for_file()
+            self.rbac_connection = sqlite3.connect(database)
+        except Exception as e:
+            print(e)
+
         self.cursor = self.rbac_connection.cursor()
         # for setting foreign key constraints to true
         self.rbac_connection.execute("PRAGMA foreign_keys = 1")

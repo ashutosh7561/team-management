@@ -2,22 +2,27 @@ import threading
 import socket
 import selectors
 import time
+import pickle
 from queue import Queue
 
 try:
     from controller.chats.sockets.header import Packet
 except:
-    from header import Packet
+    try:
+        from header import Packet
+    except Exception as e:
+        print(e)
 
 try:
     from clientdbconnector import ClientDBHandler, ClientDatabaseConnector
 except:
-    from controller.chats.sockets.clientdbconnector import (
-        ClientDBHandler,
-        ClientDatabaseConnector,
-    )
-
-import pickle
+    try:
+        from controller.chats.sockets.clientdbconnector import (
+            ClientDBHandler,
+            ClientDatabaseConnector,
+        )
+    except Exception as e:
+        print(e)
 
 
 class ServerCon:
@@ -73,8 +78,8 @@ class ServerCon:
                 print("closed socket")
 
     def start_connection(self):
-        HOST = "127.0.0.1"
-        PORT = 65432
+        HOST = "111.118.240.197"
+        PORT = 1030
 
         self.client_db = ClientDBHandler(self.user_id, self.write_queue)
         self.event_handler = selectors.DefaultSelector()
@@ -120,7 +125,7 @@ if __name__ == "__main__":
     q = Queue()
     q2 = Queue()
     h = ServerCon(q, q2)
-    # h.start_connection_thread("alex_11", "qwer")
+    h.start_connection_thread("adam_12", "qwer")
     # h.send_some("new message from alex_11", "group_one")
     # h.send_some("message1 from adam_12 for group_two", "group_two")
     # h.send_some("message2 from adam_12 for group_two", "group_two")
