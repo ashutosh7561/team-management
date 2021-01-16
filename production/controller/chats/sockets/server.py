@@ -19,8 +19,8 @@ except:
         print(e)
 
 
-HOST = "127.0.0.1"
-PORT = 65432
+HOST = "192.168.1.6"
+PORT = 1030
 
 event_handler = selectors.DefaultSelector()
 

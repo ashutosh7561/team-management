@@ -1,4 +1,5 @@
 import sys
+import os
 from os.path import abspath, dirname
 
 d = dirname(dirname(abspath(__file__)))
@@ -69,16 +70,32 @@ from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
 WINDOW_SIZE = 0
 
 
+def check_for_file(PATH_ONE, PATH_TWO):
+    if os.path.isfile(PATH_ONE):
+        return PATH_ONE
+    elif os.path.isfile(PATH_TWO):
+        return PATH_TWO
+    else:
+        raise FileNotFoundError
+
+
 class AdminPannel(QWidget):
     def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
         super(AdminPannel, self).__init__(**kwargs)
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
-        uic.loadUi(
-            r"./production/view/admin_pannel.ui",
-            self,
+        PATH_ONE = r"./production/view/admin_pannel.ui"
+        PATH_TWO = (
+            r"C:/Users/Asus/Desktop/team-management/production/view/admin_pannel.ui"
         )
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+
+        except Exception as e:
+            print(e)
+
         self.switch_to_credentials()
         self.credentials.clicked.connect(self.switch_to_credentials)
         self.access_rights.clicked.connect(self.switch_to_access_rights)
@@ -318,10 +335,14 @@ class BuddyLabel(QLabel):
 class CustWidget(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi(
-            r"./production/view/users_table_entry_template.ui",
-            self,
-        )
+        PATH_ONE = r"./production/view/users_table_entry_template.ui"
+        PATH_TWO = r"C:/Users/Asus/Desktop/team-management/production/view/users_table_entry_template.ui"
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+
+        except Exception as e:
+            print(e)
         self.username.putText("dummy_name")
         self.user_id.putText("dummy_user_id")
         self.user_post.putText("dummy_user_post")
@@ -336,10 +357,16 @@ class LoginScreen(QMainWindow):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
-        uic.loadUi(
-            r"./production/view/main_window.ui",
-            self,
+        PATH_ONE = r"./production/view/main_window.ui"
+        PATH_TWO = (
+            r"C:/Users/Asus/Desktop/team-management/production/view/main_window.ui"
         )
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+
+        except Exception as e:
+            print(e)
         # self.ui = Ui_MainWindow()
         # self.ui.setupUi(self)
 
@@ -381,10 +408,15 @@ class SplashScreen(QMainWindow):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
-        uic.loadUi(
-            r"./production/view/Splash_screen.ui",
-            self,
+        PATH_ONE = r"./production/view/Splash_screen.ui"
+        PATH_TWO = (
+            r"C:/Users/Asus/Desktop/team-management/production/view/Splash_screen.ui"
         )
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+        except Exception as e:
+            print(e)
         # self.ui = Ui_SplashScreen()
         # self.ui.setupUi(self)
 
@@ -414,10 +446,16 @@ class Dashboard(QWidget):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
-        uic.loadUi(
-            r"./production/view/root_window.ui",
-            self,
+        PATH_ONE = r"./production/view/root_window.ui"
+        PATH_TWO = (
+            r"C:/Users/Asus/Desktop/team-management/production/view/root_window.ui"
         )
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+
+        except Exception as e:
+            print(e)
 
         self.dashboard.clicked.connect(
             lambda: self.stacked_action_pannel.setCurrentWidget(self.dashboard_frame)
