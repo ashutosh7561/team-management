@@ -7,7 +7,14 @@ class ClientDatabaseConnector:
         self,
         database=r"./clientdb.db",
     ):
-        self.rbac_connection = sqlite3.connect(database)
+        try:
+            database = r"./production/controller/chats/sockets/clientdb.db"
+            # database = r"./clientdb.db"
+            self.rbac_connection = sqlite3.connect(database)
+        except:
+            database = r"./production/controller/chats/sockets/clientdb.db"
+            self.rbac_connection = sqlite3.connect(database)
+
         self.cursor = self.rbac_connection.cursor()
         # for setting foreign key constraints to true
         self.rbac_connection.execute("PRAGMA foreign_keys = 1")
@@ -109,33 +116,55 @@ class ClientDatabaseConnector:
 
 
 class ClientDBHandler:
-    def __init__(self, user_id):
+    def __init__(self, user_id, queue):
         self.clientdb = ClientDatabaseConnector()
         self.user_id = user_id
+        self.queue = queue
 
     def get_chat_messages(self, chat_id):
         chat_messages = pickle.loads(self.clientdb.get_chat_messages(chat_id))
 
         for message in chat_messages:
             print(message)
+            for i in message.keys():
+                message_sender = i
+                message = message[i]
             if self.user_id in message:
-                print("render send message")
+                # print("render send message")
+                # message = message[self.user_id]
+                self.queue.put(
+                    {"send_msg": True, "chat_id": chat_id, "message": message}
+                )
+                # self.queue.put({"send_msg": message})
             else:
-                print("render recv message")
+                # print("render recv message")
+                self.queue.put(
+                    {"recv_msg": True, "chat_id": chat_id, "message": message}
+                )
+                # self.queue.put({"recv_msg": message})
 
     def write_chat_message(self, chat_id, msg):
         self.clientdb.stash_incoming_message(chat_id, msg)
+        if self.user_id in msg:
+            # print("render send message")
+            self.queue.put({"send_msg": msg})
+        else:
+            # print("render recv message")
+            self.queue.put({"recv_msg": msg})
+
+    def get_all_chat_messages(self):
+        for i in self.clientdb.get_chat_list():
+            self.get_chat_messages(i)
 
 
 if __name__ == "__main__":
-    o = ClientDBHandler("adam_12")
-    print(o.get_chat_messages("group_one"))
-    print(o.get_chat_messages("group_two"))
+    # o = ClientDBHandler("peter_13")
+    # o.get_chat_messages("group_one")
+    # o.get_chat_messages("group_two")
 
-    # k = ClientDatabaseConnector()
-
-    # k.clear_chat_messages("group_one")
-    # k.clear_chat_messages("group_two")
+    k = ClientDatabaseConnector()
+    k.clear_chat_messages("group_one")
+    k.clear_chat_messages("group_two")
 
     # msg = {"alex_10": "msg from alex"}
 

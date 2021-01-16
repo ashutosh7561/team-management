@@ -9,7 +9,13 @@ try:
 except:
     from header import Packet
 
-from clientdbconnector import ClientDBHandler
+try:
+    from clientdbconnector import ClientDBHandler, ClientDatabaseConnector
+except:
+    from controller.chats.sockets.clientdbconnector import (
+        ClientDBHandler,
+        ClientDatabaseConnector,
+    )
 
 import pickle
 
@@ -31,10 +37,10 @@ class ServerCon:
                 "msg_data": user_msg,
             }
             self.wrapper.send_data(pac, "obj")
+            self.client_db.write_chat_message(chat_id, {message[2]: message[0]})
 
     def identify_message(self, msg):
         if "identify_user" in msg:
-            print("ok")
             self.wrapper.send_data(
                 {"credentials": [self.user_id, self.password]}, "obj"
             )
@@ -46,11 +52,10 @@ class ServerCon:
             msg = msg["message"]
             sender_id = msg["sender_id"]
             main_msg = msg["message"]
-            final = {sender_id: main_msg}
+            final_msg = {sender_id: main_msg}
 
-            self.client_db.write_chat_message(chat_id, final)
-            self.write_queue.put(msg)
-            print(msg)
+            self.client_db.write_chat_message(chat_id, final_msg)
+            # self.write_queue.put(final_msg)
             ok_msg = {"msg_recieved": True}
             self.wrapper.send_data(ok_msg, "obj")
 
@@ -71,7 +76,7 @@ class ServerCon:
         HOST = "127.0.0.1"
         PORT = 65432
 
-        self.client_db = ClientDBHandler(self.user_id)
+        self.client_db = ClientDBHandler(self.user_id, self.write_queue)
         self.event_handler = selectors.DefaultSelector()
 
         main_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -100,6 +105,9 @@ class ServerCon:
         self.user_id = user_id
         self.password = password
 
+        self.client_tmdb = ClientDBHandler(self.user_id, self.write_queue)
+        self.client_tmdb.get_all_chat_messages()
+
         con_thread = threading.Thread(target=self.start_connection)
 
         con_thread.start()
@@ -112,5 +120,10 @@ if __name__ == "__main__":
     q = Queue()
     q2 = Queue()
     h = ServerCon(q, q2)
-    h.start_connection_thread("adam_12", "qwer")
-    # h.send_some("some msg", "group_one")
+    # h.start_connection_thread("alex_11", "qwer")
+    # h.send_some("new message from alex_11", "group_one")
+    # h.send_some("message1 from adam_12 for group_two", "group_two")
+    # h.send_some("message2 from adam_12 for group_two", "group_two")
+    # h.send_some("message3 from adam_12 for group_two", "group_two")
+
+    # h.start_connection_thread("peter_13", "qwer")

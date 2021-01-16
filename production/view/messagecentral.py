@@ -108,7 +108,7 @@ class ChatBoxTemplate(QWidget):
 
         self.chat_heading.setText(chat_heading)
         self.send.clicked.connect(self.send_message)
-        self.bt.clicked.connect(self.recieve_message)
+        # self.bt.clicked.connect(self.recieve_message)
         self.fbor = QWidget()
         self.vbox = QVBoxLayout()
         self.fbor.setLayout(self.vbox)
@@ -231,6 +231,7 @@ class Main(QWidget):
         self.message_sidebar = MessageSidebar()
         user_list = [
             "group_one",
+            "group_two",
             "adam knight",
             "alex maroni",
             "aron goodman",
@@ -267,15 +268,33 @@ class Main(QWidget):
 
     def identify_message(self, message):
         if isinstance(message, dict):
-            if "buffer_msg" in message:
-                msg_info = message["buffer_msg"]
-
-                chat_id = msg_info["chat_id"]
-                msg_sender_id = msg_info["message"]["sender_id"]
-                msg_text = msg_info["message"]["msg"]
-
-                wg = self.chat_list_widgets[chat_id]
-                wg.recieve_message(msg_text)
+            try:
+                if "send_msg" in message:
+                    chat_id = message["chat_id"]
+                    msg_text = message["message"]
+                    print(msg_text)
+                    if msg_text == "":
+                        return
+                    try:
+                        wg = self.chat_list_widgets[chat_id]
+                        wg.load_send_message(msg_text)
+                        # wg.recieve_message(msg_text)
+                    except:
+                        pass
+                elif "recv_msg" in message:
+                    chat_id = message["chat_id"]
+                    msg_text = message["message"]
+                    print("recv", msg_text)
+                    if msg_text == "":
+                        return
+                    try:
+                        wg = self.chat_list_widgets[chat_id]
+                        wg.load_recieve_message(msg_text)
+                        # wg.recieve_message(msg_text)
+                    except:
+                        pass
+            except Exception as e:
+                print(e)
 
     def check_for_messages(self):
         if not (self.read_queue.empty()):
