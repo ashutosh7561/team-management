@@ -1,25 +1,22 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'DashBoardmnisKs.ui'
+## Form generated from reading UI file 'DashBoardplJBHL.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.14.1
+## Created by: Qt User Interface Compiler version 5.15.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
-    QRect, QSize, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
-    QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
-    QRadialGradient)
+from PySide2.QtCore import *
+from PySide2.QtGui import *
 from PySide2.QtWidgets import *
 
 import view.resource1_rc
 
 class Ui_DashBoard(object):
     def setupUi(self, DashBoard):
-        if DashBoard.objectName():
+        if not DashBoard.objectName():
             DashBoard.setObjectName(u"DashBoard")
         DashBoard.resize(1280, 720)
         icon = QIcon()
@@ -54,16 +51,16 @@ class Ui_DashBoard(object):
 "")
         self.frame_2.setFrameShape(QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Raised)
-        self.pushButton = QPushButton(self.frame_2)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(20, 240, 150, 40))
+        self.dashboard = QPushButton(self.frame_2)
+        self.dashboard.setObjectName(u"dashboard")
+        self.dashboard.setGeometry(QRect(20, 240, 150, 40))
         font = QFont()
         font.setFamily(u"MS Sans Serif")
         font.setPointSize(14)
         font.setBold(True)
         font.setWeight(75)
-        self.pushButton.setFont(font)
-        self.pushButton.setStyleSheet(u"QPushButton {\n"
+        self.dashboard.setFont(font)
+        self.dashboard.setStyleSheet(u"QPushButton {\n"
 "	background-color: rgb(30, 59, 81);	\n"
 "	color: white;\n"
 "	border: none;\n"
@@ -76,11 +73,11 @@ class Ui_DashBoard(object):
 "QPushButton:pressed{     \n"
 "	border-bottom: 5px solid rgb(30, 59, 81);\n"
 "}")
-        self.pushButton_2 = QPushButton(self.frame_2)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(20, 290, 150, 40))
-        self.pushButton_2.setFont(font)
-        self.pushButton_2.setStyleSheet(u"QPushButton {\n"
+        self.projects = QPushButton(self.frame_2)
+        self.projects.setObjectName(u"projects")
+        self.projects.setGeometry(QRect(20, 340, 150, 40))
+        self.projects.setFont(font)
+        self.projects.setStyleSheet(u"QPushButton {\n"
 "	background-color: rgb(30, 59, 81);	\n"
 "	color: white;\n"
 "	border: none;\n"
@@ -93,11 +90,11 @@ class Ui_DashBoard(object):
 "QPushButton:pressed{     \n"
 "	border-bottom: 5px solid rgb(30, 59, 81);\n"
 "}")
-        self.pushButton_4 = QPushButton(self.frame_2)
-        self.pushButton_4.setObjectName(u"pushButton_4")
-        self.pushButton_4.setGeometry(QRect(20, 390, 150, 40))
-        self.pushButton_4.setFont(font)
-        self.pushButton_4.setStyleSheet(u"QPushButton {\n"
+        self.messages = QPushButton(self.frame_2)
+        self.messages.setObjectName(u"messages")
+        self.messages.setGeometry(QRect(20, 460, 150, 40))
+        self.messages.setFont(font)
+        self.messages.setStyleSheet(u"QPushButton {\n"
 "	background-color: rgb(30, 59, 81);	\n"
 "	color: white;\n"
 "	border: none;\n"
@@ -110,11 +107,11 @@ class Ui_DashBoard(object):
 "QPushButton:pressed{     \n"
 "	border-bottom: 5px solid rgb(30, 59, 81);\n"
 "}")
-        self.pushButton_3 = QPushButton(self.frame_2)
-        self.pushButton_3.setObjectName(u"pushButton_3")
-        self.pushButton_3.setGeometry(QRect(20, 340, 150, 40))
-        self.pushButton_3.setFont(font)
-        self.pushButton_3.setStyleSheet(u"QPushButton {\n"
+        self.settings = QPushButton(self.frame_2)
+        self.settings.setObjectName(u"settings")
+        self.settings.setGeometry(QRect(20, 580, 150, 40))
+        self.settings.setFont(font)
+        self.settings.setStyleSheet(u"QPushButton {\n"
 "	background-color: rgb(30, 59, 81);	\n"
 "	color: white;\n"
 "	border: none;\n"
@@ -127,105 +124,20 @@ class Ui_DashBoard(object):
 "QPushButton:pressed{     \n"
 "	border-bottom: 5px solid rgb(30, 59, 81);\n"
 "}")
-        self.pushButton_8 = QPushButton(self.frame_2)
-        self.pushButton_8.setObjectName(u"pushButton_8")
-        self.pushButton_8.setGeometry(QRect(20, 590, 150, 40))
-        self.pushButton_8.setFont(font)
-        self.pushButton_8.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: white;\n"
-"	border: none;\n"
-"	border-bottom: 1px solid rgb(245, 245, 245);\n"
-" }\n"
-"QPushButton:hover{	\n"
-"	background-color: rgba(230, 136, 136, 50);\n"
-"    border-left: 2px solid rgb(230, 136, 136);;\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid rgb(30, 59, 81);\n"
-"}")
-        self.pushButton_6 = QPushButton(self.frame_2)
-        self.pushButton_6.setObjectName(u"pushButton_6")
-        self.pushButton_6.setGeometry(QRect(20, 490, 150, 40))
-        self.pushButton_6.setFont(font)
-        self.pushButton_6.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: white;\n"
-"	border: none;\n"
-"	border-bottom: 1px solid rgb(245, 245, 245);\n"
-" }\n"
-"QPushButton:hover{	\n"
-"	background-color: rgba(230, 136, 136, 50);\n"
-"    border-left: 2px solid rgb(230, 136, 136);;\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid rgb(30, 59, 81);\n"
-"}")
-        self.pushButton_5 = QPushButton(self.frame_2)
-        self.pushButton_5.setObjectName(u"pushButton_5")
-        self.pushButton_5.setGeometry(QRect(20, 440, 150, 40))
-        self.pushButton_5.setFont(font)
-        self.pushButton_5.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: white;\n"
-"	border: none;\n"
-"	border-bottom: 1px solid rgb(245, 245, 245);\n"
-" }\n"
-"QPushButton:hover{	\n"
-"	background-color: rgba(230, 136, 136, 50);\n"
-"    border-left: 2px solid rgb(230, 136, 136);;\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid rgb(30, 59, 81);\n"
-"}")
-        self.pushButton_7 = QPushButton(self.frame_2)
-        self.pushButton_7.setObjectName(u"pushButton_7")
-        self.pushButton_7.setGeometry(QRect(20, 540, 150, 40))
-        self.pushButton_7.setFont(font)
-        self.pushButton_7.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: white;\n"
-"	border: none;\n"
-"	border-bottom: 1px solid rgb(245, 245, 245);\n"
-" }\n"
-"QPushButton:hover{	\n"
-"	background-color: rgba(230, 136, 136, 50);\n"
-"    border-left: 2px solid rgb(230, 136, 136);;\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid rgb(30, 59, 81);\n"
-"}")
-        self.pushButton_9 = QPushButton(self.frame_2)
-        self.pushButton_9.setObjectName(u"pushButton_9")
-        self.pushButton_9.setGeometry(QRect(20, 670, 150, 40))
-        self.pushButton_9.setFont(font)
-        self.pushButton_9.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: white;\n"
-"	border: none;\n"
-"	border-bottom: 1px solid rgb(245, 245, 245);\n"
-" }\n"
-"QPushButton:hover{	\n"
-"	background-color: rgba(230, 136, 136, 50);\n"
-"    border-left: 2px solid rgb(230, 136, 136);;\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid rgb(30, 59, 81);\n"
-"}")
-        self.label = QLabel(self.frame_2)
-        self.label.setObjectName(u"label")
-        self.label.setGeometry(QRect(40, 20, 125, 125))
-        self.label.setPixmap(QPixmap(u":/usericon/res/usericon.png"))
-        self.label_8 = QLabel(self.frame_2)
-        self.label_8.setObjectName(u"label_8")
-        self.label_8.setGeometry(QRect(20, 160, 160, 40))
+        self.user_avatar = QLabel(self.frame_2)
+        self.user_avatar.setObjectName(u"user_avatar")
+        self.user_avatar.setGeometry(QRect(40, 20, 125, 125))
+        self.user_avatar.setPixmap(QPixmap(u":/usericon/res/usericon.png"))
+        self.user_handle = QLabel(self.frame_2)
+        self.user_handle.setObjectName(u"user_handle")
+        self.user_handle.setGeometry(QRect(20, 160, 160, 40))
         font1 = QFont()
         font1.setFamily(u"Calibri")
         font1.setPointSize(20)
         font1.setBold(True)
         font1.setWeight(75)
-        self.label_8.setFont(font1)
-        self.label_8.setStyleSheet(u"\n"
+        self.user_handle.setFont(font1)
+        self.user_handle.setStyleSheet(u"\n"
 "color: rgb(230, 136, 136);")
 
         self.horizontalLayout.addWidget(self.frame_2)
@@ -344,17 +256,17 @@ class Ui_DashBoard(object):
         self.gridLayout_3.setObjectName(u"gridLayout_3")
         self.gridLayout_3.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout_3 = QHBoxLayout()
-        self.horizontalLayout_3.setSpacing(5)
+        self.horizontalLayout_3.setSpacing(20)
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.horizontalLayout_3.setContentsMargins(-1, 5, -1, 5)
+        self.horizontalLayout_3.setContentsMargins(20, 5, 20, 5)
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setSpacing(10)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.verticalLayout_2.setContentsMargins(-1, 5, -1, 5)
         self.frame_4 = QFrame(self.Dashboard)
         self.frame_4.setObjectName(u"frame_4")
-        self.frame_4.setMinimumSize(QSize(360, 150))
-        self.frame_4.setMaximumSize(QSize(720, 300))
+        self.frame_4.setMinimumSize(QSize(320, 150))
+        self.frame_4.setMaximumSize(QSize(700, 300))
         self.frame_4.setCursor(QCursor(Qt.PointingHandCursor))
         self.frame_4.setStyleSheet(u"QFrame{\n"
 "background-color: rgb(255, 255, 255);\n"
@@ -381,8 +293,8 @@ class Ui_DashBoard(object):
 
         self.frame_5 = QFrame(self.Dashboard)
         self.frame_5.setObjectName(u"frame_5")
-        self.frame_5.setMinimumSize(QSize(360, 300))
-        self.frame_5.setMaximumSize(QSize(720, 600))
+        self.frame_5.setMinimumSize(QSize(320, 150))
+        self.frame_5.setMaximumSize(QSize(700, 300))
         self.frame_5.setCursor(QCursor(Qt.PointingHandCursor))
         self.frame_5.setStyleSheet(u"QFrame{\n"
 "background-color: rgb(255, 255, 255);\n"
@@ -412,8 +324,8 @@ class Ui_DashBoard(object):
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.frame_7 = QFrame(self.Dashboard)
         self.frame_7.setObjectName(u"frame_7")
-        self.frame_7.setMinimumSize(QSize(320, 300))
-        self.frame_7.setMaximumSize(QSize(640, 700))
+        self.frame_7.setMinimumSize(QSize(320, 150))
+        self.frame_7.setMaximumSize(QSize(700, 300))
         self.frame_7.setCursor(QCursor(Qt.PointingHandCursor))
         self.frame_7.setStyleSheet(u"QFrame{\n"
 "background-color: rgb(255, 255, 255);\n"
@@ -437,8 +349,8 @@ class Ui_DashBoard(object):
 
         self.frame_8 = QFrame(self.Dashboard)
         self.frame_8.setObjectName(u"frame_8")
-        self.frame_8.setMinimumSize(QSize(350, 320))
-        self.frame_8.setMaximumSize(QSize(700, 600))
+        self.frame_8.setMinimumSize(QSize(320, 150))
+        self.frame_8.setMaximumSize(QSize(700, 300))
         self.frame_8.setCursor(QCursor(Qt.PointingHandCursor))
         self.frame_8.setStyleSheet(u"QFrame{\n"
 "background-color: rgb(255, 255, 255);\n"
@@ -462,61 +374,6 @@ class Ui_DashBoard(object):
 
 
         self.horizontalLayout_3.addLayout(self.verticalLayout_4)
-
-        self.verticalLayout_3 = QVBoxLayout()
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.frame_6 = QFrame(self.Dashboard)
-        self.frame_6.setObjectName(u"frame_6")
-        self.frame_6.setMinimumSize(QSize(320, 150))
-        self.frame_6.setMaximumSize(QSize(700, 300))
-        self.frame_6.setCursor(QCursor(Qt.PointingHandCursor))
-        self.frame_6.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:10px;\n"
-"border:1px solid;\n"
-"}\n"
-"QFrame:hover{     \n"
-"	border:2px solid rgb(230, 136, 136);\n"
-" }")
-        self.frame_6.setFrameShape(QFrame.StyledPanel)
-        self.frame_6.setFrameShadow(QFrame.Raised)
-        self.label_4 = QLabel(self.frame_6)
-        self.label_4.setObjectName(u"label_4")
-        self.label_4.setGeometry(QRect(10, 10, 171, 31))
-        self.label_4.setFont(font2)
-        self.label_4.setStyleSheet(u"border:none;\n"
-"border-radius:0px;\n"
-"color: rgb(30, 59, 81);")
-
-        self.verticalLayout_3.addWidget(self.frame_6)
-
-        self.frame_9 = QFrame(self.Dashboard)
-        self.frame_9.setObjectName(u"frame_9")
-        self.frame_9.setMinimumSize(QSize(320, 320))
-        self.frame_9.setMaximumSize(QSize(700, 640))
-        self.frame_9.setCursor(QCursor(Qt.PointingHandCursor))
-        self.frame_9.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:10px;\n"
-"border:1px solid;\n"
-"}\n"
-"QFrame:hover{     \n"
-"	border:2px solid rgb(230, 136, 136);\n"
-" }")
-        self.frame_9.setFrameShape(QFrame.StyledPanel)
-        self.frame_9.setFrameShadow(QFrame.Raised)
-        self.label_7 = QLabel(self.frame_9)
-        self.label_7.setObjectName(u"label_7")
-        self.label_7.setGeometry(QRect(10, 10, 171, 31))
-        self.label_7.setFont(font2)
-        self.label_7.setStyleSheet(u"border:none;\n"
-"border-radius:0px;\n"
-"color: rgb(30, 59, 81);")
-
-        self.verticalLayout_3.addWidget(self.frame_9)
-
-
-        self.horizontalLayout_3.addLayout(self.verticalLayout_3)
 
 
         self.gridLayout_3.addLayout(self.horizontalLayout_3, 0, 0, 1, 1)
@@ -542,7 +399,7 @@ class Ui_DashBoard(object):
         sizePolicy2.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
         self.frame.setSizePolicy(sizePolicy2)
         self.frame.setMinimumSize(QSize(200, 200))
-        self.frame.setMaximumSize(QSize(900, 900))
+        self.frame.setMaximumSize(QSize(300, 300))
         self.frame.setCursor(QCursor(Qt.PointingHandCursor))
         self.frame.setStyleSheet(u"QFrame{\n"
 "background-color: rgb(255, 255, 255);\n"
@@ -554,18 +411,24 @@ class Ui_DashBoard(object):
 " }")
         self.frame.setFrameShape(QFrame.StyledPanel)
         self.frame.setFrameShadow(QFrame.Raised)
-        self.label_9 = QLabel(self.frame)
-        self.label_9.setObjectName(u"label_9")
-        self.label_9.setGeometry(QRect(10, 10, 200, 30))
-        sizePolicy3 = QSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
-        sizePolicy3.setHorizontalStretch(0)
-        sizePolicy3.setVerticalStretch(0)
-        sizePolicy3.setHeightForWidth(self.label_9.sizePolicy().hasHeightForWidth())
-        self.label_9.setSizePolicy(sizePolicy3)
-        self.label_9.setFont(font2)
-        self.label_9.setStyleSheet(u"border:none;\n"
-"border-radius:0px;\n"
-"color: rgb(30, 59, 81);")
+        self.pushButton_3 = QPushButton(self.frame)
+        self.pushButton_3.setObjectName(u"pushButton_3")
+        self.pushButton_3.setGeometry(QRect(29, 120, 241, 50))
+        self.pushButton_3.setMinimumSize(QSize(200, 50))
+        self.pushButton_3.setFont(font)
+        self.pushButton_3.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: white;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-left: 2px solid rgb(230, 136, 136);;\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
 
         self.gridLayout.addWidget(self.frame, 0, 0, 1, 1)
 
@@ -574,7 +437,7 @@ class Ui_DashBoard(object):
         sizePolicy2.setHeightForWidth(self.frame_10.sizePolicy().hasHeightForWidth())
         self.frame_10.setSizePolicy(sizePolicy2)
         self.frame_10.setMinimumSize(QSize(200, 200))
-        self.frame_10.setMaximumSize(QSize(900, 900))
+        self.frame_10.setMaximumSize(QSize(300, 300))
         self.frame_10.setCursor(QCursor(Qt.PointingHandCursor))
         self.frame_10.setStyleSheet(u"QFrame{\n"
 "background-color: rgb(255, 255, 255);\n"
@@ -586,13 +449,24 @@ class Ui_DashBoard(object):
 " }")
         self.frame_10.setFrameShape(QFrame.StyledPanel)
         self.frame_10.setFrameShadow(QFrame.Raised)
-        self.label_10 = QLabel(self.frame_10)
-        self.label_10.setObjectName(u"label_10")
-        self.label_10.setGeometry(QRect(10, 10, 200, 30))
-        self.label_10.setFont(font2)
-        self.label_10.setStyleSheet(u"border:none;\n"
-"border-radius:0px;\n"
-"color: rgb(30, 59, 81);")
+        self.pushButton_4 = QPushButton(self.frame_10)
+        self.pushButton_4.setObjectName(u"pushButton_4")
+        self.pushButton_4.setGeometry(QRect(60, 120, 200, 50))
+        self.pushButton_4.setMinimumSize(QSize(200, 50))
+        self.pushButton_4.setFont(font)
+        self.pushButton_4.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: white;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-left: 2px solid rgb(230, 136, 136);;\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
 
         self.gridLayout.addWidget(self.frame_10, 0, 1, 1, 1)
 
@@ -600,148 +474,6 @@ class Ui_DashBoard(object):
         self.horizontalLayout_4.addLayout(self.gridLayout)
 
         self.stackedWidget.addWidget(self.Projects)
-        self.Tickets = QWidget()
-        self.Tickets.setObjectName(u"Tickets")
-        self.Tickets.setMinimumSize(QSize(1080, 700))
-        self.Tickets.setMaximumSize(QSize(2160, 1400))
-        self.frame_12 = QFrame(self.Tickets)
-        self.frame_12.setObjectName(u"frame_12")
-        self.frame_12.setGeometry(QRect(140, 60, 801, 461))
-        self.frame_12.setCursor(QCursor(Qt.PointingHandCursor))
-        self.frame_12.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:10px;\n"
-"border:1px solid;\n"
-"}\n"
-"QFrame:hover{     \n"
-"	border:2px solid rgb(230, 136, 136);\n"
-" }")
-        self.frame_12.setFrameShape(QFrame.StyledPanel)
-        self.frame_12.setFrameShadow(QFrame.Raised)
-        self.pushButton_10 = QPushButton(self.frame_12)
-        self.pushButton_10.setObjectName(u"pushButton_10")
-        self.pushButton_10.setGeometry(QRect(310, 160, 150, 50))
-        font3 = QFont()
-        font3.setFamily(u"Calibri")
-        font3.setPointSize(14)
-        self.pushButton_10.setFont(font3)
-        self.pushButton_10.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: rgb(255, 255, 255);\n"
-"	border: none;\n"
-"	border-bottom: 2px solid rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:hover{     \n"
-"	background-color: rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
-"}")
-        self.stackedWidget.addWidget(self.Tickets)
-        self.Boards = QWidget()
-        self.Boards.setObjectName(u"Boards")
-        self.Boards.setMinimumSize(QSize(1080, 700))
-        self.Boards.setMaximumSize(QSize(2160, 1400))
-        self.Boards.setCursor(QCursor(Qt.ArrowCursor))
-        self.frame_13 = QFrame(self.Boards)
-        self.frame_13.setObjectName(u"frame_13")
-        self.frame_13.setGeometry(QRect(170, 100, 801, 461))
-        self.frame_13.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:10px;\n"
-"border:1px solid;\n"
-"}\n"
-"QFrame:hover{     \n"
-"	border:2px solid rgb(230, 136, 136);\n"
-" }")
-        self.frame_13.setFrameShape(QFrame.StyledPanel)
-        self.frame_13.setFrameShadow(QFrame.Raised)
-        self.pushButton_11 = QPushButton(self.frame_13)
-        self.pushButton_11.setObjectName(u"pushButton_11")
-        self.pushButton_11.setGeometry(QRect(310, 160, 150, 50))
-        self.pushButton_11.setFont(font3)
-        self.pushButton_11.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: rgb(255, 255, 255);\n"
-"	border: none;\n"
-"	border-bottom: 2px solid rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:hover{     \n"
-"	background-color: rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
-"}")
-        self.stackedWidget.addWidget(self.Boards)
-        self.Calendar = QWidget()
-        self.Calendar.setObjectName(u"Calendar")
-        self.Calendar.setMinimumSize(QSize(1080, 700))
-        self.Calendar.setMaximumSize(QSize(2160, 1400))
-        self.Calendar.setCursor(QCursor(Qt.ArrowCursor))
-        self.frame_14 = QFrame(self.Calendar)
-        self.frame_14.setObjectName(u"frame_14")
-        self.frame_14.setGeometry(QRect(160, 100, 801, 461))
-        self.frame_14.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:10px;\n"
-"border:1px solid;\n"
-"}\n"
-"QFrame:hover{     \n"
-"	border:2px solid rgb(230, 136, 136);\n"
-" }")
-        self.frame_14.setFrameShape(QFrame.StyledPanel)
-        self.frame_14.setFrameShadow(QFrame.Raised)
-        self.pushButton_12 = QPushButton(self.frame_14)
-        self.pushButton_12.setObjectName(u"pushButton_12")
-        self.pushButton_12.setGeometry(QRect(310, 160, 150, 50))
-        self.pushButton_12.setFont(font3)
-        self.pushButton_12.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: rgb(255, 255, 255);\n"
-"	border: none;\n"
-"	border-bottom: 2px solid rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:hover{     \n"
-"	background-color: rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
-"}")
-        self.stackedWidget.addWidget(self.Calendar)
-        self.Analysis = QWidget()
-        self.Analysis.setObjectName(u"Analysis")
-        self.Analysis.setMinimumSize(QSize(1080, 700))
-        self.Analysis.setMaximumSize(QSize(2160, 1400))
-        self.Analysis.setCursor(QCursor(Qt.ArrowCursor))
-        self.frame_15 = QFrame(self.Analysis)
-        self.frame_15.setObjectName(u"frame_15")
-        self.frame_15.setGeometry(QRect(170, 70, 801, 461))
-        self.frame_15.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:10px;\n"
-"border:1px solid;\n"
-"}\n"
-"QFrame:hover{     \n"
-"	border:2px solid rgb(230, 136, 136);\n"
-" }")
-        self.frame_15.setFrameShape(QFrame.StyledPanel)
-        self.frame_15.setFrameShadow(QFrame.Raised)
-        self.pushButton_13 = QPushButton(self.frame_15)
-        self.pushButton_13.setObjectName(u"pushButton_13")
-        self.pushButton_13.setGeometry(QRect(310, 160, 150, 50))
-        self.pushButton_13.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: rgb(255, 255, 255);\n"
-"	border: none;\n"
-"	border-bottom: 2px solid rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:hover{     \n"
-"	background-color: rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
-"}")
-        self.stackedWidget.addWidget(self.Analysis)
         self.Messages = QWidget()
         self.Messages.setObjectName(u"Messages")
         self.Messages.setMinimumSize(QSize(1080, 686))
@@ -793,12 +525,12 @@ class Ui_DashBoard(object):
         self.pushButton_19.setGeometry(QRect(315, 0, 150, 150))
         self.pushButton_19.setMinimumSize(QSize(150, 150))
         self.pushButton_19.setMaximumSize(QSize(450, 450))
-        font4 = QFont()
-        font4.setFamily(u"Calibri")
-        font4.setPointSize(10)
-        font4.setBold(True)
-        font4.setWeight(75)
-        self.pushButton_19.setFont(font4)
+        font3 = QFont()
+        font3.setFamily(u"Calibri")
+        font3.setPointSize(10)
+        font3.setBold(True)
+        font3.setWeight(75)
+        self.pushButton_19.setFont(font3)
         self.pushButton_19.setCursor(QCursor(Qt.PointingHandCursor))
         self.pushButton_19.setStyleSheet(u"QPushButton{\n"
 "border-radius:75px;\n"
@@ -830,10 +562,10 @@ class Ui_DashBoard(object):
         self.label_21.setObjectName(u"label_21")
         self.label_21.setMinimumSize(QSize(780, 51))
         self.label_21.setMaximumSize(QSize(2340, 153))
-        font5 = QFont()
-        font5.setFamily(u"Calibri")
-        font5.setPointSize(28)
-        self.label_21.setFont(font5)
+        font4 = QFont()
+        font4.setFamily(u"Calibri")
+        font4.setPointSize(28)
+        self.label_21.setFont(font4)
         self.label_21.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
 
         self.verticalLayout_5.addWidget(self.label_21)
@@ -842,12 +574,12 @@ class Ui_DashBoard(object):
         self.label_22.setObjectName(u"label_22")
         self.label_22.setMinimumSize(QSize(780, 51))
         self.label_22.setMaximumSize(QSize(2340, 153))
-        font6 = QFont()
-        font6.setFamily(u"Calibri")
-        font6.setPointSize(28)
-        font6.setBold(True)
-        font6.setWeight(75)
-        self.label_22.setFont(font6)
+        font5 = QFont()
+        font5.setFamily(u"Calibri")
+        font5.setPointSize(28)
+        font5.setBold(True)
+        font5.setWeight(75)
+        self.label_22.setFont(font5)
         self.label_22.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
 
         self.verticalLayout_5.addWidget(self.label_22)
@@ -859,10 +591,10 @@ class Ui_DashBoard(object):
         self.label_25.setObjectName(u"label_25")
         self.label_25.setMinimumSize(QSize(780, 100))
         self.label_25.setMaximumSize(QSize(2340, 300))
-        font7 = QFont()
-        font7.setFamily(u"Calibri")
-        font7.setPointSize(10)
-        self.label_25.setFont(font7)
+        font6 = QFont()
+        font6.setFamily(u"Calibri")
+        font6.setPointSize(10)
+        self.label_25.setFont(font6)
         self.label_25.setAlignment(Qt.AlignBottom|Qt.AlignHCenter)
 
         self.verticalLayout_7.addWidget(self.label_25)
@@ -883,7 +615,7 @@ class Ui_DashBoard(object):
         self.pushButton_20.setSizePolicy(sizePolicy1)
         self.pushButton_20.setMinimumSize(QSize(150, 51))
         self.pushButton_20.setMaximumSize(QSize(450, 153))
-        self.pushButton_20.setFont(font4)
+        self.pushButton_20.setFont(font3)
         self.pushButton_20.setStyleSheet(u"QPushButton{\n"
 "border-radius:25px;\n"
 "color: rgb(255, 255, 255);\n"
@@ -904,7 +636,7 @@ class Ui_DashBoard(object):
         self.pushButton_21.setSizePolicy(sizePolicy1)
         self.pushButton_21.setMinimumSize(QSize(150, 51))
         self.pushButton_21.setMaximumSize(QSize(450, 153))
-        self.pushButton_21.setFont(font4)
+        self.pushButton_21.setFont(font3)
         self.pushButton_21.setStyleSheet(u"QPushButton{\n"
 "border-radius:25px;\n"
 "color: rgb(255, 255, 255);\n"
@@ -925,7 +657,7 @@ class Ui_DashBoard(object):
         self.pushButton_22.setSizePolicy(sizePolicy1)
         self.pushButton_22.setMinimumSize(QSize(150, 51))
         self.pushButton_22.setMaximumSize(QSize(450, 153))
-        self.pushButton_22.setFont(font4)
+        self.pushButton_22.setFont(font3)
         self.pushButton_22.setStyleSheet(u"QPushButton{\n"
 "border-radius:25px;\n"
 "color: rgb(255, 255, 255);\n"
@@ -957,7 +689,7 @@ class Ui_DashBoard(object):
         self.label_23.setObjectName(u"label_23")
         self.label_23.setMinimumSize(QSize(780, 20))
         self.label_23.setMaximumSize(QSize(2340, 60))
-        self.label_23.setFont(font7)
+        self.label_23.setFont(font6)
         self.label_23.setStyleSheet(u"\n"
 "color: rgb(230, 136, 136);")
         self.label_23.setAlignment(Qt.AlignCenter)
@@ -968,11 +700,11 @@ class Ui_DashBoard(object):
         self.label_24.setObjectName(u"label_24")
         self.label_24.setMinimumSize(QSize(780, 20))
         self.label_24.setMaximumSize(QSize(2340, 60))
-        font8 = QFont()
-        font8.setFamily(u"Calibri")
-        font8.setPointSize(10)
-        font8.setUnderline(True)
-        self.label_24.setFont(font8)
+        font7 = QFont()
+        font7.setFamily(u"Calibri")
+        font7.setPointSize(10)
+        font7.setUnderline(True)
+        self.label_24.setFont(font7)
         self.label_24.setStyleSheet(u"\n"
 "color: rgb(230, 136, 136);")
         self.label_24.setAlignment(Qt.AlignCenter)
@@ -1093,10 +825,10 @@ class Ui_DashBoard(object):
         sizePolicy1.setHeightForWidth(self.pushButton_14.sizePolicy().hasHeightForWidth())
         self.pushButton_14.setSizePolicy(sizePolicy1)
         self.pushButton_14.setMinimumSize(QSize(50, 20))
-        font9 = QFont()
-        font9.setFamily(u"Calibri")
-        font9.setPointSize(8)
-        self.pushButton_14.setFont(font9)
+        font8 = QFont()
+        font8.setFamily(u"Calibri")
+        font8.setPointSize(8)
+        self.pushButton_14.setFont(font8)
         self.pushButton_14.setStyleSheet(u"QPushButton {\n"
 "	background-color: rgb(30, 59, 81);	\n"
 "	color: rgb(255, 255, 255);\n"
@@ -1118,7 +850,7 @@ class Ui_DashBoard(object):
         sizePolicy1.setHeightForWidth(self.pushButton_18.sizePolicy().hasHeightForWidth())
         self.pushButton_18.setSizePolicy(sizePolicy1)
         self.pushButton_18.setMinimumSize(QSize(50, 20))
-        self.pushButton_18.setFont(font9)
+        self.pushButton_18.setFont(font8)
         self.pushButton_18.setStyleSheet(u"QPushButton {\n"
 "	background-color: rgb(30, 59, 81);	\n"
 "	color: rgb(255, 255, 255);\n"
@@ -1140,7 +872,7 @@ class Ui_DashBoard(object):
         sizePolicy1.setHeightForWidth(self.pushButton_17.sizePolicy().hasHeightForWidth())
         self.pushButton_17.setSizePolicy(sizePolicy1)
         self.pushButton_17.setMinimumSize(QSize(50, 20))
-        self.pushButton_17.setFont(font9)
+        self.pushButton_17.setFont(font8)
         self.pushButton_17.setStyleSheet(u"QPushButton {\n"
 "	background-color: rgb(30, 59, 81);	\n"
 "	color: rgb(255, 255, 255);\n"
@@ -1168,13 +900,193 @@ class Ui_DashBoard(object):
         sizePolicy1.setHeightForWidth(self.pushButton_23.sizePolicy().hasHeightForWidth())
         self.pushButton_23.setSizePolicy(sizePolicy1)
         self.pushButton_23.setMinimumSize(QSize(50, 20))
-        font10 = QFont()
-        font10.setFamily(u"Calibri")
-        font10.setPointSize(18)
-        font10.setBold(True)
-        font10.setWeight(75)
-        self.pushButton_23.setFont(font10)
+        font9 = QFont()
+        font9.setFamily(u"Calibri")
+        font9.setPointSize(18)
+        font9.setBold(True)
+        font9.setWeight(75)
+        self.pushButton_23.setFont(font9)
         self.pushButton_23.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_24 = QPushButton(self.frame_20)
+        self.pushButton_24.setObjectName(u"pushButton_24")
+        self.pushButton_24.setGeometry(QRect(40, 90, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_24.sizePolicy().hasHeightForWidth())
+        self.pushButton_24.setSizePolicy(sizePolicy1)
+        self.pushButton_24.setMinimumSize(QSize(50, 20))
+        self.pushButton_24.setFont(font9)
+        self.pushButton_24.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_25 = QPushButton(self.frame_20)
+        self.pushButton_25.setObjectName(u"pushButton_25")
+        self.pushButton_25.setGeometry(QRect(40, 140, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_25.sizePolicy().hasHeightForWidth())
+        self.pushButton_25.setSizePolicy(sizePolicy1)
+        self.pushButton_25.setMinimumSize(QSize(50, 20))
+        self.pushButton_25.setFont(font9)
+        self.pushButton_25.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_26 = QPushButton(self.frame_20)
+        self.pushButton_26.setObjectName(u"pushButton_26")
+        self.pushButton_26.setGeometry(QRect(40, 190, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_26.sizePolicy().hasHeightForWidth())
+        self.pushButton_26.setSizePolicy(sizePolicy1)
+        self.pushButton_26.setMinimumSize(QSize(50, 20))
+        self.pushButton_26.setFont(font9)
+        self.pushButton_26.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_27 = QPushButton(self.frame_20)
+        self.pushButton_27.setObjectName(u"pushButton_27")
+        self.pushButton_27.setGeometry(QRect(40, 300, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_27.sizePolicy().hasHeightForWidth())
+        self.pushButton_27.setSizePolicy(sizePolicy1)
+        self.pushButton_27.setMinimumSize(QSize(50, 20))
+        self.pushButton_27.setFont(font9)
+        self.pushButton_27.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_28 = QPushButton(self.frame_20)
+        self.pushButton_28.setObjectName(u"pushButton_28")
+        self.pushButton_28.setGeometry(QRect(40, 240, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_28.sizePolicy().hasHeightForWidth())
+        self.pushButton_28.setSizePolicy(sizePolicy1)
+        self.pushButton_28.setMinimumSize(QSize(50, 20))
+        self.pushButton_28.setFont(font9)
+        self.pushButton_28.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_29 = QPushButton(self.frame_20)
+        self.pushButton_29.setObjectName(u"pushButton_29")
+        self.pushButton_29.setGeometry(QRect(40, 350, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_29.sizePolicy().hasHeightForWidth())
+        self.pushButton_29.setSizePolicy(sizePolicy1)
+        self.pushButton_29.setMinimumSize(QSize(50, 20))
+        self.pushButton_29.setFont(font9)
+        self.pushButton_29.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_30 = QPushButton(self.frame_20)
+        self.pushButton_30.setObjectName(u"pushButton_30")
+        self.pushButton_30.setGeometry(QRect(40, 530, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_30.sizePolicy().hasHeightForWidth())
+        self.pushButton_30.setSizePolicy(sizePolicy1)
+        self.pushButton_30.setMinimumSize(QSize(50, 20))
+        self.pushButton_30.setFont(font9)
+        self.pushButton_30.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_31 = QPushButton(self.frame_20)
+        self.pushButton_31.setObjectName(u"pushButton_31")
+        self.pushButton_31.setGeometry(QRect(40, 470, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_31.sizePolicy().hasHeightForWidth())
+        self.pushButton_31.setSizePolicy(sizePolicy1)
+        self.pushButton_31.setMinimumSize(QSize(50, 20))
+        self.pushButton_31.setFont(font9)
+        self.pushButton_31.setStyleSheet(u"QPushButton {\n"
+"	background-color: rgb(30, 59, 81);	\n"
+"	color: rgb(255, 255, 255);\n"
+"	border: none;\n"
+"	border-radius:15px;\n"
+"	border-bottom: 2px solid rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:hover{     \n"
+"	background-color: rgb(230, 136, 136);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
+"}")
+        self.pushButton_32 = QPushButton(self.frame_20)
+        self.pushButton_32.setObjectName(u"pushButton_32")
+        self.pushButton_32.setGeometry(QRect(40, 410, 200, 40))
+        sizePolicy1.setHeightForWidth(self.pushButton_32.sizePolicy().hasHeightForWidth())
+        self.pushButton_32.setSizePolicy(sizePolicy1)
+        self.pushButton_32.setMinimumSize(QSize(50, 20))
+        self.pushButton_32.setFont(font9)
+        self.pushButton_32.setStyleSheet(u"QPushButton {\n"
 "	background-color: rgb(30, 59, 81);	\n"
 "	color: rgb(255, 255, 255);\n"
 "	border: none;\n"
@@ -1191,40 +1103,6 @@ class Ui_DashBoard(object):
         self.horizontalLayout_6.addWidget(self.frame_16)
 
         self.stackedWidget.addWidget(self.Messages)
-        self.Worklog = QWidget()
-        self.Worklog.setObjectName(u"Worklog")
-        self.Worklog.setMinimumSize(QSize(1080, 700))
-        self.Worklog.setMaximumSize(QSize(2160, 1400))
-        self.frame_17 = QFrame(self.Worklog)
-        self.frame_17.setObjectName(u"frame_17")
-        self.frame_17.setGeometry(QRect(110, 90, 801, 461))
-        self.frame_17.setStyleSheet(u"QFrame{\n"
-"background-color: rgb(255, 255, 255);\n"
-"border-radius:10px;\n"
-"border:1px solid;\n"
-"}\n"
-"QFrame:hover{     \n"
-"	border:2px solid rgb(230, 136, 136);\n"
-" }")
-        self.frame_17.setFrameShape(QFrame.StyledPanel)
-        self.frame_17.setFrameShadow(QFrame.Raised)
-        self.pushButton_15 = QPushButton(self.frame_17)
-        self.pushButton_15.setObjectName(u"pushButton_15")
-        self.pushButton_15.setGeometry(QRect(310, 160, 150, 50))
-        self.pushButton_15.setFont(font3)
-        self.pushButton_15.setStyleSheet(u"QPushButton {\n"
-"	background-color: rgb(30, 59, 81);	\n"
-"	color: rgb(255, 255, 255);\n"
-"	border: none;\n"
-"	border-bottom: 2px solid rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:hover{     \n"
-"	background-color: rgb(230, 136, 136);\n"
-" }\n"
-"QPushButton:pressed{     \n"
-"	border-bottom: 5px solid  rgb(30, 59, 81);	\n"
-"}")
-        self.stackedWidget.addWidget(self.Worklog)
         self.Settings = QWidget()
         self.Settings.setObjectName(u"Settings")
         self.Settings.setMinimumSize(QSize(1080, 686))
@@ -1242,25 +1120,1478 @@ class Ui_DashBoard(object):
         self.UserSettings.setObjectName(u"UserSettings")
         self.UserSettings.setMinimumSize(QSize(880, 686))
         self.UserSettings.setMaximumSize(QSize(2640, 2058))
-        self.frame_18 = QFrame(self.UserSettings)
+        self.stackedWidget_4 = QStackedWidget(self.UserSettings)
+        self.stackedWidget_4.setObjectName(u"stackedWidget_4")
+        self.stackedWidget_4.setGeometry(QRect(0, 0, 880, 686))
+        self.stackedWidget_4.setMinimumSize(QSize(880, 686))
+        self.stackedWidget_4.setMaximumSize(QSize(2640, 2058))
+        self.myAccount = QWidget()
+        self.myAccount.setObjectName(u"myAccount")
+        self.frame_18 = QFrame(self.myAccount)
         self.frame_18.setObjectName(u"frame_18")
         self.frame_18.setGeometry(QRect(0, 0, 880, 686))
         self.frame_18.setMinimumSize(QSize(880, 686))
-        self.frame_18.setMaximumSize(QSize(2640, 2058))
+        self.frame_18.setMaximumSize(QSize(880, 686))
+        self.frame_18.setStyleSheet(u"background-color: rgb(255, 255, 255);")
         self.frame_18.setFrameShape(QFrame.StyledPanel)
         self.frame_18.setFrameShadow(QFrame.Raised)
+        self.frame_34 = QFrame(self.frame_18)
+        self.frame_34.setObjectName(u"frame_34")
+        self.frame_34.setGeometry(QRect(0, 0, 880, 343))
+        self.frame_34.setMinimumSize(QSize(880, 343))
+        self.frame_34.setMaximumSize(QSize(880, 343))
+        self.frame_34.setFrameShape(QFrame.StyledPanel)
+        self.frame_34.setFrameShadow(QFrame.Raised)
+        self.label_11 = QLabel(self.frame_34)
+        self.label_11.setObjectName(u"label_11")
+        self.label_11.setGeometry(QRect(0, 0, 880, 50))
+        self.label_11.setMinimumSize(QSize(880, 50))
+        self.label_11.setMaximumSize(QSize(880, 50))
+        font10 = QFont()
+        font10.setFamily(u"Calibri")
+        font10.setPointSize(20)
+        self.label_11.setFont(font10)
+        self.label_11.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 150);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_11.setAlignment(Qt.AlignCenter)
+        self.frame_36 = QFrame(self.frame_34)
+        self.frame_36.setObjectName(u"frame_36")
+        self.frame_36.setGeometry(QRect(0, 50, 880, 293))
+        self.frame_36.setMinimumSize(QSize(880, 293))
+        self.frame_36.setMaximumSize(QSize(880, 293))
+        self.frame_36.setStyleSheet(u"\n"
+"background-color: rgba(30, 59, 81, 50);")
+        self.frame_36.setFrameShape(QFrame.StyledPanel)
+        self.frame_36.setFrameShadow(QFrame.Raised)
+        self.frame_37 = QFrame(self.frame_36)
+        self.frame_37.setObjectName(u"frame_37")
+        self.frame_37.setGeometry(QRect(175, 16, 530, 260))
+        self.frame_37.setMinimumSize(QSize(530, 260))
+        self.frame_37.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_37.setFrameShape(QFrame.StyledPanel)
+        self.frame_37.setFrameShadow(QFrame.Raised)
+        self.label_12 = QLabel(self.frame_37)
+        self.label_12.setObjectName(u"label_12")
+        self.label_12.setGeometry(QRect(10, 40, 160, 50))
+        self.label_12.setMinimumSize(QSize(160, 50))
+        self.label_12.setMaximumSize(QSize(160, 50))
+        font11 = QFont()
+        font11.setFamily(u"Calibri")
+        font11.setPointSize(15)
+        font11.setBold(True)
+        font11.setWeight(75)
+        self.label_12.setFont(font11)
+        self.label_12.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_14 = QLabel(self.frame_37)
+        self.label_14.setObjectName(u"label_14")
+        self.label_14.setGeometry(QRect(10, 180, 160, 50))
+        self.label_14.setMinimumSize(QSize(160, 50))
+        self.label_14.setMaximumSize(QSize(160, 50))
+        self.label_14.setFont(font11)
+        self.label_14.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_13 = QLabel(self.frame_37)
+        self.label_13.setObjectName(u"label_13")
+        self.label_13.setGeometry(QRect(10, 110, 160, 50))
+        self.label_13.setMinimumSize(QSize(160, 50))
+        self.label_13.setMaximumSize(QSize(160, 50))
+        self.label_13.setFont(font11)
+        self.label_13.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_16 = QLabel(self.frame_37)
+        self.label_16.setObjectName(u"label_16")
+        self.label_16.setGeometry(QRect(200, 40, 160, 50))
+        self.label_16.setMinimumSize(QSize(160, 50))
+        self.label_16.setMaximumSize(QSize(160, 50))
+        font12 = QFont()
+        font12.setFamily(u"Calibri Light")
+        font12.setPointSize(10)
+        self.label_16.setFont(font12)
+        self.label_16.setStyleSheet(u"QLabel{\n"
+"	color: black;\n"
+"	border: none;	\n"
+"\n"
+" }\n"
+"")
+        self.label_26 = QLabel(self.frame_37)
+        self.label_26.setObjectName(u"label_26")
+        self.label_26.setGeometry(QRect(200, 110, 160, 50))
+        self.label_26.setMinimumSize(QSize(160, 50))
+        self.label_26.setMaximumSize(QSize(160, 50))
+        self.label_26.setFont(font12)
+        self.label_26.setStyleSheet(u"QLabel{\n"
+"	color: black;\n"
+"	border: none;	\n"
+"\n"
+" }\n"
+"")
+        self.label_27 = QLabel(self.frame_37)
+        self.label_27.setObjectName(u"label_27")
+        self.label_27.setGeometry(QRect(200, 180, 160, 50))
+        self.label_27.setMinimumSize(QSize(160, 50))
+        self.label_27.setMaximumSize(QSize(160, 50))
+        self.label_27.setFont(font12)
+        self.label_27.setStyleSheet(u"QLabel{\n"
+"	color: black;\n"
+"	border: none;	\n"
+"\n"
+" }\n"
+"")
+        self.pushButton_50 = QPushButton(self.frame_37)
+        self.pushButton_50.setObjectName(u"pushButton_50")
+        self.pushButton_50.setGeometry(QRect(460, 40, 50, 50))
+        self.pushButton_50.setMinimumSize(QSize(50, 50))
+        self.pushButton_50.setMaximumSize(QSize(50, 50))
+        font13 = QFont()
+        font13.setFamily(u"Calibri")
+        font13.setPointSize(10)
+        font13.setBold(False)
+        font13.setWeight(50)
+        self.pushButton_50.setFont(font13)
+        self.pushButton_50.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_51 = QPushButton(self.frame_37)
+        self.pushButton_51.setObjectName(u"pushButton_51")
+        self.pushButton_51.setGeometry(QRect(460, 110, 50, 50))
+        self.pushButton_51.setMinimumSize(QSize(50, 50))
+        self.pushButton_51.setMaximumSize(QSize(50, 50))
+        self.pushButton_51.setFont(font13)
+        self.pushButton_51.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_52 = QPushButton(self.frame_37)
+        self.pushButton_52.setObjectName(u"pushButton_52")
+        self.pushButton_52.setGeometry(QRect(460, 180, 50, 50))
+        self.pushButton_52.setMinimumSize(QSize(50, 50))
+        self.pushButton_52.setMaximumSize(QSize(50, 50))
+        self.pushButton_52.setFont(font13)
+        self.pushButton_52.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.frame_35 = QFrame(self.frame_18)
+        self.frame_35.setObjectName(u"frame_35")
+        self.frame_35.setGeometry(QRect(0, 393, 880, 293))
+        self.frame_35.setMinimumSize(QSize(880, 293))
+        self.frame_35.setMaximumSize(QSize(880, 293))
+        self.frame_35.setStyleSheet(u"\n"
+"background-color: rgba(30, 59, 81, 50);")
+        self.frame_35.setFrameShape(QFrame.StyledPanel)
+        self.frame_35.setFrameShadow(QFrame.Raised)
+        self.frame_38 = QFrame(self.frame_35)
+        self.frame_38.setObjectName(u"frame_38")
+        self.frame_38.setGeometry(QRect(170, 10, 530, 260))
+        self.frame_38.setMinimumSize(QSize(530, 260))
+        self.frame_38.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_38.setFrameShape(QFrame.StyledPanel)
+        self.frame_38.setFrameShadow(QFrame.Raised)
+        self.label_28 = QLabel(self.frame_38)
+        self.label_28.setObjectName(u"label_28")
+        self.label_28.setGeometry(QRect(10, 40, 250, 50))
+        self.label_28.setMinimumSize(QSize(250, 50))
+        self.label_28.setMaximumSize(QSize(250, 50))
+        font14 = QFont()
+        font14.setFamily(u"Calibri")
+        font14.setPointSize(15)
+        self.label_28.setFont(font14)
+        self.label_28.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_30 = QLabel(self.frame_38)
+        self.label_30.setObjectName(u"label_30")
+        self.label_30.setGeometry(QRect(10, 110, 250, 50))
+        self.label_30.setMinimumSize(QSize(250, 50))
+        self.label_30.setMaximumSize(QSize(250, 50))
+        self.label_30.setFont(font14)
+        self.label_30.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_53 = QPushButton(self.frame_38)
+        self.pushButton_53.setObjectName(u"pushButton_53")
+        self.pushButton_53.setGeometry(QRect(134, 180, 250, 50))
+        self.pushButton_53.setMinimumSize(QSize(250, 50))
+        self.pushButton_53.setMaximumSize(QSize(250, 50))
+        self.pushButton_53.setFont(font13)
+        self.pushButton_53.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(220, 220, 220);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.lineEdit = QLineEdit(self.frame_38)
+        self.lineEdit.setObjectName(u"lineEdit")
+        self.lineEdit.setGeometry(QRect(280, 40, 240, 50))
+        self.lineEdit.setStyleSheet(u"QLineEdit {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(200, 200, 200);\n"
+" }\n"
+"QLineEdit:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }")
+        self.lineEdit_2 = QLineEdit(self.frame_38)
+        self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.lineEdit_2.setGeometry(QRect(280, 110, 240, 50))
+        self.lineEdit_2.setStyleSheet(u"QLineEdit {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(200, 200, 200);\n"
+" }\n"
+"QLineEdit:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }")
+        self.label_15 = QLabel(self.frame_18)
+        self.label_15.setObjectName(u"label_15")
+        self.label_15.setGeometry(QRect(0, 343, 880, 50))
+        self.label_15.setMinimumSize(QSize(880, 50))
+        self.label_15.setMaximumSize(QSize(880, 50))
+        self.label_15.setFont(font10)
+        self.label_15.setStyleSheet(u"QLabel{\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);\n"
+"	background-color: rgba(30, 59, 81, 150);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_15.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_4.addWidget(self.myAccount)
+        self.privacySafety = QWidget()
+        self.privacySafety.setObjectName(u"privacySafety")
+        self.frame_40 = QFrame(self.privacySafety)
+        self.frame_40.setObjectName(u"frame_40")
+        self.frame_40.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_40.setMinimumSize(QSize(880, 686))
+        self.frame_40.setMaximumSize(QSize(880, 686))
+        self.frame_40.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_40.setFrameShape(QFrame.StyledPanel)
+        self.frame_40.setFrameShadow(QFrame.Raised)
+        self.frame_44 = QFrame(self.frame_40)
+        self.frame_44.setObjectName(u"frame_44")
+        self.frame_44.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_44.setMinimumSize(QSize(530, 260))
+        self.frame_44.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_44.setFrameShape(QFrame.StyledPanel)
+        self.frame_44.setFrameShadow(QFrame.Raised)
+        self.label_38 = QLabel(self.frame_44)
+        self.label_38.setObjectName(u"label_38")
+        self.label_38.setGeometry(QRect(10, 40, 400, 50))
+        self.label_38.setMinimumSize(QSize(400, 50))
+        self.label_38.setMaximumSize(QSize(400, 50))
+        self.label_38.setFont(font11)
+        self.label_38.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_39 = QLabel(self.frame_44)
+        self.label_39.setObjectName(u"label_39")
+        self.label_39.setGeometry(QRect(10, 180, 400, 50))
+        self.label_39.setMinimumSize(QSize(400, 50))
+        self.label_39.setMaximumSize(QSize(400, 50))
+        self.label_39.setFont(font11)
+        self.label_39.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_40 = QLabel(self.frame_44)
+        self.label_40.setObjectName(u"label_40")
+        self.label_40.setGeometry(QRect(10, 110, 400, 50))
+        self.label_40.setMinimumSize(QSize(400, 50))
+        self.label_40.setMaximumSize(QSize(400, 50))
+        self.label_40.setFont(font11)
+        self.label_40.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_57 = QPushButton(self.frame_44)
+        self.pushButton_57.setObjectName(u"pushButton_57")
+        self.pushButton_57.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_57.setMinimumSize(QSize(50, 50))
+        self.pushButton_57.setMaximumSize(QSize(50, 50))
+        self.pushButton_57.setFont(font13)
+        self.pushButton_57.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_58 = QPushButton(self.frame_44)
+        self.pushButton_58.setObjectName(u"pushButton_58")
+        self.pushButton_58.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_58.setMinimumSize(QSize(50, 50))
+        self.pushButton_58.setMaximumSize(QSize(50, 50))
+        self.pushButton_58.setFont(font13)
+        self.pushButton_58.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_59 = QPushButton(self.frame_44)
+        self.pushButton_59.setObjectName(u"pushButton_59")
+        self.pushButton_59.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_59.setMinimumSize(QSize(50, 50))
+        self.pushButton_59.setMaximumSize(QSize(50, 50))
+        self.pushButton_59.setFont(font13)
+        self.pushButton_59.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_37 = QLabel(self.frame_40)
+        self.label_37.setObjectName(u"label_37")
+        self.label_37.setGeometry(QRect(0, 0, 880, 50))
+        self.label_37.setMinimumSize(QSize(880, 50))
+        self.label_37.setMaximumSize(QSize(880, 50))
+        self.label_37.setFont(font10)
+        self.label_37.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_37.setAlignment(Qt.AlignCenter)
+        self.label_37.raise_()
+        self.frame_44.raise_()
+        self.stackedWidget_4.addWidget(self.privacySafety)
+        self.backupRestore = QWidget()
+        self.backupRestore.setObjectName(u"backupRestore")
+        self.frame_41 = QFrame(self.backupRestore)
+        self.frame_41.setObjectName(u"frame_41")
+        self.frame_41.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_41.setMinimumSize(QSize(880, 686))
+        self.frame_41.setMaximumSize(QSize(880, 686))
+        self.frame_41.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_41.setFrameShape(QFrame.StyledPanel)
+        self.frame_41.setFrameShadow(QFrame.Raised)
+        self.frame_45 = QFrame(self.frame_41)
+        self.frame_45.setObjectName(u"frame_45")
+        self.frame_45.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_45.setMinimumSize(QSize(530, 260))
+        self.frame_45.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_45.setFrameShape(QFrame.StyledPanel)
+        self.frame_45.setFrameShadow(QFrame.Raised)
+        self.label_41 = QLabel(self.frame_45)
+        self.label_41.setObjectName(u"label_41")
+        self.label_41.setGeometry(QRect(10, 40, 400, 50))
+        self.label_41.setMinimumSize(QSize(400, 50))
+        self.label_41.setMaximumSize(QSize(400, 50))
+        self.label_41.setFont(font11)
+        self.label_41.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_42 = QLabel(self.frame_45)
+        self.label_42.setObjectName(u"label_42")
+        self.label_42.setGeometry(QRect(10, 180, 400, 50))
+        self.label_42.setMinimumSize(QSize(400, 50))
+        self.label_42.setMaximumSize(QSize(400, 50))
+        self.label_42.setFont(font11)
+        self.label_42.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_43 = QLabel(self.frame_45)
+        self.label_43.setObjectName(u"label_43")
+        self.label_43.setGeometry(QRect(10, 110, 400, 50))
+        self.label_43.setMinimumSize(QSize(400, 50))
+        self.label_43.setMaximumSize(QSize(400, 50))
+        self.label_43.setFont(font11)
+        self.label_43.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_60 = QPushButton(self.frame_45)
+        self.pushButton_60.setObjectName(u"pushButton_60")
+        self.pushButton_60.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_60.setMinimumSize(QSize(50, 50))
+        self.pushButton_60.setMaximumSize(QSize(50, 50))
+        self.pushButton_60.setFont(font13)
+        self.pushButton_60.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_61 = QPushButton(self.frame_45)
+        self.pushButton_61.setObjectName(u"pushButton_61")
+        self.pushButton_61.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_61.setMinimumSize(QSize(50, 50))
+        self.pushButton_61.setMaximumSize(QSize(50, 50))
+        self.pushButton_61.setFont(font13)
+        self.pushButton_61.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_62 = QPushButton(self.frame_45)
+        self.pushButton_62.setObjectName(u"pushButton_62")
+        self.pushButton_62.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_62.setMinimumSize(QSize(50, 50))
+        self.pushButton_62.setMaximumSize(QSize(50, 50))
+        self.pushButton_62.setFont(font13)
+        self.pushButton_62.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_44 = QLabel(self.frame_41)
+        self.label_44.setObjectName(u"label_44")
+        self.label_44.setGeometry(QRect(0, 0, 880, 50))
+        self.label_44.setMinimumSize(QSize(880, 50))
+        self.label_44.setMaximumSize(QSize(880, 50))
+        self.label_44.setFont(font10)
+        self.label_44.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_44.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_4.addWidget(self.backupRestore)
+        self.addAccount = QWidget()
+        self.addAccount.setObjectName(u"addAccount")
+        self.frame_42 = QFrame(self.addAccount)
+        self.frame_42.setObjectName(u"frame_42")
+        self.frame_42.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_42.setMinimumSize(QSize(880, 686))
+        self.frame_42.setMaximumSize(QSize(880, 686))
+        self.frame_42.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_42.setFrameShape(QFrame.StyledPanel)
+        self.frame_42.setFrameShadow(QFrame.Raised)
+        self.frame_46 = QFrame(self.frame_42)
+        self.frame_46.setObjectName(u"frame_46")
+        self.frame_46.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_46.setMinimumSize(QSize(530, 260))
+        self.frame_46.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_46.setFrameShape(QFrame.StyledPanel)
+        self.frame_46.setFrameShadow(QFrame.Raised)
+        self.label_45 = QLabel(self.frame_46)
+        self.label_45.setObjectName(u"label_45")
+        self.label_45.setGeometry(QRect(10, 40, 400, 50))
+        self.label_45.setMinimumSize(QSize(400, 50))
+        self.label_45.setMaximumSize(QSize(400, 50))
+        self.label_45.setFont(font11)
+        self.label_45.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_46 = QLabel(self.frame_46)
+        self.label_46.setObjectName(u"label_46")
+        self.label_46.setGeometry(QRect(10, 180, 400, 50))
+        self.label_46.setMinimumSize(QSize(400, 50))
+        self.label_46.setMaximumSize(QSize(400, 50))
+        self.label_46.setFont(font11)
+        self.label_46.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_47 = QLabel(self.frame_46)
+        self.label_47.setObjectName(u"label_47")
+        self.label_47.setGeometry(QRect(10, 110, 400, 50))
+        self.label_47.setMinimumSize(QSize(400, 50))
+        self.label_47.setMaximumSize(QSize(400, 50))
+        self.label_47.setFont(font11)
+        self.label_47.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_63 = QPushButton(self.frame_46)
+        self.pushButton_63.setObjectName(u"pushButton_63")
+        self.pushButton_63.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_63.setMinimumSize(QSize(50, 50))
+        self.pushButton_63.setMaximumSize(QSize(50, 50))
+        self.pushButton_63.setFont(font13)
+        self.pushButton_63.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_64 = QPushButton(self.frame_46)
+        self.pushButton_64.setObjectName(u"pushButton_64")
+        self.pushButton_64.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_64.setMinimumSize(QSize(50, 50))
+        self.pushButton_64.setMaximumSize(QSize(50, 50))
+        self.pushButton_64.setFont(font13)
+        self.pushButton_64.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_65 = QPushButton(self.frame_46)
+        self.pushButton_65.setObjectName(u"pushButton_65")
+        self.pushButton_65.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_65.setMinimumSize(QSize(50, 50))
+        self.pushButton_65.setMaximumSize(QSize(50, 50))
+        self.pushButton_65.setFont(font13)
+        self.pushButton_65.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_48 = QLabel(self.frame_42)
+        self.label_48.setObjectName(u"label_48")
+        self.label_48.setGeometry(QRect(0, 0, 880, 50))
+        self.label_48.setMinimumSize(QSize(880, 50))
+        self.label_48.setMaximumSize(QSize(880, 50))
+        self.label_48.setFont(font10)
+        self.label_48.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_48.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_4.addWidget(self.addAccount)
         self.stackedWidget_3.addWidget(self.UserSettings)
         self.AppSettings = QWidget()
         self.AppSettings.setObjectName(u"AppSettings")
         self.AppSettings.setMinimumSize(QSize(880, 686))
         self.AppSettings.setMaximumSize(QSize(2640, 2058))
-        self.frame_64 = QFrame(self.AppSettings)
-        self.frame_64.setObjectName(u"frame_64")
-        self.frame_64.setGeometry(QRect(0, 0, 880, 686))
-        self.frame_64.setMinimumSize(QSize(880, 686))
-        self.frame_64.setMaximumSize(QSize(2640, 2058))
-        self.frame_64.setFrameShape(QFrame.StyledPanel)
-        self.frame_64.setFrameShadow(QFrame.Raised)
+        self.stackedWidget_5 = QStackedWidget(self.AppSettings)
+        self.stackedWidget_5.setObjectName(u"stackedWidget_5")
+        self.stackedWidget_5.setGeometry(QRect(0, 0, 880, 686))
+        self.stackedWidget_5.setMinimumSize(QSize(880, 686))
+        self.stackedWidget_5.setMaximumSize(QSize(2640, 2058))
+        self.Appearance = QWidget()
+        self.Appearance.setObjectName(u"Appearance")
+        self.frame_43 = QFrame(self.Appearance)
+        self.frame_43.setObjectName(u"frame_43")
+        self.frame_43.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_43.setMinimumSize(QSize(880, 686))
+        self.frame_43.setMaximumSize(QSize(880, 686))
+        self.frame_43.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_43.setFrameShape(QFrame.StyledPanel)
+        self.frame_43.setFrameShadow(QFrame.Raised)
+        self.frame_47 = QFrame(self.frame_43)
+        self.frame_47.setObjectName(u"frame_47")
+        self.frame_47.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_47.setMinimumSize(QSize(530, 260))
+        self.frame_47.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_47.setFrameShape(QFrame.StyledPanel)
+        self.frame_47.setFrameShadow(QFrame.Raised)
+        self.label_49 = QLabel(self.frame_47)
+        self.label_49.setObjectName(u"label_49")
+        self.label_49.setGeometry(QRect(10, 40, 400, 50))
+        self.label_49.setMinimumSize(QSize(400, 50))
+        self.label_49.setMaximumSize(QSize(400, 50))
+        self.label_49.setFont(font11)
+        self.label_49.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_50 = QLabel(self.frame_47)
+        self.label_50.setObjectName(u"label_50")
+        self.label_50.setGeometry(QRect(10, 180, 400, 50))
+        self.label_50.setMinimumSize(QSize(400, 50))
+        self.label_50.setMaximumSize(QSize(400, 50))
+        self.label_50.setFont(font11)
+        self.label_50.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_51 = QLabel(self.frame_47)
+        self.label_51.setObjectName(u"label_51")
+        self.label_51.setGeometry(QRect(10, 110, 400, 50))
+        self.label_51.setMinimumSize(QSize(400, 50))
+        self.label_51.setMaximumSize(QSize(400, 50))
+        self.label_51.setFont(font11)
+        self.label_51.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_66 = QPushButton(self.frame_47)
+        self.pushButton_66.setObjectName(u"pushButton_66")
+        self.pushButton_66.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_66.setMinimumSize(QSize(50, 50))
+        self.pushButton_66.setMaximumSize(QSize(50, 50))
+        self.pushButton_66.setFont(font13)
+        self.pushButton_66.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_67 = QPushButton(self.frame_47)
+        self.pushButton_67.setObjectName(u"pushButton_67")
+        self.pushButton_67.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_67.setMinimumSize(QSize(50, 50))
+        self.pushButton_67.setMaximumSize(QSize(50, 50))
+        self.pushButton_67.setFont(font13)
+        self.pushButton_67.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_68 = QPushButton(self.frame_47)
+        self.pushButton_68.setObjectName(u"pushButton_68")
+        self.pushButton_68.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_68.setMinimumSize(QSize(50, 50))
+        self.pushButton_68.setMaximumSize(QSize(50, 50))
+        self.pushButton_68.setFont(font13)
+        self.pushButton_68.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_52 = QLabel(self.frame_43)
+        self.label_52.setObjectName(u"label_52")
+        self.label_52.setGeometry(QRect(0, 0, 880, 50))
+        self.label_52.setMinimumSize(QSize(880, 50))
+        self.label_52.setMaximumSize(QSize(880, 50))
+        self.label_52.setFont(font10)
+        self.label_52.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_52.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_5.addWidget(self.Appearance)
+        self.Notification = QWidget()
+        self.Notification.setObjectName(u"Notification")
+        self.frame_48 = QFrame(self.Notification)
+        self.frame_48.setObjectName(u"frame_48")
+        self.frame_48.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_48.setMinimumSize(QSize(880, 686))
+        self.frame_48.setMaximumSize(QSize(880, 686))
+        self.frame_48.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_48.setFrameShape(QFrame.StyledPanel)
+        self.frame_48.setFrameShadow(QFrame.Raised)
+        self.frame_49 = QFrame(self.frame_48)
+        self.frame_49.setObjectName(u"frame_49")
+        self.frame_49.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_49.setMinimumSize(QSize(530, 260))
+        self.frame_49.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_49.setFrameShape(QFrame.StyledPanel)
+        self.frame_49.setFrameShadow(QFrame.Raised)
+        self.label_53 = QLabel(self.frame_49)
+        self.label_53.setObjectName(u"label_53")
+        self.label_53.setGeometry(QRect(10, 40, 400, 50))
+        self.label_53.setMinimumSize(QSize(400, 50))
+        self.label_53.setMaximumSize(QSize(400, 50))
+        self.label_53.setFont(font11)
+        self.label_53.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_54 = QLabel(self.frame_49)
+        self.label_54.setObjectName(u"label_54")
+        self.label_54.setGeometry(QRect(10, 180, 400, 50))
+        self.label_54.setMinimumSize(QSize(400, 50))
+        self.label_54.setMaximumSize(QSize(400, 50))
+        self.label_54.setFont(font11)
+        self.label_54.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_55 = QLabel(self.frame_49)
+        self.label_55.setObjectName(u"label_55")
+        self.label_55.setGeometry(QRect(10, 110, 400, 50))
+        self.label_55.setMinimumSize(QSize(400, 50))
+        self.label_55.setMaximumSize(QSize(400, 50))
+        self.label_55.setFont(font11)
+        self.label_55.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_69 = QPushButton(self.frame_49)
+        self.pushButton_69.setObjectName(u"pushButton_69")
+        self.pushButton_69.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_69.setMinimumSize(QSize(50, 50))
+        self.pushButton_69.setMaximumSize(QSize(50, 50))
+        self.pushButton_69.setFont(font13)
+        self.pushButton_69.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_70 = QPushButton(self.frame_49)
+        self.pushButton_70.setObjectName(u"pushButton_70")
+        self.pushButton_70.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_70.setMinimumSize(QSize(50, 50))
+        self.pushButton_70.setMaximumSize(QSize(50, 50))
+        self.pushButton_70.setFont(font13)
+        self.pushButton_70.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_71 = QPushButton(self.frame_49)
+        self.pushButton_71.setObjectName(u"pushButton_71")
+        self.pushButton_71.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_71.setMinimumSize(QSize(50, 50))
+        self.pushButton_71.setMaximumSize(QSize(50, 50))
+        self.pushButton_71.setFont(font13)
+        self.pushButton_71.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_56 = QLabel(self.frame_48)
+        self.label_56.setObjectName(u"label_56")
+        self.label_56.setGeometry(QRect(0, 0, 880, 50))
+        self.label_56.setMinimumSize(QSize(880, 50))
+        self.label_56.setMaximumSize(QSize(880, 50))
+        self.label_56.setFont(font10)
+        self.label_56.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_56.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_5.addWidget(self.Notification)
+        self.textImages = QWidget()
+        self.textImages.setObjectName(u"textImages")
+        self.frame_50 = QFrame(self.textImages)
+        self.frame_50.setObjectName(u"frame_50")
+        self.frame_50.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_50.setMinimumSize(QSize(880, 686))
+        self.frame_50.setMaximumSize(QSize(880, 686))
+        self.frame_50.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_50.setFrameShape(QFrame.StyledPanel)
+        self.frame_50.setFrameShadow(QFrame.Raised)
+        self.frame_51 = QFrame(self.frame_50)
+        self.frame_51.setObjectName(u"frame_51")
+        self.frame_51.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_51.setMinimumSize(QSize(530, 260))
+        self.frame_51.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_51.setFrameShape(QFrame.StyledPanel)
+        self.frame_51.setFrameShadow(QFrame.Raised)
+        self.label_57 = QLabel(self.frame_51)
+        self.label_57.setObjectName(u"label_57")
+        self.label_57.setGeometry(QRect(10, 40, 400, 50))
+        self.label_57.setMinimumSize(QSize(400, 50))
+        self.label_57.setMaximumSize(QSize(400, 50))
+        self.label_57.setFont(font11)
+        self.label_57.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_58 = QLabel(self.frame_51)
+        self.label_58.setObjectName(u"label_58")
+        self.label_58.setGeometry(QRect(10, 180, 400, 50))
+        self.label_58.setMinimumSize(QSize(400, 50))
+        self.label_58.setMaximumSize(QSize(400, 50))
+        self.label_58.setFont(font11)
+        self.label_58.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_59 = QLabel(self.frame_51)
+        self.label_59.setObjectName(u"label_59")
+        self.label_59.setGeometry(QRect(10, 110, 400, 50))
+        self.label_59.setMinimumSize(QSize(400, 50))
+        self.label_59.setMaximumSize(QSize(400, 50))
+        self.label_59.setFont(font11)
+        self.label_59.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_72 = QPushButton(self.frame_51)
+        self.pushButton_72.setObjectName(u"pushButton_72")
+        self.pushButton_72.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_72.setMinimumSize(QSize(50, 50))
+        self.pushButton_72.setMaximumSize(QSize(50, 50))
+        self.pushButton_72.setFont(font13)
+        self.pushButton_72.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_73 = QPushButton(self.frame_51)
+        self.pushButton_73.setObjectName(u"pushButton_73")
+        self.pushButton_73.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_73.setMinimumSize(QSize(50, 50))
+        self.pushButton_73.setMaximumSize(QSize(50, 50))
+        self.pushButton_73.setFont(font13)
+        self.pushButton_73.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_74 = QPushButton(self.frame_51)
+        self.pushButton_74.setObjectName(u"pushButton_74")
+        self.pushButton_74.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_74.setMinimumSize(QSize(50, 50))
+        self.pushButton_74.setMaximumSize(QSize(50, 50))
+        self.pushButton_74.setFont(font13)
+        self.pushButton_74.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_60 = QLabel(self.frame_50)
+        self.label_60.setObjectName(u"label_60")
+        self.label_60.setGeometry(QRect(0, 0, 880, 50))
+        self.label_60.setMinimumSize(QSize(880, 50))
+        self.label_60.setMaximumSize(QSize(880, 50))
+        self.label_60.setFont(font10)
+        self.label_60.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_60.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_5.addWidget(self.textImages)
+        self.Performance = QWidget()
+        self.Performance.setObjectName(u"Performance")
+        self.frame_52 = QFrame(self.Performance)
+        self.frame_52.setObjectName(u"frame_52")
+        self.frame_52.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_52.setMinimumSize(QSize(880, 686))
+        self.frame_52.setMaximumSize(QSize(880, 686))
+        self.frame_52.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_52.setFrameShape(QFrame.StyledPanel)
+        self.frame_52.setFrameShadow(QFrame.Raised)
+        self.frame_53 = QFrame(self.frame_52)
+        self.frame_53.setObjectName(u"frame_53")
+        self.frame_53.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_53.setMinimumSize(QSize(530, 260))
+        self.frame_53.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_53.setFrameShape(QFrame.StyledPanel)
+        self.frame_53.setFrameShadow(QFrame.Raised)
+        self.label_61 = QLabel(self.frame_53)
+        self.label_61.setObjectName(u"label_61")
+        self.label_61.setGeometry(QRect(10, 40, 400, 50))
+        self.label_61.setMinimumSize(QSize(400, 50))
+        self.label_61.setMaximumSize(QSize(400, 50))
+        self.label_61.setFont(font11)
+        self.label_61.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_62 = QLabel(self.frame_53)
+        self.label_62.setObjectName(u"label_62")
+        self.label_62.setGeometry(QRect(10, 180, 400, 50))
+        self.label_62.setMinimumSize(QSize(400, 50))
+        self.label_62.setMaximumSize(QSize(400, 50))
+        self.label_62.setFont(font11)
+        self.label_62.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_63 = QLabel(self.frame_53)
+        self.label_63.setObjectName(u"label_63")
+        self.label_63.setGeometry(QRect(10, 110, 400, 50))
+        self.label_63.setMinimumSize(QSize(400, 50))
+        self.label_63.setMaximumSize(QSize(400, 50))
+        self.label_63.setFont(font11)
+        self.label_63.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_75 = QPushButton(self.frame_53)
+        self.pushButton_75.setObjectName(u"pushButton_75")
+        self.pushButton_75.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_75.setMinimumSize(QSize(50, 50))
+        self.pushButton_75.setMaximumSize(QSize(50, 50))
+        self.pushButton_75.setFont(font13)
+        self.pushButton_75.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_76 = QPushButton(self.frame_53)
+        self.pushButton_76.setObjectName(u"pushButton_76")
+        self.pushButton_76.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_76.setMinimumSize(QSize(50, 50))
+        self.pushButton_76.setMaximumSize(QSize(50, 50))
+        self.pushButton_76.setFont(font13)
+        self.pushButton_76.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_77 = QPushButton(self.frame_53)
+        self.pushButton_77.setObjectName(u"pushButton_77")
+        self.pushButton_77.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_77.setMinimumSize(QSize(50, 50))
+        self.pushButton_77.setMaximumSize(QSize(50, 50))
+        self.pushButton_77.setFont(font13)
+        self.pushButton_77.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_64 = QLabel(self.frame_52)
+        self.label_64.setObjectName(u"label_64")
+        self.label_64.setGeometry(QRect(0, 0, 880, 50))
+        self.label_64.setMinimumSize(QSize(880, 50))
+        self.label_64.setMaximumSize(QSize(880, 50))
+        self.label_64.setFont(font10)
+        self.label_64.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_64.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_5.addWidget(self.Performance)
+        self.Language = QWidget()
+        self.Language.setObjectName(u"Language")
+        self.frame_54 = QFrame(self.Language)
+        self.frame_54.setObjectName(u"frame_54")
+        self.frame_54.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_54.setMinimumSize(QSize(880, 686))
+        self.frame_54.setMaximumSize(QSize(880, 686))
+        self.frame_54.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_54.setFrameShape(QFrame.StyledPanel)
+        self.frame_54.setFrameShadow(QFrame.Raised)
+        self.frame_55 = QFrame(self.frame_54)
+        self.frame_55.setObjectName(u"frame_55")
+        self.frame_55.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_55.setMinimumSize(QSize(530, 260))
+        self.frame_55.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_55.setFrameShape(QFrame.StyledPanel)
+        self.frame_55.setFrameShadow(QFrame.Raised)
+        self.label_65 = QLabel(self.frame_55)
+        self.label_65.setObjectName(u"label_65")
+        self.label_65.setGeometry(QRect(10, 40, 400, 50))
+        self.label_65.setMinimumSize(QSize(400, 50))
+        self.label_65.setMaximumSize(QSize(400, 50))
+        self.label_65.setFont(font11)
+        self.label_65.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_66 = QLabel(self.frame_55)
+        self.label_66.setObjectName(u"label_66")
+        self.label_66.setGeometry(QRect(10, 180, 400, 50))
+        self.label_66.setMinimumSize(QSize(400, 50))
+        self.label_66.setMaximumSize(QSize(400, 50))
+        self.label_66.setFont(font11)
+        self.label_66.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_67 = QLabel(self.frame_55)
+        self.label_67.setObjectName(u"label_67")
+        self.label_67.setGeometry(QRect(10, 110, 400, 50))
+        self.label_67.setMinimumSize(QSize(400, 50))
+        self.label_67.setMaximumSize(QSize(400, 50))
+        self.label_67.setFont(font11)
+        self.label_67.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_78 = QPushButton(self.frame_55)
+        self.pushButton_78.setObjectName(u"pushButton_78")
+        self.pushButton_78.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_78.setMinimumSize(QSize(50, 50))
+        self.pushButton_78.setMaximumSize(QSize(50, 50))
+        self.pushButton_78.setFont(font13)
+        self.pushButton_78.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_79 = QPushButton(self.frame_55)
+        self.pushButton_79.setObjectName(u"pushButton_79")
+        self.pushButton_79.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_79.setMinimumSize(QSize(50, 50))
+        self.pushButton_79.setMaximumSize(QSize(50, 50))
+        self.pushButton_79.setFont(font13)
+        self.pushButton_79.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_80 = QPushButton(self.frame_55)
+        self.pushButton_80.setObjectName(u"pushButton_80")
+        self.pushButton_80.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_80.setMinimumSize(QSize(50, 50))
+        self.pushButton_80.setMaximumSize(QSize(50, 50))
+        self.pushButton_80.setFont(font13)
+        self.pushButton_80.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_68 = QLabel(self.frame_54)
+        self.label_68.setObjectName(u"label_68")
+        self.label_68.setGeometry(QRect(0, 0, 880, 50))
+        self.label_68.setMinimumSize(QSize(880, 50))
+        self.label_68.setMaximumSize(QSize(880, 50))
+        self.label_68.setFont(font10)
+        self.label_68.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_68.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_5.addWidget(self.Language)
+        self.versionUpdates = QWidget()
+        self.versionUpdates.setObjectName(u"versionUpdates")
+        self.frame_56 = QFrame(self.versionUpdates)
+        self.frame_56.setObjectName(u"frame_56")
+        self.frame_56.setGeometry(QRect(0, 0, 880, 686))
+        self.frame_56.setMinimumSize(QSize(880, 686))
+        self.frame_56.setMaximumSize(QSize(880, 686))
+        self.frame_56.setStyleSheet(u"background-color: rgba(30, 59, 81, 50);")
+        self.frame_56.setFrameShape(QFrame.StyledPanel)
+        self.frame_56.setFrameShadow(QFrame.Raised)
+        self.frame_57 = QFrame(self.frame_56)
+        self.frame_57.setObjectName(u"frame_57")
+        self.frame_57.setGeometry(QRect(50, 100, 781, 531))
+        self.frame_57.setMinimumSize(QSize(530, 260))
+        self.frame_57.setStyleSheet(u"border:none;\n"
+"border:2px solid rgb(220,220,220);\n"
+"border-radius:20px;\n"
+"background-color: rgb(242, 242, 242);")
+        self.frame_57.setFrameShape(QFrame.StyledPanel)
+        self.frame_57.setFrameShadow(QFrame.Raised)
+        self.label_69 = QLabel(self.frame_57)
+        self.label_69.setObjectName(u"label_69")
+        self.label_69.setGeometry(QRect(10, 40, 400, 50))
+        self.label_69.setMinimumSize(QSize(400, 50))
+        self.label_69.setMaximumSize(QSize(400, 50))
+        self.label_69.setFont(font11)
+        self.label_69.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_70 = QLabel(self.frame_57)
+        self.label_70.setObjectName(u"label_70")
+        self.label_70.setGeometry(QRect(10, 180, 400, 50))
+        self.label_70.setMinimumSize(QSize(400, 50))
+        self.label_70.setMaximumSize(QSize(400, 50))
+        self.label_70.setFont(font11)
+        self.label_70.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.label_71 = QLabel(self.frame_57)
+        self.label_71.setObjectName(u"label_71")
+        self.label_71.setGeometry(QRect(10, 110, 400, 50))
+        self.label_71.setMinimumSize(QSize(400, 50))
+        self.label_71.setMaximumSize(QSize(400, 50))
+        self.label_71.setFont(font11)
+        self.label_71.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+" }\n"
+"")
+        self.pushButton_81 = QPushButton(self.frame_57)
+        self.pushButton_81.setObjectName(u"pushButton_81")
+        self.pushButton_81.setGeometry(QRect(700, 40, 50, 50))
+        self.pushButton_81.setMinimumSize(QSize(50, 50))
+        self.pushButton_81.setMaximumSize(QSize(50, 50))
+        self.pushButton_81.setFont(font13)
+        self.pushButton_81.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_82 = QPushButton(self.frame_57)
+        self.pushButton_82.setObjectName(u"pushButton_82")
+        self.pushButton_82.setGeometry(QRect(700, 110, 50, 50))
+        self.pushButton_82.setMinimumSize(QSize(50, 50))
+        self.pushButton_82.setMaximumSize(QSize(50, 50))
+        self.pushButton_82.setFont(font13)
+        self.pushButton_82.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.pushButton_83 = QPushButton(self.frame_57)
+        self.pushButton_83.setObjectName(u"pushButton_83")
+        self.pushButton_83.setGeometry(QRect(700, 180, 50, 50))
+        self.pushButton_83.setMinimumSize(QSize(50, 50))
+        self.pushButton_83.setMaximumSize(QSize(50, 50))
+        self.pushButton_83.setFont(font13)
+        self.pushButton_83.setStyleSheet(u"QPushButton {\n"
+"	background-color: white;	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border: 1px solid rgb(245, 245, 245);\n"
+" }\n"
+"QPushButton:hover{	\n"
+"	background-color: rgba(230, 136, 136, 50);\n"
+"    border-right: 2px solid rgb(30, 59, 81);\n"
+" }\n"
+"QPushButton:pressed{     \n"
+"	border-bottom: 5px solid rgb(30, 59, 81);\n"
+"}")
+        self.label_72 = QLabel(self.frame_56)
+        self.label_72.setObjectName(u"label_72")
+        self.label_72.setGeometry(QRect(0, 0, 880, 50))
+        self.label_72.setMinimumSize(QSize(880, 50))
+        self.label_72.setMaximumSize(QSize(880, 50))
+        self.label_72.setFont(font10)
+        self.label_72.setStyleSheet(u"QLabel{	\n"
+"	color: black;\n"
+"	border: none;\n"
+"	border-bottom: 1px solid rgb(220, 220, 220);	\n"
+"	background-color: rgba(30, 59, 81, 120);\n"
+" }\n"
+"QLabel:hover{	\n"
+"	color: rgba(0, 0, 0, 100);\n"
+" }\n"
+"")
+        self.label_72.setAlignment(Qt.AlignCenter)
+        self.stackedWidget_5.addWidget(self.versionUpdates)
         self.stackedWidget_3.addWidget(self.AppSettings)
 
         self.horizontalLayout_13.addWidget(self.stackedWidget_3)
@@ -1287,12 +2618,12 @@ class Ui_DashBoard(object):
         self.pushButton_38.setGeometry(QRect(10, 5, 180, 30))
         self.pushButton_38.setMinimumSize(QSize(180, 30))
         self.pushButton_38.setMaximumSize(QSize(180, 30))
-        font11 = QFont()
-        font11.setFamily(u"Calibri")
-        font11.setPointSize(12)
-        font11.setBold(True)
-        font11.setWeight(75)
-        self.pushButton_38.setFont(font11)
+        font15 = QFont()
+        font15.setFamily(u"Calibri")
+        font15.setPointSize(12)
+        font15.setBold(True)
+        font15.setWeight(75)
+        self.pushButton_38.setFont(font15)
         self.pushButton_38.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1310,12 +2641,7 @@ class Ui_DashBoard(object):
         self.pushButton_40.setGeometry(QRect(10, 50, 180, 30))
         self.pushButton_40.setMinimumSize(QSize(180, 30))
         self.pushButton_40.setMaximumSize(QSize(180, 30))
-        font12 = QFont()
-        font12.setFamily(u"Calibri")
-        font12.setPointSize(10)
-        font12.setBold(False)
-        font12.setWeight(50)
-        self.pushButton_40.setFont(font12)
+        self.pushButton_40.setFont(font13)
         self.pushButton_40.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1334,7 +2660,7 @@ class Ui_DashBoard(object):
         self.pushButton_41.setGeometry(QRect(10, 120, 180, 30))
         self.pushButton_41.setMinimumSize(QSize(180, 30))
         self.pushButton_41.setMaximumSize(QSize(180, 30))
-        self.pushButton_41.setFont(font12)
+        self.pushButton_41.setFont(font13)
         self.pushButton_41.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1353,7 +2679,7 @@ class Ui_DashBoard(object):
         self.pushButton_42.setGeometry(QRect(10, 190, 180, 30))
         self.pushButton_42.setMinimumSize(QSize(180, 30))
         self.pushButton_42.setMaximumSize(QSize(180, 30))
-        self.pushButton_42.setFont(font12)
+        self.pushButton_42.setFont(font13)
         self.pushButton_42.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1372,7 +2698,7 @@ class Ui_DashBoard(object):
         self.pushButton_43.setGeometry(QRect(10, 260, 180, 30))
         self.pushButton_43.setMinimumSize(QSize(180, 30))
         self.pushButton_43.setMaximumSize(QSize(180, 30))
-        self.pushButton_43.setFont(font12)
+        self.pushButton_43.setFont(font13)
         self.pushButton_43.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1400,7 +2726,7 @@ class Ui_DashBoard(object):
         self.pushButton_39.setGeometry(QRect(10, 5, 180, 30))
         self.pushButton_39.setMinimumSize(QSize(180, 30))
         self.pushButton_39.setMaximumSize(QSize(180, 30))
-        self.pushButton_39.setFont(font11)
+        self.pushButton_39.setFont(font15)
         self.pushButton_39.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1418,7 +2744,7 @@ class Ui_DashBoard(object):
         self.pushButton_44.setGeometry(QRect(10, 45, 180, 30))
         self.pushButton_44.setMinimumSize(QSize(180, 30))
         self.pushButton_44.setMaximumSize(QSize(180, 30))
-        self.pushButton_44.setFont(font12)
+        self.pushButton_44.setFont(font13)
         self.pushButton_44.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1437,7 +2763,7 @@ class Ui_DashBoard(object):
         self.pushButton_45.setGeometry(QRect(10, 85, 180, 30))
         self.pushButton_45.setMinimumSize(QSize(180, 30))
         self.pushButton_45.setMaximumSize(QSize(180, 30))
-        self.pushButton_45.setFont(font12)
+        self.pushButton_45.setFont(font13)
         self.pushButton_45.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1456,7 +2782,7 @@ class Ui_DashBoard(object):
         self.pushButton_46.setGeometry(QRect(10, 125, 180, 30))
         self.pushButton_46.setMinimumSize(QSize(180, 30))
         self.pushButton_46.setMaximumSize(QSize(180, 30))
-        self.pushButton_46.setFont(font12)
+        self.pushButton_46.setFont(font13)
         self.pushButton_46.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1475,7 +2801,7 @@ class Ui_DashBoard(object):
         self.pushButton_47.setGeometry(QRect(10, 165, 180, 30))
         self.pushButton_47.setMinimumSize(QSize(180, 30))
         self.pushButton_47.setMaximumSize(QSize(180, 30))
-        self.pushButton_47.setFont(font12)
+        self.pushButton_47.setFont(font13)
         self.pushButton_47.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1494,7 +2820,7 @@ class Ui_DashBoard(object):
         self.pushButton_48.setGeometry(QRect(10, 205, 180, 30))
         self.pushButton_48.setMinimumSize(QSize(180, 30))
         self.pushButton_48.setMaximumSize(QSize(180, 30))
-        self.pushButton_48.setFont(font12)
+        self.pushButton_48.setFont(font13)
         self.pushButton_48.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1513,7 +2839,7 @@ class Ui_DashBoard(object):
         self.pushButton_49.setGeometry(QRect(10, 245, 180, 30))
         self.pushButton_49.setMinimumSize(QSize(180, 30))
         self.pushButton_49.setMaximumSize(QSize(180, 30))
-        self.pushButton_49.setFont(font12)
+        self.pushButton_49.setFont(font13)
         self.pushButton_49.setStyleSheet(u"QPushButton {\n"
 "	background-color: white;	\n"
 "	color: black;\n"
@@ -1541,7 +2867,7 @@ class Ui_DashBoard(object):
         self.pushButton_16.setGeometry(QRect(55, 10, 90, 30))
         self.pushButton_16.setMinimumSize(QSize(90, 30))
         self.pushButton_16.setMaximumSize(QSize(90, 30))
-        self.pushButton_16.setFont(font11)
+        self.pushButton_16.setFont(font15)
         self.pushButton_16.setStyleSheet(u"QPushButton {\n"
 "	background-color: red;	\n"
 "	color: rgb(255, 255, 255);\n"
@@ -1571,37 +2897,30 @@ class Ui_DashBoard(object):
 
         self.retranslateUi(DashBoard)
 
+        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget_3.setCurrentIndex(1)
+
+
         QMetaObject.connectSlotsByName(DashBoard)
     # setupUi
 
     def retranslateUi(self, DashBoard):
         DashBoard.setWindowTitle(QCoreApplication.translate("DashBoard", u"Scepter", None))
-        self.pushButton.setText(QCoreApplication.translate("DashBoard", u"Dashboard", None))
-        self.pushButton_2.setText(QCoreApplication.translate("DashBoard", u"Projects", None))
-        self.pushButton_4.setText(QCoreApplication.translate("DashBoard", u"Boards", None))
-        self.pushButton_3.setText(QCoreApplication.translate("DashBoard", u"Tickets", None))
-        self.pushButton_8.setText(QCoreApplication.translate("DashBoard", u"Worklog", None))
-        self.pushButton_6.setText(QCoreApplication.translate("DashBoard", u"Analysis", None))
-        self.pushButton_5.setText(QCoreApplication.translate("DashBoard", u"Calendar", None))
-        self.pushButton_7.setText(QCoreApplication.translate("DashBoard", u"Messages", None))
-        self.pushButton_9.setText(QCoreApplication.translate("DashBoard", u"Settings", None))
-        self.label.setText("")
-        self.label_8.setText(QCoreApplication.translate("DashBoard", u"User Name", None))
+        self.dashboard.setText(QCoreApplication.translate("DashBoard", u"Dashboard", None))
+        self.projects.setText(QCoreApplication.translate("DashBoard", u"Projects", None))
+        self.messages.setText(QCoreApplication.translate("DashBoard", u"Messages", None))
+        self.settings.setText(QCoreApplication.translate("DashBoard", u"Settings", None))
+        self.user_avatar.setText("")
+        self.user_handle.setText(QCoreApplication.translate("DashBoard", u"User Name", None))
         self.max.setText("")
         self.min.setText("")
         self.close.setText("")
         self.label_2.setText(QCoreApplication.translate("DashBoard", u"Projects", None))
         self.label_3.setText(QCoreApplication.translate("DashBoard", u"Progress Reports", None))
         self.label_5.setText(QCoreApplication.translate("DashBoard", u"Schedules", None))
-        self.label_6.setText(QCoreApplication.translate("DashBoard", u"Files", None))
-        self.label_4.setText(QCoreApplication.translate("DashBoard", u"Recent Charts", None))
-        self.label_7.setText(QCoreApplication.translate("DashBoard", u"Flags", None))
-        self.label_9.setText(QCoreApplication.translate("DashBoard", u"Ongoing Projects", None))
-        self.label_10.setText(QCoreApplication.translate("DashBoard", u"Past Projects", None))
-        self.pushButton_10.setText(QCoreApplication.translate("DashBoard", u"Tickets Page", None))
-        self.pushButton_11.setText(QCoreApplication.translate("DashBoard", u"Boards Page", None))
-        self.pushButton_12.setText(QCoreApplication.translate("DashBoard", u"Calendar Page", None))
-        self.pushButton_13.setText(QCoreApplication.translate("DashBoard", u"Analysis Page", None))
+        self.label_6.setText(QCoreApplication.translate("DashBoard", u"Members", None))
+        self.pushButton_3.setText(QCoreApplication.translate("DashBoard", u"Create New Project", None))
+        self.pushButton_4.setText(QCoreApplication.translate("DashBoard", u"Past Projects", None))
         self.label_20.setText("")
         self.pushButton_19.setText(QCoreApplication.translate("DashBoard", u"User", None))
         self.label_21.setText(QCoreApplication.translate("DashBoard", u"Welcome!", None))
@@ -1619,7 +2938,92 @@ class Ui_DashBoard(object):
         self.pushButton_18.setText(QCoreApplication.translate("DashBoard", u"Contacts", None))
         self.pushButton_17.setText(QCoreApplication.translate("DashBoard", u"Groups", None))
         self.pushButton_23.setText(QCoreApplication.translate("DashBoard", u"Member 1", None))
-        self.pushButton_15.setText(QCoreApplication.translate("DashBoard", u"Worklog Page", None))
+        self.pushButton_24.setText(QCoreApplication.translate("DashBoard", u"Member 2", None))
+        self.pushButton_25.setText(QCoreApplication.translate("DashBoard", u"Member 3", None))
+        self.pushButton_26.setText(QCoreApplication.translate("DashBoard", u"Member 4", None))
+        self.pushButton_27.setText(QCoreApplication.translate("DashBoard", u"Member 6", None))
+        self.pushButton_28.setText(QCoreApplication.translate("DashBoard", u"Member 5", None))
+        self.pushButton_29.setText(QCoreApplication.translate("DashBoard", u"Member 7", None))
+        self.pushButton_30.setText(QCoreApplication.translate("DashBoard", u"Member 10", None))
+        self.pushButton_31.setText(QCoreApplication.translate("DashBoard", u"Member 9", None))
+        self.pushButton_32.setText(QCoreApplication.translate("DashBoard", u"Member 8", None))
+        self.label_11.setText(QCoreApplication.translate("DashBoard", u"My Account", None))
+        self.label_12.setText(QCoreApplication.translate("DashBoard", u"Username", None))
+        self.label_14.setText(QCoreApplication.translate("DashBoard", u"Phone Number", None))
+        self.label_13.setText(QCoreApplication.translate("DashBoard", u"Email", None))
+        self.label_16.setText(QCoreApplication.translate("DashBoard", u"*Username*", None))
+        self.label_26.setText(QCoreApplication.translate("DashBoard", u"*test@email.com*", None))
+        self.label_27.setText(QCoreApplication.translate("DashBoard", u"*0000000000*", None))
+        self.pushButton_50.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_51.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_52.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_28.setText(QCoreApplication.translate("DashBoard", u"Enter Old Password", None))
+        self.label_30.setText(QCoreApplication.translate("DashBoard", u"Enter New Password", None))
+        self.pushButton_53.setText(QCoreApplication.translate("DashBoard", u"Change Password", None))
+        self.label_15.setText(QCoreApplication.translate("DashBoard", u"Password and Authentication", None))
+        self.label_38.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_39.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_40.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_57.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_58.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_59.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_37.setText(QCoreApplication.translate("DashBoard", u"Privacy And Safety", None))
+        self.label_41.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_42.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_43.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_60.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_61.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_62.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_44.setText(QCoreApplication.translate("DashBoard", u"Backup and Restore", None))
+        self.label_45.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_46.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_47.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_63.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_64.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_65.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_48.setText(QCoreApplication.translate("DashBoard", u"Add Account", None))
+        self.label_49.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_50.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_51.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_66.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_67.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_68.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_52.setText(QCoreApplication.translate("DashBoard", u"Appearance", None))
+        self.label_53.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_54.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_55.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_69.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_70.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_71.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_56.setText(QCoreApplication.translate("DashBoard", u"Notification", None))
+        self.label_57.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_58.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_59.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_72.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_73.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_74.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_60.setText(QCoreApplication.translate("DashBoard", u"Text and Images", None))
+        self.label_61.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_62.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_63.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_75.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_76.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_77.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_64.setText(QCoreApplication.translate("DashBoard", u"Performance", None))
+        self.label_65.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_66.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_67.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_78.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_79.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_80.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_68.setText(QCoreApplication.translate("DashBoard", u"Language", None))
+        self.label_69.setText(QCoreApplication.translate("DashBoard", u"Allow direct messages from member", None))
+        self.label_70.setText(QCoreApplication.translate("DashBoard", u"Every one can add you as friend", None))
+        self.label_71.setText(QCoreApplication.translate("DashBoard", u"Use data to improve scepter", None))
+        self.pushButton_81.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_82.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.pushButton_83.setText(QCoreApplication.translate("DashBoard", u"Edit", None))
+        self.label_72.setText(QCoreApplication.translate("DashBoard", u"Version and Updates", None))
         self.pushButton_38.setText(QCoreApplication.translate("DashBoard", u"User Settings", None))
         self.pushButton_40.setText(QCoreApplication.translate("DashBoard", u"My Account", None))
         self.pushButton_41.setText(QCoreApplication.translate("DashBoard", u"Privacy and Safety", None))

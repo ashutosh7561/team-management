@@ -7,6 +7,7 @@ sys.path.append(d)
 
 import platform
 import time
+from queue import Queue
 
 # from controller.authenticator import authenticate
 
@@ -65,6 +66,8 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
+from controller.chats.sockets.client import ServerCon
+from view.messagecentral import *
 
 ## ==> GLOBALS
 WINDOW_SIZE = 0
@@ -452,8 +455,8 @@ class Dashboard(QWidget):
         )
         try:
             file = check_for_file(PATH_ONE, PATH_TWO)
+            print(file)
             uic.loadUi(file, self)
-
         except Exception as e:
             print(e)
 
@@ -463,27 +466,34 @@ class Dashboard(QWidget):
         self.projects.clicked.connect(
             lambda: self.stacked_action_pannel.setCurrentWidget(self.projects_frame)
         )
-        self.tickets.clicked.connect(
-            lambda: self.stacked_action_pannel.setCurrentWidget(self.tickets_frame)
-        )
-        self.boards.clicked.connect(
-            lambda: self.stacked_action_pannel.setCurrentWidget(self.boards_frame)
-        )
-        self.calendar.clicked.connect(
-            lambda: self.stacked_action_pannel.setCurrentWidget(self.calendar_frame)
-        )
-        self.analysis.clicked.connect(
-            lambda: self.stacked_action_pannel.setCurrentWidget(self.analysis_frame)
-        )
-        self.messages.clicked.connect(
-            lambda: self.stacked_action_pannel.setCurrentWidget(self.messages_frame)
-        )
-        self.worklog.clicked.connect(
-            lambda: self.stacked_action_pannel.setCurrentWidget(self.worklog_frame)
-        )
         self.settings.clicked.connect(
             lambda: self.stacked_action_pannel.setCurrentWidget(self.settings_frame)
         )
+        self.messages.clicked.connect(self.show_messages)
+
+    def initiate(self, user_id):
+        self.user_id = user_id
+        self.user_handle.setText(user_id)
+        self.label_68.setText(user_id)
+
+    def show_messages(self):
+        queue_one = Queue()  # used for sending messages
+        queue_two = Queue()  # used for receiving messages
+
+        print(self.settings_frame)
+
+        print(self.stacked_action_pannel.setCurrentWidget(self.messages_frame))
+
+        user_id = "adam_12"
+        password = "asdf"
+
+        con = ServerCon(queue_one, queue_two)
+        con.start_connection_thread(user_id, password)
+
+        msg_widget = Main(queue_two, con)
+
+        self.stacked_action_pannel.addWidget(msg_widget)
+        self.stacked_action_pannel.setCurrentWidget(msg_widget)
 
 
 class ViewHandler:
@@ -559,7 +569,7 @@ class ViewHandler:
         if post == "admin":
             self.show_admin_pannel(user_id)
         elif post in ["general", "project_manager", "team_lead"]:
-            self.show_dashboard_window()
+            self.show_dashboard_window(user_id)
 
     def show_admin_users_data(self, user_data_list):
         self.main_window.feed_data(user_data_list)
@@ -587,14 +597,18 @@ class ViewHandler:
         self.main_window = self.login_window
         self.main_window.show()
 
-    def show_dashboard_window(self):
+    def show_dashboard_window(self, user_id):
         self.main_window.close()
         self.main_window = self.dashboard_window
         self.main_window.show()
+        self.dashboard_window.initiate(user_id)
 
 
 if __name__ == "__main__":
+    q1 = Queue()
+    q2 = Queue()
+    q3 = Queue()
     app = QApplication(sys.argv)
-    win = CustWidget()
+    win = Dashboard(q1, q2, q3)
     win.show()
     sys.exit(app.exec_())

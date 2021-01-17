@@ -6,6 +6,7 @@ sys.path.append(d)
 
 import platform
 import time
+import os
 from queue import Queue
 
 from PyQt5 import QtCore, QtWidgets, uic
@@ -216,10 +217,28 @@ class ChatBoxTemplate(QWidget):
         self.scroll_to_last()
 
 
+def check_for_file(PATH_ONE, PATH_TWO):
+    print("\n\n\nfile path:")
+    print(os.getcwd())
+    if os.path.isfile(PATH_ONE):
+        return PATH_ONE
+    elif os.path.isfile(PATH_TWO):
+        return PATH_TWO
+    else:
+        raise FileNotFoundError
+
+
 class Main(QWidget):
     def __init__(self, read_queue, servcon):
         super(Main, self).__init__()
-        uic.loadUi(r"./production/view/message_template.ui", self)
+        PATH_ONE = r"C:/Users/Ashutosh/Desktop/pp/repo/team-management/production/view/message_template.ui"
+        PATH_TWO = r""
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+        except Exception as e:
+            print(e)
+            print("******************", e, e, e)
 
         self.CHECK_DURATION = 50
         self.read_queue = read_queue
