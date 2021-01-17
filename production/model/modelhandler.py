@@ -2,8 +2,8 @@ import sys
 import time
 from os.path import abspath, dirname
 
-d = dirname(dirname(abspath(__file__)))
-sys.path.append(d)
+# d = dirname(dirname(abspath(__file__)))
+# sys.path.append(d)
 
 import multiprocessing as mp
 
@@ -25,7 +25,7 @@ class ModelHandler:
         self.controller_queue = controller_queue
         self.model_queue = model_queue
 
-        print("model handler up and running")
+        # print("model handler up and running")
 
         self.flag = True
         self.validator = Validator()
@@ -78,7 +78,7 @@ class ModelHandler:
         self.controller_queue.put(["admin_users_data", self.validator.get_users_data()])
 
     def quit_application(self):
-        print("quit application request")
+        # print("quit application request")
         self.flag = False
 
 
@@ -87,7 +87,7 @@ class ModelHandlerTesting:
         m_handler = ModelHandler(v_q, c_q, m_q)
 
     def controller_proc(self, v_q, c_q, m_q):
-        print("putting data on queue")
+        # print("putting data on queue")
         m_q.put(["admin_get_users_data", "alex", "admin"])
         m_q.put(["validate_credentials", "11", "alex"])
         m_q.put(["validate_credentials", "12", "adam"])
@@ -101,7 +101,7 @@ class ModelHandlerTesting:
                     m_q.put(["get_access_rights", masg[2]])
                 elif masg[0] == "user_access_rights":
                     print(masg)
-        print("other processs quiting")
+        # print("other processs quiting")
         m_q.put(["quit_application"])
 
     def test(self):

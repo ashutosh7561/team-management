@@ -1,8 +1,8 @@
 import sys
 from os.path import dirname, abspath
 
-d = dirname(dirname(abspath(__file__)))
-sys.path.append(d)
+# d = dirname(dirname(abspath(__file__)))
+# sys.path.append(d)
 
 from model.validator import validate_user, get_access_rights
 

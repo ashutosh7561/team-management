@@ -1,8 +1,8 @@
 import sys
 from os.path import abspath, dirname
 
-d = dirname(dirname(abspath(__file__)))
-sys.path.append(d)
+# d = dirname(dirname(abspath(__file__)))
+# sys.path.append(d)
 
 import platform
 import time
@@ -32,13 +32,27 @@ from view.messagetexttemplate import (
 from controller.chats.sockets.client import ServerCon
 
 
+def check_for_file(PATH_ONE, PATH_TWO):
+    # print("\n\n\nfile path:")
+    # print(os.getcwd())
+    if os.path.isfile(PATH_ONE):
+        return PATH_ONE
+    elif os.path.isfile(PATH_TWO):
+        return PATH_TWO
+    else:
+        raise FileNotFoundError
+
+
 class ChatWidgetTemplate(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi(
-            r"./production/view/chat_widget.ui",
-            self,
-        )
+        PATH_ONE = r"./production/view/chat_widget.ui"
+        PATH_TWO = r""
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+        except Exception as e:
+            print(e)
         self.chat_heading.clicked.connect(self.callback)
 
     def callback(self):
@@ -56,19 +70,26 @@ class ChatWidgetTemplate(QWidget):
 class MessageCentral(QWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
-        uic.loadUi(
-            r"./production/view/message_template_initial.ui",
-            self,
-        )
+        PATH_ONE = r"./production/view/message_template_initial.ui"
+        PATH_TWO = r""
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+        except Exception as e:
+            print(e)
+        # self.chat_heading.clicked.connect(self.callback)
 
 
 class MessageSidebar(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi(
-            r"./production/view/message_template_sidebar.ui",
-            self,
-        )
+        PATH_ONE = r"./production/view/message_template_sidebar.ui"
+        PATH_TWO = r""
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+        except Exception as e:
+            print(e)
         self.contact_list.setWidgetResizable(True)
         self.group_list.setWidgetResizable(True)
         self.personal_chat_list.setWidgetResizable(True)
@@ -103,7 +124,13 @@ class MessageSidebar(QWidget):
 class ChatBoxTemplate(QWidget):
     def __init__(self, servcon, chat_heading):
         super().__init__()
-        uic.loadUi(r"./production/view/chat_box_template.ui", self)
+        PATH_ONE = r"./production/view/chat_box_template.ui"
+        PATH_TWO = r""
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+        except Exception as e:
+            print(e)
 
         self.servcon = servcon
 
@@ -217,21 +244,10 @@ class ChatBoxTemplate(QWidget):
         self.scroll_to_last()
 
 
-def check_for_file(PATH_ONE, PATH_TWO):
-    print("\n\n\nfile path:")
-    print(os.getcwd())
-    if os.path.isfile(PATH_ONE):
-        return PATH_ONE
-    elif os.path.isfile(PATH_TWO):
-        return PATH_TWO
-    else:
-        raise FileNotFoundError
-
-
 class Main(QWidget):
     def __init__(self, read_queue, servcon):
         super(Main, self).__init__()
-        PATH_ONE = r"C:/Users/Ashutosh/Desktop/pp/repo/team-management/production/view/message_template.ui"
+        PATH_ONE = r"./production/view/message_template.ui"
         PATH_TWO = r""
         try:
             file = check_for_file(PATH_ONE, PATH_TWO)
@@ -239,12 +255,13 @@ class Main(QWidget):
         except Exception as e:
             print(e)
             print("******************", e, e, e)
+        # uic.loadUi(PATH_ONE, self)
 
         self.CHECK_DURATION = 50
         self.read_queue = read_queue
         self.servcon = servcon
 
-        self.central_window.setCurrentWidget(self.message_initial)
+        # self.central_window.setCurrentWidget(self.message_initial)
         # print(self.central_window.addWidget(ChatBoxTemplate(self.servcon, "Alex")))
         # self.central_window.setCurrentIndex(1)
         self.message_sidebar = MessageSidebar()
@@ -291,7 +308,7 @@ class Main(QWidget):
                 if "send_msg" in message:
                     chat_id = message["chat_id"]
                     msg_text = message["message"]
-                    print(msg_text)
+                    # print(msg_text)
                     if msg_text == "":
                         return
                     try:

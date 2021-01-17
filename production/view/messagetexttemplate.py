@@ -1,8 +1,8 @@
 import sys
 from os.path import abspath, dirname
 
-d = dirname(dirname(abspath(__file__)))
-sys.path.append(d)
+# d = dirname(dirname(abspath(__file__)))
+# sys.path.append(d)
 
 import platform
 import time
@@ -33,18 +33,18 @@ class MessageTextTemplate(QWidget):
         msg_text = self.message_text
         msg_widget_width = msg_text.fontMetrics().boundingRect(msg_text.text()).width()
         left_bound = self.parent().width() * 0.5
-        print(f"{msg_widget_width} < {left_bound}")
-        print(self.message_text.width())
-        print("window width:", self.parent(), self.parent().width())
+        # print(f"{msg_widget_width} < {left_bound}")
+        # print(self.message_text.width())
+        # print("window width:", self.parent(), self.parent().width())
 
         if msg_widget_width < left_bound:
-            print("one liner")
+            # print("one liner")
             msg_text.setWordWrap(False)
             horizontal_spacer.changeSize(
                 200, 20, QSizePolicy.MinimumExpanding, QSizePolicy.Minimum
             )
         else:
-            print("multiline")
+            # print("multiline")
             msg_text.setWordWrap(True)
             horizontal_spacer.changeSize(
                 200, 20, QSizePolicy.Fixed, QSizePolicy.Minimum

@@ -13,7 +13,7 @@ from model.modelhandler import ModelHandler
 
 
 def root():
-    print("root process")
+    # print("root process")
     view_queue = mp.Queue()
     controller_queue = mp.Queue()
     model_queue = mp.Queue()
@@ -55,27 +55,27 @@ def root():
     # controller_process.join()
     # model_process.join()
 
-    print("doing cleanpup")
+    # print("doing cleanpup")
 
 
 def view(view_queue, controller_queue, model_queue, root_queue):
-    print("starting view process")
+    # print("starting view process")
     view = ViewHandler(view_queue, controller_queue, model_queue)
-    print("exit from app.exec_() event loop")
+    # print("exit from app.exec_() event loop")
     controller_queue.put(["quit_application"])
     model_queue.put(["quit_application"])
 
 
 def controller(view_queue, controller_queue, model_queue, root_queue):
-    print("starting controller process")
+    # print("starting controller process")
     controller = ControllerHandler(view_queue, controller_queue, model_queue)
-    print("controller is quiting")
+    # print("controller is quiting")
 
 
 def model(view_queue, controller_queue, model_queue, root_queue):
-    print("starting model process")
+    # print("starting model process")
     model = ModelHandler(view_queue, controller_queue, model_queue)
-    print("model quiting")
+    # print("model quiting")
 
 
 if __name__ == "__main__":

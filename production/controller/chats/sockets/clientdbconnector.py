@@ -132,7 +132,7 @@ class ClientDBHandler:
         chat_messages = pickle.loads(self.clientdb.get_chat_messages(chat_id))
 
         for message in chat_messages:
-            print(message)
+            # print(message)
             for i in message.keys():
                 message_sender = i
                 message = message[i]

@@ -16,7 +16,7 @@ class DatabaseConnector:
         PATH_TWO = r"C:/Users/Asus/Desktop/team-management/production/model/rbac.db"
         try:
             file =check_for_file(PATH_ONE,PATH_TWO)
-            print(file)
+            # print(file)
             self.rbac_connection = sqlite3.connect(file)          
         except Exception as e:
             print(e) 

@@ -11,39 +11,6 @@ from queue import Queue
 
 # from controller.authenticator import authenticate
 
-# from PySide2 import QtCore, QtGui, QtWidgets
-# from PySide2.QtCore import (
-#     QCoreApplication,
-#     QDate,
-#     QDateTime,
-#     QEvent,
-#     QMetaObject,
-#     QObject,
-#     QPoint,
-#     QPropertyAnimation,
-#     QRect,
-#     QSize,
-#     Qt,
-#     QTime,
-#     QUrl,
-# )
-# from PySide2.QtGui import (
-#     QBrush,
-#     QColor,
-#     QConicalGradient,
-#     QCursor,
-#     QFont,
-#     QFontDatabase,
-#     QIcon,
-#     QKeySequence,
-#     QLinearGradient,
-#     QPainter,
-#     QPalette,
-#     QPixmap,
-#     QRadialGradient,
-# )
-# from PySide2.QtWidgets import *
-
 ## ==> Dashboard window
 from view.ui_DashBoard import Ui_DashBoard
 
@@ -67,10 +34,9 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
 from controller.chats.sockets.client import ServerCon
-from view.messagecentral import *
 
-## ==> GLOBALS
-WINDOW_SIZE = 0
+# print("importing message central")
+from view.messagecentral import *
 
 
 def check_for_file(PATH_ONE, PATH_TWO):
@@ -88,6 +54,7 @@ class AdminPannel(QWidget):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
+
         PATH_ONE = r"./production/view/admin_pannel.ui"
         PATH_TWO = (
             r"C:/Users/Asus/Desktop/team-management/production/view/admin_pannel.ui"
@@ -95,7 +62,6 @@ class AdminPannel(QWidget):
         try:
             file = check_for_file(PATH_ONE, PATH_TWO)
             uic.loadUi(file, self)
-
         except Exception as e:
             print(e)
 
@@ -150,7 +116,7 @@ class AdminPannel(QWidget):
 
         self.model_queue.put(["change_username", new_username, user_id])
         user_info["username"] = new_username
-        print("username changed to:", new_username)
+        # print("username changed to:", new_username)
 
     def change_user_post(self, cust_label, *args):
         user_info = cust_label.parent().user_data
@@ -160,7 +126,7 @@ class AdminPannel(QWidget):
 
         self.model_queue.put(["change_user_post", "zed_15", new_user_post])
         user_info["user_post"] = new_user_post
-        print("user post changed to:", new_user_post)
+        # print("user post changed to:", new_user_post)
 
     def switch_to_credentials(self):
         self.central_stack_frame.setCurrentWidget(self.credentials_page)
@@ -189,10 +155,13 @@ class PostTemplate(QWidget):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
-        uic.loadUi(
-            r"./production/view/post_template.ui",
-            self,
-        )
+        PATH_ONE = r"./production/view/post_template.ui"
+        PATH_TWO = r""
+        try:
+            file = check_for_file(PATH_ONE, PATH_TWO)
+            uic.loadUi(file, self)
+        except Exception as e:
+            print(e)
         self.toggle = True
         self.access_rights_status = [True] * 6
 
@@ -397,12 +366,12 @@ class LoginScreen(QMainWindow):
         self.controller_queue.put(["validate_credentials", username, password])
 
     def invalid_user(self):
-        print("Incorrect Credentials")
+        # print("Incorrect Credentials")
         self.username_field.setText("")
         self.username_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
         self.password_field.setText("")
         self.password_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
-        print("total time taken for validating credentials:", time.time() - self.st)
+        # print("total time taken for validating credentials:", time.time() - self.st)
 
 
 class SplashScreen(QMainWindow):
@@ -455,7 +424,7 @@ class Dashboard(QWidget):
         )
         try:
             file = check_for_file(PATH_ONE, PATH_TWO)
-            print(file)
+            # print(file)
             uic.loadUi(file, self)
         except Exception as e:
             print(e)
@@ -480,9 +449,9 @@ class Dashboard(QWidget):
         queue_one = Queue()  # used for sending messages
         queue_two = Queue()  # used for receiving messages
 
-        print(self.settings_frame)
+        # print(self.settings_frame)
 
-        print(self.stacked_action_pannel.setCurrentWidget(self.messages_frame))
+        # print(self.stacked_action_pannel.setCurrentWidget(self.messages_frame))
 
         user_id = "adam_12"
         password = "asdf"
@@ -502,7 +471,7 @@ class ViewHandler:
         self.controller_queue = controller_queue
         self.model_queue = model_queue
 
-        print("view handler up and running")
+        # print("view handler up and running")
 
         self.CHECK_DURATION = 100
 
@@ -541,7 +510,7 @@ class ViewHandler:
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
 
     def load_status(self, progress_value, special_message):
-        print("setting progress bar value to", progress_value)
+        # print("setting progress bar value to", progress_value)
         self.set_status(progress_value, special_message)
 
     def load_complete(self):

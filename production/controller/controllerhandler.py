@@ -2,8 +2,8 @@ import time
 import sys
 from os.path import dirname, abspath
 
-d = dirname(dirname(abspath(__file__)))
-sys.path.append(d)
+# d = dirname(dirname(abspath(__file__)))
+# sys.path.append(d)
 
 import multiprocessing as mp
 
@@ -14,7 +14,7 @@ class ControllerHandler:
         self.controller_queue = controller_queue
         self.model_queue = model_queue
 
-        print("controller handler up and running")
+        # print("controller handler up and running")
 
         self.flag = True
         self.check_for_messages()
@@ -45,7 +45,7 @@ class ControllerHandler:
 
     def authentication_status(self, is_valid, post, user_id):
         if is_valid:
-            print(post)
+            # print(post)
             self.view_queue.put(["valid_user", post, user_id])
         else:
             self.view_queue.put(["invalid_user"])
@@ -69,16 +69,16 @@ class ControllerHandler:
         ]
         for i in range(11):
             time.sleep(0.3)
-            print("loading...", i * 10)
+            # print("loading...", i * 10)
             self.view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
-        print("load complete")
+        # print("load complete")
         self.view_queue.put(["load_complete"])
 
     def admin_get_users_data(self, *args):
         self.model_queue.put(["admin_get_users_data", *args])
 
     def quit_application(self):
-        print("quit application request")
+        # print("quit application request")
         self.flag = False
 
 
@@ -87,7 +87,7 @@ class ControllerHandlerTesting:
         c_handler = ControllerHandler(v_q, c_q, m_q)
 
     def other_proc(self, v_q, c_q, m_q):
-        print("putting data on queue")
+        # print("putting data on queue")
         c_q.put(["admin_get_users_data", "alex", "admin", "root"])
         c_q.put(["quit_application"])
 
