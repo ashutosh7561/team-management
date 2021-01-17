@@ -1,15 +1,35 @@
 import sys
 from os.path import dirname, abspath
+import os
 
 d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("parent id: " + str(os.getppid()) + "\n")
+    f.write(str(os.getpid()) + "\n")
+
 import time
 import multiprocessing as mp
 
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing main.py\n")
 from view.main import ViewHandler
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing controllerhandler.py\n")
 from controller.controllerhandler import ControllerHandler
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing modelhandler.py\n")
 from model.modelhandler import ModelHandler
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("app.py imports done\n")
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("dir:\n" + str(dir()))
 
 
 def root():
@@ -27,6 +47,7 @@ def root():
             model_queue,
             root_queue,
         ),
+        name="view process",
     )
     controller_process = mp.Process(
         target=controller,
@@ -36,6 +57,7 @@ def root():
             model_queue,
             root_queue,
         ),
+        name="controller process",
     )
     model_process = mp.Process(
         target=model,
@@ -45,6 +67,7 @@ def root():
             model_queue,
             root_queue,
         ),
+        name="model process",
     )
 
     view_process.start()
@@ -79,7 +102,7 @@ def model(view_queue, controller_queue, model_queue, root_queue):
 
 
 if __name__ == "__main__":
-    root_process = mp.Process(target=root)
+    root_process = mp.Process(target=root, name="root process")
     root_process.start()
     # root_process.join()
 

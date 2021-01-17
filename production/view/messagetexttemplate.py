@@ -1,8 +1,12 @@
 import sys
 from os.path import abspath, dirname
+import os
 
 # d = dirname(dirname(abspath(__file__)))
 # sys.path.append(d)
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("imported messagetexttemplate.py successfully\n")
 
 import platform
 import time

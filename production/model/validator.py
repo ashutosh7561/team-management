@@ -1,11 +1,18 @@
 import sys
 from os.path import dirname, abspath
+import os
 
 # d = dirname(dirname(abspath(__file__)))
 # sys.path.append(d)
 
 from model.hashalgo import hash_password, verify_password
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing databaseconnector.py from validatory.py\n")
 from model.databaseconnector import DatabaseConnector
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("imported validator.py successfully\n")
 
 
 class Validator:

@@ -4,6 +4,7 @@ from os.path import abspath, dirname
 # d = dirname(dirname(abspath(__file__)))
 # sys.path.append(d)
 
+
 import platform
 import time
 import os
@@ -24,12 +25,19 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, QSize, Qt
 from PyQt5.QtGui import QFont
 
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing messagetexttemplate.py\n")
 from view.messagetexttemplate import (
     MessageTextTemplate,
     MessageTextRecieveTemplate,
 )
 
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing client.py\n")
 from controller.chats.sockets.client import ServerCon
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("imported messagecentral.py successfully\n")
 
 
 def check_for_file(PATH_ONE, PATH_TWO):
@@ -254,8 +262,6 @@ class Main(QWidget):
             uic.loadUi(file, self)
         except Exception as e:
             print(e)
-            print("******************", e, e, e)
-        # uic.loadUi(PATH_ONE, self)
 
         self.CHECK_DURATION = 50
         self.read_queue = read_queue
@@ -320,7 +326,7 @@ class Main(QWidget):
                 elif "recv_msg" in message:
                     chat_id = message["chat_id"]
                     msg_text = message["message"]
-                    print("recv", msg_text)
+                    # print("recv", msg_text)
                     if msg_text == "":
                         return
                     try:

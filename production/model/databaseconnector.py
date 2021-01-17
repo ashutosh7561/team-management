@@ -1,7 +1,11 @@
 import sqlite3
 import os
 
-def check_for_file(PATH_ONE,PATH_TWO):           
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("imported databaseconnector.py successfully\n")
+
+
+def check_for_file(PATH_ONE, PATH_TWO):
     if os.path.isfile(PATH_ONE):
         return PATH_ONE
     elif os.path.isfile(PATH_TWO):
@@ -12,14 +16,14 @@ def check_for_file(PATH_ONE,PATH_TWO):
 
 class DatabaseConnector:
     def __init__(self):
-        PATH_ONE = r"./production/model/rbac.db" 
+        PATH_ONE = r"./production/model/rbac.db"
         PATH_TWO = r"C:/Users/Asus/Desktop/team-management/production/model/rbac.db"
         try:
-            file =check_for_file(PATH_ONE,PATH_TWO)
+            file = check_for_file(PATH_ONE, PATH_TWO)
             # print(file)
-            self.rbac_connection = sqlite3.connect(file)          
+            self.rbac_connection = sqlite3.connect(file)
         except Exception as e:
-            print(e) 
+            print(e)
         # for setting
         # self.rbac_connection = sqlite3.connect(database)
         # for setting foreign key constraints to true

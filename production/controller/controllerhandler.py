@@ -1,11 +1,15 @@
 import time
 import sys
 from os.path import dirname, abspath
+import os
 
 # d = dirname(dirname(abspath(__file__)))
 # sys.path.append(d)
 
 import multiprocessing as mp
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("imported controllerhandler.py successfully\n")
 
 
 class ControllerHandler:

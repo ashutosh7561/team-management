@@ -4,6 +4,7 @@ import selectors
 import time
 import pickle
 from queue import Queue
+import os
 
 try:
     from controller.chats.sockets.header import Packet
@@ -23,6 +24,9 @@ except:
         )
     except Exception as e:
         print(e)
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("imported client.py successfully\n")
 
 
 class ServerCon:

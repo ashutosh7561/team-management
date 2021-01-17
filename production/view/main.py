@@ -5,6 +5,7 @@ from os.path import abspath, dirname
 d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
+
 import platform
 import time
 from queue import Queue
@@ -35,8 +36,12 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
 from controller.chats.sockets.client import ServerCon
 
-# print("importing message central")
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing messagecentral.py\n")
 from view.messagecentral import *
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("improted main.py\n")
 
 
 def check_for_file(PATH_ONE, PATH_TWO):

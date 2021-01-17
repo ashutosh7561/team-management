@@ -1,15 +1,23 @@
 import sys
 import time
 from os.path import abspath, dirname
+import os
 
 # d = dirname(dirname(abspath(__file__)))
 # sys.path.append(d)
 
 import multiprocessing as mp
 
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing databaseconnector.py\n")
 from model.databaseconnector import DatabaseConnector
+
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("importing validator.py\n")
 from model.validator import Validator
 
+with open(str(os.getpid()) + ".txt", "a+") as f:
+    f.write("imported modelhandler.py successfully\n")
 
 # Hanlders including Model, View, and Controller will only contain
 # functionality to check for messages, identify them and call
