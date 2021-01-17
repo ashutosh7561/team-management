@@ -25,19 +25,11 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, QSize, Qt
 from PyQt5.QtGui import QFont
 
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("importing messagetexttemplate.py\n")
 from view.messagetexttemplate import (
     MessageTextTemplate,
     MessageTextRecieveTemplate,
 )
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("importing client.py\n")
 from controller.chats.sockets.client import ServerCon
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("imported messagecentral.py successfully\n")
 
 
 def check_for_file(PATH_ONE, PATH_TWO):

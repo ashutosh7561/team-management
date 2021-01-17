@@ -35,13 +35,7 @@ from PyQt5.QtWidgets import (
 )
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
 from controller.chats.sockets.client import ServerCon
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("importing messagecentral.py\n")
 from view.messagecentral import *
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("improted main.py\n")
 
 
 def check_for_file(PATH_ONE, PATH_TWO):

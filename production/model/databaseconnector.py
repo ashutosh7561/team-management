@@ -1,9 +1,6 @@
 import sqlite3
 import os
 
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("imported databaseconnector.py successfully\n")
-
 
 def check_for_file(PATH_ONE, PATH_TWO):
     if os.path.isfile(PATH_ONE):

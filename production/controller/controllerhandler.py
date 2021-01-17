@@ -8,9 +8,6 @@ import os
 
 import multiprocessing as mp
 
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("imported controllerhandler.py successfully\n")
-
 
 class ControllerHandler:
     def __init__(self, view_queue, controller_queue, model_queue):

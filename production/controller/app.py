@@ -5,31 +5,12 @@ import os
 d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("parent id: " + str(os.getppid()) + "\n")
-    f.write(str(os.getpid()) + "\n")
-
 import time
 import multiprocessing as mp
 
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("importing main.py\n")
 from view.main import ViewHandler
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("importing controllerhandler.py\n")
 from controller.controllerhandler import ControllerHandler
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("importing modelhandler.py\n")
 from model.modelhandler import ModelHandler
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("app.py imports done\n")
-
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("dir:\n" + str(dir()))
 
 
 def root():

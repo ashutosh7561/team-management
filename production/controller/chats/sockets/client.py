@@ -25,9 +25,6 @@ except:
     except Exception as e:
         print(e)
 
-with open(str(os.getpid()) + ".txt", "a+") as f:
-    f.write("imported client.py successfully\n")
-
 
 class ServerCon:
     def __init__(self, read_queue, write_queue):
