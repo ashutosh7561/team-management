@@ -79,7 +79,9 @@ class ServerCon:
                 print("closed socket")
 
     def start_connection(self):
-        HOST = "111.118.240.197"
+        HOST = "111.118.242.44"
+        HOST = "127.0.0.1"
+        PORT = 50000
         PORT = 1030
 
         self.client_db = ClientDBHandler(self.user_id, self.write_queue)
@@ -126,9 +128,12 @@ if __name__ == "__main__":
     q = Queue()
     q2 = Queue()
     h = ServerCon(q, q2)
-    h.start_connection_thread("adam_12", "qwer")
+    h.start_connection_thread("alex_11", "qwer")
+
+    # h.start_connection_thread("adam_12", "asdf")
+    # h.send_some("message1 from adam_12 for group_one", "group_one")
+
     # h.send_some("new message from alex_11", "group_one")
-    # h.send_some("message1 from adam_12 for group_two", "group_two")
     # h.send_some("message2 from adam_12 for group_two", "group_two")
     # h.send_some("message3 from adam_12 for group_two", "group_two")
 

@@ -5,22 +5,11 @@ from os.path import abspath, dirname
 d = dirname(dirname(abspath(__file__)))
 sys.path.append(d)
 
-
 import platform
 import time
 from queue import Queue
 
-# from controller.authenticator import authenticate
-
-## ==> Dashboard window
-from view.ui_DashBoard import Ui_DashBoard
-
-## ==> MAIN WINDOW
-from view.ui_main_window import Ui_MainWindow
-
-## ==> SPLASH SCREEN
-from view.ui_Splash_screen import Ui_SplashScreen
-
+import view.resource1_rc
 from PyQt5 import QtCore, QtWidgets, uic
 from PyQt5.QtWidgets import (
     QApplication,
@@ -365,12 +354,10 @@ class LoginScreen(QMainWindow):
         self.controller_queue.put(["validate_credentials", username, password])
 
     def invalid_user(self):
-        # print("Incorrect Credentials")
         self.username_field.setText("")
         self.username_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
         self.password_field.setText("")
         self.password_field.setStyleSheet("""QLineEdit {border: 1px solid red }""")
-        # print("total time taken for validating credentials:", time.time() - self.st)
 
 
 class SplashScreen(QMainWindow):
@@ -388,20 +375,9 @@ class SplashScreen(QMainWindow):
             uic.loadUi(file, self)
         except Exception as e:
             print(e)
-        # self.ui = Ui_SplashScreen()
-        # self.ui.setupUi(self)
 
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
-        # self.shadow = QGraphicsDropShadowEffect(self)
-        # self.shadow.setBlurRadius(20)
-        # self.shadow.setXOffset(0)
-        # self.shadow.setYOffset(0)
-        # self.shadow.setColor(QColor(0, 0, 0, 255))
-        # self.ui.dropShadowFrame.setGraphicsEffect(self.shadow)
-
-        # shadow1(self.ui.label, 20)
 
         self.label_3.setText("<strong>LOADING</strong>")
         self.progressBar.setValue(0)
@@ -423,7 +399,6 @@ class Dashboard(QWidget):
         )
         try:
             file = check_for_file(PATH_ONE, PATH_TWO)
-            # print(file)
             uic.loadUi(file, self)
         except Exception as e:
             print(e)
@@ -448,11 +423,8 @@ class Dashboard(QWidget):
         queue_one = Queue()  # used for sending messages
         queue_two = Queue()  # used for receiving messages
 
-        # print(self.settings_frame)
-
-        # print(self.stacked_action_pannel.setCurrentWidget(self.messages_frame))
-
-        user_id = "adam_12"
+        user_id = self.user_id
+        # user_id = "adam_12"
         password = "asdf"
 
         con = ServerCon(queue_one, queue_two)
@@ -509,7 +481,6 @@ class ViewHandler:
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
 
     def load_status(self, progress_value, special_message):
-        # print("setting progress bar value to", progress_value)
         self.set_status(progress_value, special_message)
 
     def load_complete(self):
@@ -536,7 +507,7 @@ class ViewHandler:
     def valid_user(self, post, user_id):
         if post == "admin":
             self.show_admin_pannel(user_id)
-        elif post in ["general", "project_manager", "team_lead"]:
+        elif post in ["general_employee", "project_manager", "team_manager"]:
             self.show_dashboard_window(user_id)
 
     def show_admin_users_data(self, user_data_list):

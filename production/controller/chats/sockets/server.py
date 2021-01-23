@@ -20,6 +20,7 @@ except:
 
 
 HOST = "192.168.1.6"
+HOST = "127.0.0.1"
 PORT = 1030
 
 event_handler = selectors.DefaultSelector()

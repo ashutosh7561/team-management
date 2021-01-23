@@ -4,3 +4,4 @@ __pycache__/
 Newfolder/
 production/controller/chats/sockets/chats.db
 production/controller/chats/sockets/clientdb.db
+production/model/rbac.db

@@ -15,7 +15,8 @@ class ClientDatabaseConnector:
         else:
             raise FileNotFoundError
 
-    def __init__(self):
+    def __init__(self, user_id):
+        self.user_table = user_id
         try:
             database = self.check_for_file()
             self.rbac_connection = sqlite3.connect(database)
@@ -25,6 +26,34 @@ class ClientDatabaseConnector:
         self.cursor = self.rbac_connection.cursor()
         # for setting foreign key constraints to true
         self.rbac_connection.execute("PRAGMA foreign_keys = 1")
+
+        self.verify_table()
+
+    def verify_table(self):
+        user_table = self.table_exists()
+        if user_table == []:
+            self.add_user_table()
+
+    def table_exists(self):
+        query = "SELECT name FROM sqlite_master WHERE type='table' AND name= (?);"
+        try:
+            self.cursor.execute(query, (self.user_table,))
+            rows = self.cursor.fetchall()
+            arr = []
+            for i in rows:
+                arr.append(i[0])
+            return arr
+        except Exception as e:
+            print(e)
+            return []
+
+    def add_user_table(self):
+        query = f'CREATE TABLE IF NOT EXISTS "{self.user_table}" (chat_id TEXT PRIMARY KEY, msg BOLB);'
+        try:
+            self.cursor.execute(query)
+            self.rbac_connection.commit()
+        except Exception as e:
+            print(e)
 
     def add_members_to_group(self, chat_id, user_id):
         dummy = pickle.dumps([])
@@ -47,7 +76,7 @@ class ClientDatabaseConnector:
         self.add_members_to_group(chat_id, chat_admin_user_id)
 
     def get_chat_list(self):
-        query = "SELECT chat_id FROM chat_cache;"
+        query = f'SELECT chat_id FROM "{self.user_table}";'
         try:
             self.cursor.execute(query)
             rows = self.cursor.fetchall()
@@ -64,7 +93,7 @@ class ClientDatabaseConnector:
         # so read it in binary for this query only
         self.rbac_connection.text_factory = bytes
 
-        query = "SELECT msg FROM chat_cache WHERE chat_id = (?);"
+        query = f'SELECT msg FROM "{self.user_table}" WHERE chat_id = (?);'
         arr = []
         try:
             self.cursor.execute(
@@ -83,12 +112,14 @@ class ClientDatabaseConnector:
             return arr
 
     def stash_incoming_message(self, chat_id, data):
-        query = "INSERT INTO chat_cache(chat_id, msg) VALUES (?, ?);"
-        query_two = "UPDATE chat_cache SET msg = (?) WHERE chat_id = (?);"
+        query = f'INSERT INTO "{self.user_table}"(chat_id, msg) VALUES (?, ?);'
+        query_two = f'UPDATE "{self.user_table}" SET msg = (?) WHERE chat_id = (?);'
 
         chat_list = self.get_chat_list()
         if chat_id not in chat_list:
             try:
+                data = [data]
+                data = pickle.dumps(data)
                 cursor = self.cursor.execute(query, (chat_id, data))
                 self.rbac_connection.commit()
             except Exception as e:
@@ -105,7 +136,7 @@ class ClientDatabaseConnector:
                 print(e)
 
     def clear_chat_messages(self, chat_id):
-        query_two = "UPDATE chat_cache SET msg = (?) WHERE chat_id = (?);"
+        query_two = f'UPDATE "{self.user_table}" SET msg = (?) WHERE chat_id = (?);'
 
         chat_list = self.get_chat_list()
         if chat_id not in chat_list:
@@ -124,7 +155,7 @@ class ClientDatabaseConnector:
 
 class ClientDBHandler:
     def __init__(self, user_id, queue):
-        self.clientdb = ClientDatabaseConnector()
+        self.clientdb = ClientDatabaseConnector(user_id)
         self.user_id = user_id
         self.queue = queue
 
@@ -135,18 +166,18 @@ class ClientDBHandler:
             # print(message)
             for i in message.keys():
                 message_sender = i
-                message = message[i]
+                msg = message[i]
             if self.user_id in message:
                 # print("render send message")
                 # message = message[self.user_id]
                 self.queue.put(
-                    {"send_msg": True, "chat_id": chat_id, "message": message}
+                    {"send_msg": True, "chat_id": chat_id, "message": msg}
                 )
                 # self.queue.put({"send_msg": message})
             else:
                 # print("render recv message")
                 self.queue.put(
-                    {"recv_msg": True, "chat_id": chat_id, "message": message}
+                    {"recv_msg": True, "chat_id": chat_id, "message": msg}
                 )
                 # self.queue.put({"recv_msg": message})
 
@@ -169,9 +200,13 @@ if __name__ == "__main__":
     # o.get_chat_messages("group_one")
     # o.get_chat_messages("group_two")
 
-    k = ClientDatabaseConnector()
-    k.clear_chat_messages("group_one")
-    k.clear_chat_messages("group_two")
+    k = ClientDatabaseConnector("alex_11")
+
+    # k.clear_chat_messages("group_one")
+    # k.clear_chat_messages("group_two")
+    # mm = pickle.dumps({"adam_12": "message from adam_12"})
+
+    # k.stash_incoming_message("group_one", mm)
 
     # msg = {"alex_10": "msg from alex"}
 
