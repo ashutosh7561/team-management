@@ -24,7 +24,7 @@ class Packet:
         self.header_threshold = 30
         self.data_threshold = self.packet_threshold - self.header_threshold
         self.encoding = "utf-8"
-
+    
     def bind_socket(self, user_id, ob):
         self.user_id = user_id
         self.ob = ob
@@ -130,7 +130,7 @@ class Packet:
 
         for i in data_packets:
             final_data += i
-
+        
         if msg_type == "txt":
             return final_data.decode(self.encoding)
         elif msg_type == "obj":

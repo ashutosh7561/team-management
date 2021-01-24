@@ -7,6 +7,9 @@ import os
 # sys.path.append(d)
 
 import multiprocessing as mp
+from queue import Queue
+
+from client import ServerCon
 
 
 class ControllerHandler:
@@ -19,6 +22,13 @@ class ControllerHandler:
 
         self.flag = True
         self.check_for_messages()
+
+    def connect_to_server(self):
+        queue_one = Queue()
+        queue_two = Queue()
+
+        con = ServerCon(queue_one, self.controller_queue)
+        con.start_connection_thread()
 
     def check_for_messages(self):
         while self.flag:
@@ -46,7 +56,7 @@ class ControllerHandler:
 
     def authentication_status(self, is_valid, post, user_id):
         if is_valid:
-            # print(post)
+            print(post)
             self.view_queue.put(["valid_user", post, user_id])
         else:
             self.view_queue.put(["invalid_user"])
@@ -55,6 +65,7 @@ class ControllerHandler:
         self.model_queue.put(["validate_credentials", user_id, password])
 
     def load_resources(self):
+        self.connect_to_server()
         msg = [
             "Database",
             "Files",
@@ -113,4 +124,12 @@ class ControllerHandlerTesting:
 
 if __name__ == "__main__":
     # ControllerHandlerTesting().test()
+
+    v_q = mp.Queue()
+    c_q = mp.Queue()
+    m_q = mp.Queue()
+
+    c_q.put(["load_resources"])
+
+    ControllerHandler(v_q, c_q, m_q)
     pass

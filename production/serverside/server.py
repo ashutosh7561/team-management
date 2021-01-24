@@ -6,18 +6,13 @@ try:
     from header import Packet
 except:
     try:
-        from controller.chats.sockets.header import Packet
+        from serverside.header import Packet
     except Exception as e:
         print(e)
 
-try:
-    from chatdbconnector import *
-except:
-    try:
-        from controller.chats.sockets.chatdbconnector import *
-    except Exception as e:
-        print(e)
-
+from validator import Validator
+from databaseconnector import DatabaseConnector
+from chatdbconnector import ChatDatabaseConnector, UserStandard
 
 HOST = "192.168.1.6"
 HOST = "127.0.0.1"
@@ -65,13 +60,19 @@ def verify_credentials(msg_data, wrapper):
     user_id = msg_data["user_id"]
     password = msg_data["password"]
 
-    # pass values to checking module
+    is_valid_user = False
 
-    if user_id == "adam_12" and password == "asdf":
-        dat = {"is_valid": True, "post": "admin", "user_id": "adam_12"}
+    if Validator().validate_user(user_id, password):
+        user_post = DatabaseConnector().get_user_post(user_id)
+        is_valid_user = True
+        dat = {"is_valid": True, "post": user_post, "user_id": user_id}
+        wrapper.send_data({"msg_type": "authentication_status", "msg_data": dat}, "obj")
+    else:
+        dat = {"is_valid": False, "post": None, "user_id": user_id}
         wrapper.send_data({"msg_type": "authentication_status", "msg_data": dat}, "obj")
 
-    # if valid user
+    if not (is_valid_user):
+        return
     ob = UserStandard(user_id)
     wrapper.bind_socket(user_id, ob)
 
@@ -88,6 +89,8 @@ def register_new_client(client_handle):
     event_handler.register(client_socket, events=respond_to, data=wrapper)
 
     verify_user(wrapper)
+
+    print("active clients:\n", active_client_sockets)
 
 
 def try_sending_buffer_msg(head):
@@ -142,6 +145,7 @@ def handle_client_request(key, mask):
             client_socket.close()
             event_handler.unregister(client_socket)
             print("closed socket")
+            print(client_socket)
 
 
 def check_for_updates():
@@ -171,3 +175,5 @@ def start_server():
 
 if __name__ == "__main__":
     start_server()
+    # verify_credentials({"user_id": "adam_12", "password": "adam"}, None)
+    # verify_credentials({"user_id": "peter_13", "password": "peter"}, None)
