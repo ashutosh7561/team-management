@@ -37,17 +37,22 @@ def verify_user(wrapper):
 def fanout_message(msg_data, wrapper):
     chat_id = msg_data["chat_id"]
     msg_content = msg_data["msg_content"]
+    sender_id = msg_data["sender_id"]
 
-    ob = wrapper.ob
-    ob.send_message(chat_id, msg_content)
-    recipient_list = ob.get_recipient_list(chat_id)
-    for i in recipient_list:
-        try:
-            is_online = active_client_sockets[i]
-            if is_online:
-                active_client_sockets[i][1] = False
-        except:
-            pass
+    try:
+        ob = wrapper.ob
+        print(ob)
+        ob.send_message(chat_id, msg_content)
+        recipient_list = ob.get_recipient_list(chat_id)
+        for i in recipient_list:
+            try:
+                is_online = active_client_sockets[i]
+                if is_online:
+                    active_client_sockets[i][1] = False
+            except:
+                pass
+    except Exception as e:
+        print(e)
 
 
 def msg_ack(msg_data, wrapper):
@@ -90,8 +95,6 @@ def register_new_client(client_handle):
 
     verify_user(wrapper)
 
-    print("active clients:\n", active_client_sockets)
-
 
 def try_sending_buffer_msg(head):
     user_id = head.user_id
@@ -119,7 +122,7 @@ def delegate_message(msg, wrapper):
     print(msg)
     MAPPING = {
         "credentials": verify_credentials,
-        "msg": fanout_message,
+        "chat_msg": fanout_message,
         "msg_ack": msg_ack,
     }
     if type(msg) is dict:
@@ -141,11 +144,13 @@ def handle_client_request(key, mask):
             print(e)
             print("no data from client")
             print("client might have closed connection")
-            del active_client_sockets[head.user_id]
+            try:
+                del active_client_sockets[head.user_id]
+            except:
+                pass
             client_socket.close()
             event_handler.unregister(client_socket)
             print("closed socket")
-            print(client_socket)
 
 
 def check_for_updates():

@@ -3,7 +3,7 @@ import pickle
 import os
 
 PATH_ONE = r"./clientdb.db"
-PATH_TWO = r"./production/serverside/clientdb.db"
+PATH_TWO = r"./production/model/clientdb.db"
 
 
 class ClientDatabaseConnector:
@@ -170,25 +170,21 @@ class ClientDBHandler:
             if self.user_id in message:
                 # print("render send message")
                 # message = message[self.user_id]
-                self.queue.put(
-                    {"send_msg": True, "chat_id": chat_id, "message": msg}
-                )
+                self.queue.put({"send_msg": True, "chat_id": chat_id, "message": msg})
                 # self.queue.put({"send_msg": message})
             else:
                 # print("render recv message")
-                self.queue.put(
-                    {"recv_msg": True, "chat_id": chat_id, "message": msg}
-                )
+                self.queue.put({"recv_msg": True, "chat_id": chat_id, "message": msg})
                 # self.queue.put({"recv_msg": message})
 
     def write_chat_message(self, chat_id, msg):
         self.clientdb.stash_incoming_message(chat_id, msg)
-        if self.user_id in msg:
-            # print("render send message")
-            self.queue.put({"send_msg": msg})
-        else:
-            # print("render recv message")
-            self.queue.put({"recv_msg": msg})
+        # if self.user_id in msg:
+        #     # print("render send message")
+        #     self.queue.put({"send_msg": msg})
+        # else:
+        #     # print("render recv message")
+        #     self.queue.put({"recv_msg": msg})
 
     def get_all_chat_messages(self):
         for i in self.clientdb.get_chat_list():

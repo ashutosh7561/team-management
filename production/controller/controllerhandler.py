@@ -3,8 +3,8 @@ import sys
 from os.path import dirname, abspath
 import os
 
-# d = dirname(dirname(abspath(__file__)))
-# sys.path.append(d)
+d = dirname(dirname(abspath(__file__)))
+sys.path.append(d)
 
 import multiprocessing as mp
 from queue import Queue
@@ -17,17 +17,13 @@ class ControllerHandler:
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
-
-        # print("controller handler up and running")
+        self.server_queue = Queue()
 
         self.flag = True
         self.check_for_messages()
 
     def connect_to_server(self):
-        queue_one = Queue()
-        queue_two = Queue()
-
-        con = ServerCon(queue_one, self.controller_queue)
+        con = ServerCon(self.server_queue, self.controller_queue)
         con.start_connection_thread()
 
     def check_for_messages(self):
@@ -44,8 +40,17 @@ class ControllerHandler:
             "user_authenticated": self.authentication_status,
             "admin_users_data": self.admin_users_data,
             "admin_add_new_user": self.admin_add_new_user,
+            "chat_msg": self.send_chat_msg,
         }
         self.message_dict[message[0]](*message[1:])
+
+    def send_chat_msg(self, chat_msg, chat_id, sender_id):
+        self.server_queue.put(
+            {
+                "msg_type": "chat_msg",
+                "msg_data": [chat_msg, chat_id, sender_id],
+            }
+        )
 
     def admin_add_new_user(self, *args):
         self.model_queue.put(["admin_add_new_user", *args])
@@ -62,7 +67,13 @@ class ControllerHandler:
             self.view_queue.put(["invalid_user"])
 
     def validate_credentials(self, user_id, password):
-        self.model_queue.put(["validate_credentials", user_id, password])
+        # self.model_queue.put(["validate_credentials", user_id, password])
+        self.server_queue.put(
+            {
+                "msg_type": "credentials",
+                "msg_data": {"user_id": user_id, "password": password},
+            }
+        )
 
     def load_resources(self):
         self.connect_to_server()
@@ -99,9 +110,11 @@ class ControllerHandlerTesting:
         c_handler = ControllerHandler(v_q, c_q, m_q)
 
     def other_proc(self, v_q, c_q, m_q):
-        # print("putting data on queue")
-        c_q.put(["admin_get_users_data", "alex", "admin", "root"])
-        c_q.put(["quit_application"])
+        c_q.put(["load_resources"])
+        time.sleep(2)
+        c_q.put(["validate_credentials", "adam_12", "adam"])
+        print("sending chat messages:\n")
+        c_q.put(["chat_msg", "hi", "group_one", "adam"])
 
     def test(self):
         v_q = mp.Queue()
@@ -123,13 +136,4 @@ class ControllerHandlerTesting:
 
 
 if __name__ == "__main__":
-    # ControllerHandlerTesting().test()
-
-    v_q = mp.Queue()
-    c_q = mp.Queue()
-    m_q = mp.Queue()
-
-    c_q.put(["load_resources"])
-
-    ControllerHandler(v_q, c_q, m_q)
-    pass
+    ControllerHandlerTesting().test()
