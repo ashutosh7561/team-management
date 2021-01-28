@@ -13,7 +13,7 @@ def check_for_file(PATH_ONE, PATH_TWO):
 
 class DatabaseConnector:
     def __init__(self):
-        PATH_ONE = r"./production/serverside/rbac.db"
+        PATH_ONE = r"./production/serverside/servermodel/rbac.db"
         PATH_TWO = r"C:/Users/Asus/Desktop/team-management/production/model/rbac.db"
         try:
             file = check_for_file(PATH_ONE, PATH_TWO)

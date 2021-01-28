@@ -388,8 +388,8 @@ class SplashScreen(QMainWindow):
 
 
 class Dashboard(QWidget):
-    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
-        super(Dashboard, self).__init__(**kwargs)
+    def __init__(self, view_queue, controller_queue, model_queue, parent=None):
+        super(Dashboard, self).__init__(parent)
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
@@ -412,28 +412,31 @@ class Dashboard(QWidget):
         self.settings.clicked.connect(
             lambda: self.stacked_action_pannel.setCurrentWidget(self.settings_frame)
         )
-        self.messages.clicked.connect(self.show_messages)
+        self.messages.clicked.connect(
+            lambda: self.stacked_action_pannel.setCurrentWidget(msg_widget)
+        )
+        self.stacked_action_pannel.setCurrentWidget(self.dashboard_frame)
 
-    def initiate(self, user_id):
+        queue_two = Queue()  # used for receiving messages
+        msg_widget = Main(queue_two, None, parent=self.stacked_action_pannel)
+
+        self.stacked_action_pannel.addWidget(msg_widget)
+
+        self.stacked_action_pannel.setCurrentWidget(msg_widget)
+
+    def initialize(self, user_id):
         self.user_id = user_id
         self.user_handle.setText(user_id)
         self.label_68.setText(user_id)
 
     def show_messages(self):
-        queue_one = Queue()  # used for sending messages
         queue_two = Queue()  # used for receiving messages
 
-        user_id = self.user_id
-        # user_id = "adam_12"
-        password = "asdf"
+        msg_widget = Main(queue_two, None, parent=self)
+        msg_widget.setBaseSize(self.siz[0], self.siz[1])
 
-        con = ServerCon(queue_one, queue_two)
-        con.start_connection_thread(user_id, password)
-
-        msg_widget = Main(queue_two, con)
-
-        self.stacked_action_pannel.addWidget(msg_widget)
-        self.stacked_action_pannel.setCurrentWidget(msg_widget)
+        self.messages_frame.layout().addWidget(msg_widget)
+        self.stacked_action_pannel.setCurrentWidget(self.messages_frame)
 
 
 class ViewHandler:
@@ -539,8 +542,8 @@ class ViewHandler:
     def show_dashboard_window(self, user_id):
         self.main_window.close()
         self.main_window = self.dashboard_window
+        self.dashboard_window.initialize(user_id)
         self.main_window.show()
-        self.dashboard_window.initiate(user_id)
 
 
 if __name__ == "__main__":

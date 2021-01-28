@@ -8,8 +8,8 @@ import os
 
 import multiprocessing as mp
 
-from model.databaseconnector import DatabaseConnector
-from model.validator import Validator
+# from model.databaseconnector import DatabaseConnector
+# from model.validator import Validator
 
 # Hanlders including Model, View, and Controller will only contain
 # functionality to check for messages, identify them and call
@@ -28,8 +28,8 @@ class ModelHandler:
         # print("model handler up and running")
 
         self.flag = True
-        self.validator = Validator()
-        self.db = DatabaseConnector()
+        # self.validator = Validator()
+        # self.db = DatabaseConnector()
         self.check_for_messages()
 
     def check_for_messages(self):

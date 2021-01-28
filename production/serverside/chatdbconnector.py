@@ -3,7 +3,7 @@ import pickle
 import os
 
 PATH_ONE = r"./chats.db"
-PATH_TWO = r"./production/serverside/chats.db"
+PATH_TWO = r"./production/serverside/servermodel/chats.db"
 
 
 class ChatDatabaseConnector:

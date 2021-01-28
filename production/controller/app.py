@@ -53,7 +53,7 @@ def root():
 
     view_process.start()
     controller_process.start()
-    model_process.start()
+    # model_process.start()
 
     # view_process.join()
     # controller_process.join()

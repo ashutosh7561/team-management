@@ -1,8 +1,8 @@
 import sys
 from os.path import abspath, dirname
 
-# d = dirname(dirname(abspath(__file__)))
-# sys.path.append(d)
+d = dirname(dirname(abspath(__file__)))
+sys.path.append(d)
 
 
 import platform
@@ -29,6 +29,7 @@ from view.messagetexttemplate import (
     MessageTextTemplate,
     MessageTextRecieveTemplate,
 )
+from view.chatbar import ChatDetails
 from controller.chats.sockets.client import ServerCon
 
 
@@ -44,8 +45,9 @@ def check_for_file(PATH_ONE, PATH_TWO):
 
 
 class ChatWidgetTemplate(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None, root=None):
+        super().__init__(parent)
+        self.root = root
         PATH_ONE = r"./production/view/chat_widget.ui"
         PATH_TWO = r""
         try:
@@ -53,7 +55,6 @@ class ChatWidgetTemplate(QWidget):
             uic.loadUi(file, self)
         except Exception as e:
             print(e)
-        self.chat_heading.clicked.connect(self.callback)
 
     def callback(self):
         chat_id = self.chat_heading.text()
@@ -65,6 +66,10 @@ class ChatWidgetTemplate(QWidget):
                 pass
         if isinstance(a, Main):
             a.change_chat(chat_id)
+
+    def mousePressEvent(self, event):
+        chat_id = self.chat_heading.text()
+        self.root.change_chat(chat_id)
 
 
 class MessageCentral(QWidget):
@@ -81,8 +86,9 @@ class MessageCentral(QWidget):
 
 
 class MessageSidebar(QWidget):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None, root=None):
+        super().__init__(parent)
+        self.root = root
         PATH_ONE = r"./production/view/message_template_sidebar.ui"
         PATH_TWO = r""
         try:
@@ -113,7 +119,7 @@ class MessageSidebar(QWidget):
         wig = QWidget()
         box = QVBoxLayout()
         for i in user_list:
-            gt = ChatWidgetTemplate()
+            gt = ChatWidgetTemplate(parent=self, root=self.root)
             gt.chat_heading.setText(i)
             box.addWidget(gt)
 
@@ -122,8 +128,9 @@ class MessageSidebar(QWidget):
 
 
 class ChatBoxTemplate(QWidget):
-    def __init__(self, servcon, chat_heading):
-        super().__init__()
+    def __init__(self, servcon, chat_heading, parent=None, root=None):
+        super().__init__(parent)
+        self.root = root
         PATH_ONE = r"./production/view/chat_box_template.ui"
         PATH_TWO = r""
         try:
@@ -142,6 +149,7 @@ class ChatBoxTemplate(QWidget):
         self.fbor.setLayout(self.vbox)
         self.vbox.addStretch()
         self.chat_message_list.setWidget(self.fbor)
+        self.chat_group_info.root = self.root
 
     def resizeEvent(self, event):
         km = iter(self.fbor.children())
@@ -245,8 +253,8 @@ class ChatBoxTemplate(QWidget):
 
 
 class Main(QWidget):
-    def __init__(self, read_queue, servcon):
-        super(Main, self).__init__()
+    def __init__(self, read_queue, servcon, parent=None):
+        super(Main, self).__init__(parent)
         PATH_ONE = r"./production/view/message_template.ui"
         PATH_TWO = r""
         try:
@@ -262,7 +270,11 @@ class Main(QWidget):
         # self.central_window.setCurrentWidget(self.message_initial)
         # print(self.central_window.addWidget(ChatBoxTemplate(self.servcon, "Alex")))
         # self.central_window.setCurrentIndex(1)
-        self.message_sidebar = MessageSidebar()
+
+        self.tw = ChatDetails(parent=self.central_window, root=self)
+        self.central_window.addWidget(self.tw)
+
+        self.message_sidebar = MessageSidebar(parent=self.sidebar, root=self)
         user_list = [
             "group_one",
             "group_two",
@@ -298,6 +310,10 @@ class Main(QWidget):
         self.message_sidebar.show_contacts.clicked.connect(self.start_screen)
         self.message_sidebar.show_groups.clicked.connect(self.chat_box_screen)
 
+        self.message_sidebar.show_groups.clicked.connect(
+            lambda: self.central_window.setCurrentWidget(self.tw)
+        )
+
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
 
     def identify_message(self, message):
@@ -310,7 +326,7 @@ class Main(QWidget):
                     if msg_text == "":
                         return
                     try:
-                        wg = self.chat_list_widgets[chat_id]
+                        wg = self.chat_list_widgets[chat_id][0]
                         wg.load_send_message(msg_text)
                         # wg.recieve_message(msg_text)
                     except:
@@ -322,7 +338,7 @@ class Main(QWidget):
                     if msg_text == "":
                         return
                     try:
-                        wg = self.chat_list_widgets[chat_id]
+                        wg = self.chat_list_widgets[chat_id][0]
                         wg.load_recieve_message(msg_text)
                         # wg.recieve_message(msg_text)
                     except:
@@ -346,21 +362,37 @@ class Main(QWidget):
     def populate_chat_widgets(self, user_list):
         self.chat_list_widgets = {}
         for i in user_list:
-            wg = ChatBoxTemplate(self.servcon, i)
-            self.chat_list_widgets[i] = wg
+            wg = ChatBoxTemplate(
+                servcon=self.servcon,
+                chat_heading=i,
+                parent=self.central_window,
+                root=self,
+            )
+            tg = ChatDetails(parent=self.central_window, root=self)
+            tg.initialize(chat_id=i)
+            self.chat_list_widgets[i] = (wg, tg)
             self.central_window.addWidget(wg)
+            self.central_window.addWidget(tg)
 
     def change_chat(self, chat_id):
-        wg = self.chat_list_widgets[chat_id]
+        wg = self.chat_list_widgets[chat_id][0]
         self.central_window.setCurrentWidget(wg)
+
+    def show_chat_details(self, chat_id):
+        chat_detail = self.chat_list_widgets[chat_id][1]
+        self.central_window.setCurrentWidget(chat_detail)
+
+    def hide_chat_details(self, chat_id):
+        chat_widget = self.chat_list_widgets[chat_id][0]
+        self.central_window.setCurrentWidget(chat_widget)
 
 
 if __name__ == "__main__":
     queue_one = Queue()  # used for sending messages
     queue_two = Queue()  # used for receiving messages
 
-    user_id = input()
-    password = input()
+    user_id = "alex_11"
+    password = "alex"
 
     con = ServerCon(queue_one, queue_two)
     con.start_connection_thread(user_id, password)

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1079</width>
+    <width>1100</width>
     <height>822</height>
    </rect>
   </property>
@@ -33,8 +33,8 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>800</width>
-       <height>800</height>
+       <width>0</width>
+       <height>0</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -43,8 +43,8 @@
      <widget class="MessageCentral" name="message_initial">
       <property name="minimumSize">
        <size>
-        <width>800</width>
-        <height>800</height>
+        <width>0</width>
+        <height>0</height>
        </size>
       </property>
      </widget>
@@ -60,7 +60,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>250</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>

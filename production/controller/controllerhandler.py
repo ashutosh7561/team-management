@@ -77,25 +77,26 @@ class ControllerHandler:
 
     def load_resources(self):
         self.connect_to_server()
-        msg = [
-            "Database",
-            "Files",
-            "Settings",
-            "Settings",
-            "Dependencies",
-            "Dependencies",
-            "Images",
-            "Projects",
-            "Calendar",
-            "Messages",
-            "Messages",
-        ]
-        for i in range(11):
-            time.sleep(0.3)
-            # print("loading...", i * 10)
-            self.view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
+        # msg = [
+        #     "Database",
+        #     "Files",
+        #     "Settings",
+        #     "Settings",
+        #     "Dependencies",
+        #     "Dependencies",
+        #     "Images",
+        #     "Projects",
+        #     "Calendar",
+        #     "Messages",
+        #     "Messages",
+        # ]
+        # for i in range(11):
+        #     time.sleep(0.3)
+        #     print("loading...", i * 10)
+        #     self.view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
         # print("load complete")
         self.view_queue.put(["load_complete"])
+        self.validate_credentials("asdf", "asdf")
 
     def admin_get_users_data(self, *args):
         self.model_queue.put(["admin_get_users_data", *args])
