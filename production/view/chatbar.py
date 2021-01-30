@@ -28,9 +28,13 @@ class ChatDetails(QWidget):
 
         self.close_btn.clicked.connect(self.close_tab)
 
-    def initialize(self, chat_id):
+    def initialize(self, chat_id, chat_desc, chat_icon):
         self.chat_id = chat_id
+        if type(chat_desc) == bytes:
+            chat_desc = chat_desc.decode("utf-8")
         self.chat_heading.setText(self.chat_id)
+        print(chat_desc)
+        self.chat_desc.setText(chat_desc)
 
     def close_tab(self):
         self.root.hide_chat_details(self.chat_id)

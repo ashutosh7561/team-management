@@ -13,24 +13,20 @@ from client import ServerCon
 
 
 class ControllerHandler:
-    def __init__(self, view_queue, controller_queue, model_queue):
+    def __init__(self, view_queue, controller_queue, message_queue, server_queue, con):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
-        self.model_queue = model_queue
-        self.server_queue = mp.Queue()
+        self.message_queue = message_queue
+        self.server_queue = server_queue
+        self.con = con
 
         self.flag = True
         self.check_for_messages()
 
     def connect_to_server(self):
-        print("connecting to server")
-        self.con = ServerCon(self.server_queue, self.controller_queue)
         self.con.start_connection_thread()
-        print("*" * 88, self.con)
-        print("passing connection object to view")
         # self.view_queue.put(["connection_obj", self.con])
         self.view_queue.put(["connection_obj", None])
-        print("passed connection object to view")
 
     def check_for_messages(self):
         while self.flag:
@@ -38,7 +34,6 @@ class ControllerHandler:
             self.identify_message(message)
 
     def identify_message(self, message):
-        print("controller received message:", message)
         self.message_dict = {
             "load_resources": self.load_resources,
             "admin_get_users_data": self.admin_get_users_data,
@@ -53,9 +48,10 @@ class ControllerHandler:
         self.message_dict[message[0]](*message[1:])
 
     def store_message_queue(self, queue):
-        self.message_queue = queue
-        print("passing message queue to connection object(client)")
-        self.con.message_queue = self.message_queue
+        # self.message_queue = self.message_queue
+        # self.con.message_queue = self.message_queue
+        # print(self.con)
+        pass
 
     def send_chat_msg(self, chat_msg, chat_id, sender_id):
         self.server_queue.put(
@@ -74,7 +70,6 @@ class ControllerHandler:
 
     def authentication_status(self, is_valid, post, user_id):
         if is_valid:
-            print(post)
             self.view_queue.put(["valid_user", post, user_id])
         else:
             self.view_queue.put(["invalid_user"])
@@ -107,16 +102,14 @@ class ControllerHandler:
         #     time.sleep(0.3)
         #     print("loading...", i * 10)
         #     self.view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
-        # print("load complete")
-        print("load completed sending message to view")
+        print("load complete")
         self.view_queue.put(["load_complete"])
-        # self.validate_credentials("asdf", "asdf")
+        self.validate_credentials("adam_12", "adam")
 
     def admin_get_users_data(self, *args):
         self.model_queue.put(["admin_get_users_data", *args])
 
     def quit_application(self):
-        # print("quit application request")
         self.server_queue.put({"msg_type": "action", "msg_data": {"quit": True}})
         self.flag = False
 

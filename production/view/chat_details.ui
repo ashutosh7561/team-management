@@ -236,7 +236,7 @@ border-radius:3px;
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QLabel" name="chat_heading_2">
+          <widget class="QLabel" name="chat_desc">
            <property name="font">
             <font>
              <pointsize>10</pointsize>

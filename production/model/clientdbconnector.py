@@ -243,8 +243,9 @@ class ClientDBHandler:
 
     def get_chat_details(self, chat_id):
         details = self.clientdb.get_chat_details(chat_id)
-        chat_icon = details[0]
-        chat_desc = details[1].decode("utf-8")
+        chat_icon = details[1]
+        # chat_desc = details[1].decode("utf-8")
+        chat_desc = details[0]
 
         return {"chat_id": chat_id, "chat_icon": chat_icon, "chat_desc": chat_desc}
 
@@ -253,7 +254,6 @@ class ClientDBHandler:
         dat = {}
         dat["chats_list"] = True
         dat["list"] = chats_list
-        print(dat)
         self.queue.put(dat)
 
     def get_all_chats_details(self):
@@ -265,7 +265,6 @@ class ClientDBHandler:
         dat["chats_list_detail"] = True
         dat["list_two"] = chats_list_detail
         dat["list"] = chats_list
-        print(dat)
         self.queue.put(dat)
 
 

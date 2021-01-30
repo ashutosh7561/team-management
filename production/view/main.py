@@ -38,11 +38,11 @@ def check_for_file(PATH_ONE, PATH_TWO):
 
 
 class AdminPannel(QWidget):
-    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
+    def __init__(self, view_queue, controller_queue, message_queue, **kwargs):
         super(AdminPannel, self).__init__(**kwargs)
         self.view_queue = view_queue
         self.controller_queue = controller_queue
-        self.model_queue = model_queue
+        self.message_queue = message_queue
 
         PATH_ONE = r"./production/view/admin_pannel.ui"
         PATH_TWO = (
@@ -126,7 +126,7 @@ class AdminPannel(QWidget):
     def switch_to_posts(self):
         # dummy posts data
         post_data = [
-            PostTemplate(self.view_queue, self.controller_queue, self.model_queue)
+            PostTemplate(self.view_queue, self.controller_queue, self.message_queue)
             for i in range(10)
         ]
         lis = QWidget()
@@ -139,11 +139,11 @@ class AdminPannel(QWidget):
 
 
 class PostTemplate(QWidget):
-    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
+    def __init__(self, view_queue, controller_queue, message_queue, **kwargs):
         super(PostTemplate, self).__init__(**kwargs)
         self.view_queue = view_queue
         self.controller_queue = controller_queue
-        self.model_queue = model_queue
+        self.message_queue = message_queue
         PATH_ONE = r"./production/view/post_template.ui"
         PATH_TWO = r""
         try:
@@ -313,11 +313,11 @@ class CustWidget(QWidget):
 
 
 class LoginScreen(QMainWindow):
-    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
+    def __init__(self, view_queue, controller_queue, message_queue, **kwargs):
         super(LoginScreen, self).__init__(**kwargs)
         self.view_queue = view_queue
         self.controller_queue = controller_queue
-        self.model_queue = model_queue
+        self.message_queue = message_queue
         PATH_ONE = r"./production/view/main_window.ui"
         PATH_TWO = (
             r"C:/Users/Asus/Desktop/team-management/production/view/main_window.ui"
@@ -362,11 +362,11 @@ class LoginScreen(QMainWindow):
 
 
 class SplashScreen(QMainWindow):
-    def __init__(self, view_queue, controller_queue, model_queue, **kwargs):
+    def __init__(self, view_queue, controller_queue, message_queue, **kwargs):
         super(SplashScreen, self).__init__(**kwargs)
         self.view_queue = view_queue
         self.controller_queue = controller_queue
-        self.model_queue = model_queue
+        self.message_queue = message_queue
         PATH_ONE = r"./production/view/Splash_screen.ui"
         PATH_TWO = (
             r"C:/Users/Asus/Desktop/team-management/production/view/Splash_screen.ui"
@@ -389,14 +389,13 @@ class SplashScreen(QMainWindow):
 
 
 class Dashboard(QWidget):
-    def __init__(self, view_queue, controller_queue, model_queue, parent=None):
+    def __init__(self, view_queue, controller_queue, message_queue, parent=None):
         super(Dashboard, self).__init__(parent)
         self.view_queue = view_queue
         self.controller_queue = controller_queue
-        self.model_queue = model_queue
+        self.message_queue = message_queue
         self.con = None
         self.message_queue = None
-        self.message_queue = self.model_queue
         PATH_ONE = r"./production/view/root_window.ui"
         PATH_TWO = (
             r"C:/Users/Asus/Desktop/team-management/production/view/root_window.ui"
@@ -432,25 +431,23 @@ class Dashboard(QWidget):
         self.user_handle.setText(user_id)
         self.label_68.setText(user_id)
 
-        print("ok")
         self.msg_widget = Main(self.message_queue, self.con, parent=self)
-        print("ok2")
         self.stacked_action_pannel.addWidget(self.msg_widget)
 
     def show_messages(self):
         if self.msg_widget == None:
-            print("ok3")
             self.msg_widget = Main(self.message_queue, self.con, parent=self)
-            print("ok4")
             self.stacked_action_pannel.addWidget(self.msg_widget)
         self.stacked_action_pannel.setCurrentWidget(self.msg_widget)
 
 
 class ViewHandler:
-    def __init__(self, view_queue, controller_queue, model_queue):
+    def __init__(self, view_queue, controller_queue, message_queue, server_queue, con):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
-        self.model_queue = model_queue
+        self.message_queue = message_queue
+        self.server_queue = server_queue
+        self.con = con
 
         # print("view handler up and running")
 
@@ -459,27 +456,24 @@ class ViewHandler:
         self.app = QApplication(sys.argv)
         self.main_window = None
         self.splash_screen = SplashScreen(
-            self.view_queue, self.controller_queue, self.model_queue
+            self.view_queue, self.controller_queue, self.message_queue
         )
         self.login_window = LoginScreen(
-            self.view_queue, self.controller_queue, self.model_queue
+            self.view_queue, self.controller_queue, self.message_queue
         )
         self.dashboard_window = Dashboard(
             self.view_queue,
             self.controller_queue,
-            self.model_queue,
+            self.message_queue,
         )
         self.admin_pannel = AdminPannel(
-            self.view_queue, self.controller_queue, self.model_queue
+            self.view_queue, self.controller_queue, self.message_queue
         )
-
-        print("initialized splash, login, dashboard window")
 
         self.start_app()
 
     def start_app(self):
         self.show_splash_screen()
-        print("view requesting for resources")
         self.controller_queue.put(["load_resources"])
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
         self.app.exec_()
@@ -503,7 +497,6 @@ class ViewHandler:
         self.show_login_window()
 
     def identify_message(self, message):
-        print("view received message:", message)
         self.message_dict = {
             "load_status": self.load_status,
             "load_complete": self.load_complete,
@@ -519,17 +512,14 @@ class ViewHandler:
         self.message_dict[message[0]](*message[1:])
 
     def store_connection_obj(self, con):
-        print("got con object from controller")
-        cc = ServerCon(None, None)
-        print("*" * 88, cc)
-        self.con = con
-        self.message_queue = mp.Queue()
-        # self.message_queue = self.model_queue
+        # self.con = con
+        # self.message_queue = mp.Queue()
+        # self.message_queue = self.message_queue
         self.dashboard_window.con = self.con
-        print("assigning connection obj, message queue to dashboard object")
         self.dashboard_window.message_queue = self.message_queue
-        print("passing message queue to controller")
-        self.controller_queue.put(["message_queue", self.message_queue])
+        # self.controller_queue.put(["message_queue", self.message_queue])
+        self.controller_queue.put(["message_queue", None])
+        # print(self.con)
 
     def invalid_user(self):
         self.main_window.invalid_user()

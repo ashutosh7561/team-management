@@ -11,81 +11,93 @@ import multiprocessing as mp
 from view.main import ViewHandler
 from controller.controllerhandler import ControllerHandler
 from model.modelhandler import ModelHandler
+from controller.client import ServerCon
+from multiprocessing.managers import BaseManager
+
+
+from queue import Queue
+
+queue = Queue()
+
+
+class QueueManager(BaseManager):
+    pass
+
+
+view_queue = mp.Queue()
+controller_queue = mp.Queue()
+message_queue = mp.Queue()
+server_queue = mp.Queue()
+con = ServerCon(server_queue, controller_queue, message_queue)
+
+
+def host():
+    QueueManager.register("get_viewq", callable=lambda: view_queue)
+    QueueManager.register("get_conq", callable=lambda: controller_queue)
+    QueueManager.register("get_messageq", callable=lambda: message_queue)
+    QueueManager.register("get_serverq", callable=lambda: server_queue)
+    QueueManager.register("get_con", callable=lambda: con)
+    m = QueueManager(address=("127.0.0.1", 50000), authkey=b"something_random")
+    m.get_server().serve_forever()
 
 
 def root():
-    # print("root process")
-    view_queue = mp.Queue()
-    controller_queue = mp.Queue()
-    model_queue = mp.Queue()
-    root_queue = mp.Queue()
-
     view_process = mp.Process(
         target=view,
-        args=(
-            view_queue,
-            controller_queue,
-            model_queue,
-            root_queue,
-        ),
         name="view process",
     )
     controller_process = mp.Process(
         target=controller,
-        args=(
-            view_queue,
-            controller_queue,
-            model_queue,
-            root_queue,
-        ),
         name="controller process",
     )
-    model_process = mp.Process(
-        target=model,
-        args=(
-            view_queue,
-            controller_queue,
-            model_queue,
-            root_queue,
-        ),
-        name="model process",
-    )
-
     view_process.start()
     controller_process.start()
-    # model_process.start()
 
-    # view_process.join()
-    # controller_process.join()
-    # model_process.join()
-
-    # print("doing cleanpup")
+    view_process.join()
+    controller_process.join()
 
 
-def view(view_queue, controller_queue, model_queue, root_queue):
-    # print("starting view process")
-    view = ViewHandler(view_queue, controller_queue, model_queue)
-    # print("exit from app.exec_() event loop")
+def view():
+    QueueManager.register("get_viewq")
+    QueueManager.register("get_conq")
+    QueueManager.register("get_messageq")
+    QueueManager.register("get_serverq")
+    QueueManager.register("get_con")
+    m = QueueManager(address=("127.0.0.1", 50000), authkey=b"something_random")
+    m.connect()
+    view_queue = m.get_viewq()
+    controller_queue = m.get_conq()
+    message_queue = m.get_messageq()
+    server_queue = m.get_serverq()
+    con = m.get_con()
+
+    view = ViewHandler(view_queue, controller_queue, message_queue, server_queue, con)
     controller_queue.put(["quit_application"])
-    model_queue.put(["quit_application"])
 
 
-def controller(view_queue, controller_queue, model_queue, root_queue):
-    # print("starting controller process")
-    controller = ControllerHandler(view_queue, controller_queue, model_queue)
-    # print("controller is quiting")
+def controller():
+    QueueManager.register("get_viewq")
+    QueueManager.register("get_conq")
+    QueueManager.register("get_messageq")
+    QueueManager.register("get_serverq")
+    QueueManager.register("get_con")
+    m = QueueManager(address=("127.0.0.1", 50000), authkey=b"something_random")
+    m.connect()
+    view_queue = m.get_viewq()
+    controller_queue = m.get_conq()
+    message_queue = m.get_messageq()
+    server_queue = m.get_serverq()
+    con = m.get_con()
 
-
-def model(view_queue, controller_queue, model_queue, root_queue):
-    # print("starting model process")
-    model = ModelHandler(view_queue, controller_queue, model_queue)
-    # print("model quiting")
+    controller = ControllerHandler(
+        view_queue, controller_queue, message_queue, server_queue, con
+    )
 
 
 if __name__ == "__main__":
-    root_process = mp.Process(target=root, name="root process")
-    root_process.start()
-    # root_process.join()
+    h = mp.Process(target=host)
+    h.start()
+    root()
 
 
 # if __name__ == "__main__":

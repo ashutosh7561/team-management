@@ -8,8 +8,8 @@ from queue import Queue
 from os.path import dirname, abspath
 import os
 
-# d = dirname(dirname(abspath(__file__)))
-# sys.path.append(d)
+d = dirname(dirname(abspath(__file__)))
+sys.path.append(d)
 
 from header import Packet
 
@@ -21,17 +21,17 @@ except Exception as e:
     print(e)
 
 
-class ServerCon:
-    __instance = None
+class Singleton(type):
+    _instances = {}
 
+    def __call__(cls, *args, **kwargs):
+        if cls not in cls._instances:
+            cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
+        return cls._instances[cls]
+
+
+class ServerCon(metaclass=Singleton):
     def __init__(self, read_queue, write_queue, message_queue=None):
-        print("checking for singleton")
-        if ServerCon.__instance != None:
-            print("object already exists")
-            return ServerCon.__instance
-        else:
-            print("creating new object")
-            ServerCon.__instance = self
         self.read_queue = read_queue
         self.write_queue = write_queue
         self.message_queue = message_queue
@@ -46,11 +46,17 @@ class ServerCon:
             "chat_msg": self.send_chat_message,
             "credentials": self.pass_credentials,
             "action": self.perform_action,
+            "chats_list": self.fetch_all_chats_list,
+            "chats_details": self.fetch_all_chats_details,
         }
         self.user_id = None
         self.password = None
 
-        print("created con obj")
+    def fetch_all_chats_list(self, msg_data):
+        self.client_db.get_all_chats_list()
+
+    def fetch_all_chats_details(self, msg_data):
+        self.client_db.get_all_chats_details()
 
     def perform_action(self, msg_data):
         self.flag = msg_data["quit"]
@@ -71,15 +77,11 @@ class ServerCon:
         is_valid = msg_data["is_valid"]
         post = msg_data["post"]
         user_id = msg_data["user_id"]
-        print(msg_data)
         self.write_queue.put(["user_authenticated", is_valid, post, user_id])
         if is_valid:
-            print("workin till here")
             self.client_db = ClientDBHandler(self.user_id, self.message_queue)
-            print("here it works")
 
     def send_credentials(self, msg_data=None):
-        print("server asked for credentials")
         if self.user_id is not None:
             dat = {"user_id": self.user_id, "password": self.password}
             self.wrapper.send_data({"msg_type": "credentials", "msg_data": dat}, "obj")
@@ -175,7 +177,14 @@ class ServerCon:
         #     print(e)
 
     def get_all_chats_list(self):
-        self.client_db.get_all_chats_list()
+        self.read_queue.put({"msg_type": "chats_list", "msg_data": None})
 
     def get_all_chats_details(self):
-        self.client_db.get_all_chats_details()
+        self.read_queue.put({"msg_type": "chats_details", "msg_data": None})
+
+
+if __name__ == "__main__":
+    c = ServerCon(None, None, None)
+    print(c)
+    c2 = ServerCon(None, None, None)
+    print(c2)

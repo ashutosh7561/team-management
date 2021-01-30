@@ -30,7 +30,7 @@ from view.messagetexttemplate import (
     MessageTextRecieveTemplate,
 )
 from view.chatbar import ChatDetails
-from controller.chats.sockets.client import ServerCon
+from controller.client import ServerCon
 
 
 def check_for_file(PATH_ONE, PATH_TWO):
@@ -55,17 +55,6 @@ class ChatWidgetTemplate(QWidget):
             uic.loadUi(file, self)
         except Exception as e:
             print(e)
-
-    def callback(self):
-        chat_id = self.chat_heading.text()
-        a = self
-        while not isinstance(a, Main) and True:
-            try:
-                a = a.parent()
-            except:
-                pass
-        if isinstance(a, Main):
-            a.change_chat(chat_id)
 
     def mousePressEvent(self, event):
         chat_id = self.chat_heading.text()
@@ -312,10 +301,10 @@ class Main(QWidget):
             lambda: self.central_window.setCurrentWidget(self.tw)
         )
         try:
-            self.servcon.get_all_chat_list()
-            self.servcon.get_all_chat_details()
-        except:
-            pass
+            self.servcon.get_all_chats_list()
+            self.servcon.get_all_chats_details()
+        except Exception as e:
+            print(e)
 
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
 
@@ -386,11 +375,15 @@ class Main(QWidget):
     def update_chat_details(self, chats_list):
         for i in chats_list:
             tg = ChatDetails(parent=self.central_window, root=self)
+            print(i)
             chat_id = i["chat_id"]
+            chat_desc = i["chat_desc"]
+            chat_icon = i["chat_icon"]
+            print(chat_desc)
             tg.initialize(
-                chat_id=chat_id
+                chat_id=chat_id, chat_desc=chat_desc, chat_icon=chat_icon
             )  # pass other details like group_desc, group_icon also.Delete this comment if done
-            self.chat_list_widgets[i][1] = tg
+            self.chat_list_widgets[chat_id][1] = tg
             self.central_window.addWidget(tg)
 
     def change_chat(self, chat_id):
