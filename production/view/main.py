@@ -8,6 +8,7 @@ sys.path.append(d)
 import platform
 import time
 from queue import Queue
+import multiprocessing as mp
 
 import view.resource1_rc
 from PyQt5 import QtCore, QtWidgets, uic
@@ -23,7 +24,7 @@ from PyQt5.QtWidgets import (
     QWidget,
 )
 from PyQt5.QtCore import QCoreApplication, QMetaObject, QRect, Qt
-from controller.chats.sockets.client import ServerCon
+from controller.client import ServerCon
 from view.messagecentral import *
 
 
@@ -393,6 +394,9 @@ class Dashboard(QWidget):
         self.view_queue = view_queue
         self.controller_queue = controller_queue
         self.model_queue = model_queue
+        self.con = None
+        self.message_queue = None
+        self.message_queue = self.model_queue
         PATH_ONE = r"./production/view/root_window.ui"
         PATH_TWO = (
             r"C:/Users/Asus/Desktop/team-management/production/view/root_window.ui"
@@ -412,31 +416,34 @@ class Dashboard(QWidget):
         self.settings.clicked.connect(
             lambda: self.stacked_action_pannel.setCurrentWidget(self.settings_frame)
         )
-        self.messages.clicked.connect(
-            lambda: self.stacked_action_pannel.setCurrentWidget(msg_widget)
-        )
+        self.messages.clicked.connect(self.show_messages)
         self.stacked_action_pannel.setCurrentWidget(self.dashboard_frame)
 
-        queue_two = Queue()  # used for receiving messages
-        msg_widget = Main(queue_two, None, parent=self.stacked_action_pannel)
+        self.msg_widget = None
 
-        self.stacked_action_pannel.addWidget(msg_widget)
-
-        self.stacked_action_pannel.setCurrentWidget(msg_widget)
+    # @message_queue.setter
+    # def message_queue(self, message_queue):
+    #     self.message_queue = message_queue
+    # self.msg_widget = Main(self.message_queue, self.con, parent=self)
+    # self.stacked_action_pannel.addWidget(self.msg_widget)
 
     def initialize(self, user_id):
         self.user_id = user_id
         self.user_handle.setText(user_id)
         self.label_68.setText(user_id)
 
+        print("ok")
+        self.msg_widget = Main(self.message_queue, self.con, parent=self)
+        print("ok2")
+        self.stacked_action_pannel.addWidget(self.msg_widget)
+
     def show_messages(self):
-        queue_two = Queue()  # used for receiving messages
-
-        msg_widget = Main(queue_two, None, parent=self)
-        msg_widget.setBaseSize(self.siz[0], self.siz[1])
-
-        self.messages_frame.layout().addWidget(msg_widget)
-        self.stacked_action_pannel.setCurrentWidget(self.messages_frame)
+        if self.msg_widget == None:
+            print("ok3")
+            self.msg_widget = Main(self.message_queue, self.con, parent=self)
+            print("ok4")
+            self.stacked_action_pannel.addWidget(self.msg_widget)
+        self.stacked_action_pannel.setCurrentWidget(self.msg_widget)
 
 
 class ViewHandler:
@@ -458,16 +465,21 @@ class ViewHandler:
             self.view_queue, self.controller_queue, self.model_queue
         )
         self.dashboard_window = Dashboard(
-            self.view_queue, self.controller_queue, self.model_queue
+            self.view_queue,
+            self.controller_queue,
+            self.model_queue,
         )
         self.admin_pannel = AdminPannel(
             self.view_queue, self.controller_queue, self.model_queue
         )
 
+        print("initialized splash, login, dashboard window")
+
         self.start_app()
 
     def start_app(self):
         self.show_splash_screen()
+        print("view requesting for resources")
         self.controller_queue.put(["load_resources"])
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
         self.app.exec_()
@@ -491,6 +503,7 @@ class ViewHandler:
         self.show_login_window()
 
     def identify_message(self, message):
+        print("view received message:", message)
         self.message_dict = {
             "load_status": self.load_status,
             "load_complete": self.load_complete,
@@ -500,9 +513,23 @@ class ViewHandler:
             "admin_users_data": self.show_admin_users_data,
             "valid_user": self.valid_user,
             "invalid_user": self.invalid_user,
+            "connection_obj": self.store_connection_obj,
         }
 
         self.message_dict[message[0]](*message[1:])
+
+    def store_connection_obj(self, con):
+        print("got con object from controller")
+        cc = ServerCon(None, None)
+        print("*" * 88, cc)
+        self.con = con
+        self.message_queue = mp.Queue()
+        # self.message_queue = self.model_queue
+        self.dashboard_window.con = self.con
+        print("assigning connection obj, message queue to dashboard object")
+        self.dashboard_window.message_queue = self.message_queue
+        print("passing message queue to controller")
+        self.controller_queue.put(["message_queue", self.message_queue])
 
     def invalid_user(self):
         self.main_window.invalid_user()

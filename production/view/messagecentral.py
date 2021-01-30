@@ -267,12 +267,8 @@ class Main(QWidget):
         self.read_queue = read_queue
         self.servcon = servcon
 
-        # self.central_window.setCurrentWidget(self.message_initial)
-        # print(self.central_window.addWidget(ChatBoxTemplate(self.servcon, "Alex")))
-        # self.central_window.setCurrentIndex(1)
-
-        self.tw = ChatDetails(parent=self.central_window, root=self)
-        self.central_window.addWidget(self.tw)
+        # self.tw = ChatDetails(parent=self.central_window, root=self)
+        # self.central_window.addWidget(self.tw)
 
         self.message_sidebar = MessageSidebar(parent=self.sidebar, root=self)
         user_list = [
@@ -301,9 +297,11 @@ class Main(QWidget):
             "zen",
         ]
 
-        self.populate_chat_widgets(user_list)
+        self.chat_list_widgets = {}
 
-        self.message_sidebar.add_group(user_list)
+        # self.populate_chat_widgets(user_list)
+
+        # self.message_sidebar.add_group(user_list)
 
         self.sidebar.layout().addWidget(self.message_sidebar)
 
@@ -313,6 +311,11 @@ class Main(QWidget):
         self.message_sidebar.show_groups.clicked.connect(
             lambda: self.central_window.setCurrentWidget(self.tw)
         )
+        try:
+            self.servcon.get_all_chat_list()
+            self.servcon.get_all_chat_details()
+        except:
+            pass
 
         QtCore.QTimer.singleShot(self.CHECK_DURATION, self.check_for_messages)
 
@@ -343,6 +346,15 @@ class Main(QWidget):
                         # wg.recieve_message(msg_text)
                     except:
                         pass
+                elif "chats_list" in message:
+                    chats_list = message["list"]
+                    self.message_sidebar.add_group(chats_list)
+
+                elif "chats_list_detail" in message:
+                    chats_list = message["list"]
+                    chats_list_details = message["list_two"]
+                    self.populate_chat_widgets(chats_list)
+                    self.update_chat_details(chats_list_details)
             except Exception as e:
                 print(e)
 
@@ -360,7 +372,6 @@ class Main(QWidget):
         self.central_window.setCurrentIndex(1)
 
     def populate_chat_widgets(self, user_list):
-        self.chat_list_widgets = {}
         for i in user_list:
             wg = ChatBoxTemplate(
                 servcon=self.servcon,
@@ -368,10 +379,18 @@ class Main(QWidget):
                 parent=self.central_window,
                 root=self,
             )
-            tg = ChatDetails(parent=self.central_window, root=self)
-            tg.initialize(chat_id=i)
-            self.chat_list_widgets[i] = (wg, tg)
+            self.chat_list_widgets[i] = [None, None]
+            self.chat_list_widgets[i][0] = wg
             self.central_window.addWidget(wg)
+
+    def update_chat_details(self, chats_list):
+        for i in chats_list:
+            tg = ChatDetails(parent=self.central_window, root=self)
+            chat_id = i["chat_id"]
+            tg.initialize(
+                chat_id=chat_id
+            )  # pass other details like group_desc, group_icon also.Delete this comment if done
+            self.chat_list_widgets[i][1] = tg
             self.central_window.addWidget(tg)
 
     def change_chat(self, chat_id):

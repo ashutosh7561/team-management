@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>373</width>
-    <height>459</height>
+    <width>467</width>
+    <height>700</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -271,8 +271,8 @@ border-radius:3px;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>349</width>
-        <height>85</height>
+        <width>443</width>
+        <height>284</height>
        </rect>
       </property>
      </widget>
@@ -371,7 +371,7 @@ border-radius:3px;
             <string notr="true">background-color: rgb(30, 59, 81);	</string>
            </property>
            <property name="text">
-            <string>PROMOTE</string>
+            <string>EXIT</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>

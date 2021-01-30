@@ -16,7 +16,9 @@ class ClientDatabaseConnector:
             raise FileNotFoundError
 
     def __init__(self, user_id):
-        self.user_table = user_id
+        self.user_chat_table = user_id + "_chats"
+        self.user_chat_details_table = user_id + "_chatdetails"
+
         try:
             database = self.check_for_file()
             self.rbac_connection = sqlite3.connect(database)
@@ -37,7 +39,7 @@ class ClientDatabaseConnector:
     def table_exists(self):
         query = "SELECT name FROM sqlite_master WHERE type='table' AND name= (?);"
         try:
-            self.cursor.execute(query, (self.user_table,))
+            self.cursor.execute(query, (self.user_chat_table,))
             rows = self.cursor.fetchall()
             arr = []
             for i in rows:
@@ -48,7 +50,7 @@ class ClientDatabaseConnector:
             return []
 
     def add_user_table(self):
-        query = f'CREATE TABLE IF NOT EXISTS "{self.user_table}" (chat_id TEXT PRIMARY KEY, msg BOLB);'
+        query = f'CREATE TABLE IF NOT EXISTS "{self.user_chat_table}" (chat_id TEXT PRIMARY KEY, msg BOLB);'
         try:
             self.cursor.execute(query)
             self.rbac_connection.commit()
@@ -76,7 +78,7 @@ class ClientDatabaseConnector:
         self.add_members_to_group(chat_id, chat_admin_user_id)
 
     def get_chat_list(self):
-        query = f'SELECT chat_id FROM "{self.user_table}";'
+        query = f'SELECT chat_id FROM "{self.user_chat_table}";'
         try:
             self.cursor.execute(query)
             rows = self.cursor.fetchall()
@@ -93,7 +95,7 @@ class ClientDatabaseConnector:
         # so read it in binary for this query only
         self.rbac_connection.text_factory = bytes
 
-        query = f'SELECT msg FROM "{self.user_table}" WHERE chat_id = (?);'
+        query = f'SELECT msg FROM "{self.user_chat_table}" WHERE chat_id = (?);'
         arr = []
         try:
             self.cursor.execute(
@@ -111,9 +113,56 @@ class ClientDatabaseConnector:
             print(e)
             return arr
 
+    def get_chat_details(self, chat_id):
+        self.rbac_connection.text_factory = bytes
+        query = f'SELECT chat_icon, chat_desc FROM "{self.user_chat_details_table}" WHERE chat_id = (?);'
+
+        arr = []
+        try:
+            self.cursor.execute(
+                query,
+                (chat_id,),
+            )
+            rows = self.cursor.fetchall()
+            for i in rows:
+                arr.append(i)
+            self.rbac_connection.text_factory = str
+            return arr[0]
+
+        except Exception as e:
+            self.rbac_connection.text_factory = str
+            print(e)
+            return arr
+
+    def update_chat_icon(self, chat_id, chat_icon):
+        query = f'UPDATE "{self.user_chat_details_table}" SET chat_icon = (?) WHERE chat_id = (?);'
+
+        chat_list = self.get_chat_list()
+        if chat_id not in chat_list:
+            raise Exception("chat_id not found")
+        try:
+            cursor = self.cursor.execute(query, (chat_id, chat_icon))
+            self.rbac_connection.commit()
+        except Exception as e:
+            print(e)
+
+    def update_chat_desc(self, chat_id, chat_desc):
+        query = f'UPDATE "{self.user_chat_details_table}" SET chat_desc = (?) WHERE chat_id = (?);'
+
+        chat_list = self.get_chat_list()
+        if chat_id not in chat_list:
+            raise Exception("chat_id not found")
+        try:
+            cursor = self.cursor.execute(query, (chat_id, chat_desc))
+            self.rbac_connection.commit()
+        except Exception as e:
+            print(e)
+
     def stash_incoming_message(self, chat_id, data):
-        query = f'INSERT INTO "{self.user_table}"(chat_id, msg) VALUES (?, ?);'
-        query_two = f'UPDATE "{self.user_table}" SET msg = (?) WHERE chat_id = (?);'
+        query = f'INSERT INTO "{self.user_chat_table}"(chat_id, msg) VALUES (?, ?);'
+        query_two = (
+            f'UPDATE "{self.user_chat_table}" SET msg = (?) WHERE chat_id = (?);'
+        )
 
         chat_list = self.get_chat_list()
         if chat_id not in chat_list:
@@ -136,7 +185,9 @@ class ClientDatabaseConnector:
                 print(e)
 
     def clear_chat_messages(self, chat_id):
-        query_two = f'UPDATE "{self.user_table}" SET msg = (?) WHERE chat_id = (?);'
+        query_two = (
+            f'UPDATE "{self.user_chat_table}" SET msg = (?) WHERE chat_id = (?);'
+        )
 
         chat_list = self.get_chat_list()
         if chat_id not in chat_list:
@@ -190,13 +241,48 @@ class ClientDBHandler:
         for i in self.clientdb.get_chat_list():
             self.get_chat_messages(i)
 
+    def get_chat_details(self, chat_id):
+        details = self.clientdb.get_chat_details(chat_id)
+        chat_icon = details[0]
+        chat_desc = details[1].decode("utf-8")
+
+        return {"chat_id": chat_id, "chat_icon": chat_icon, "chat_desc": chat_desc}
+
+    def get_all_chats_list(self):
+        chats_list = self.clientdb.get_chat_list()
+        dat = {}
+        dat["chats_list"] = True
+        dat["list"] = chats_list
+        print(dat)
+        self.queue.put(dat)
+
+    def get_all_chats_details(self):
+        chats_list = self.clientdb.get_chat_list()
+        chats_list_detail = []
+        for chat in chats_list:
+            chats_list_detail.append(self.get_chat_details(chat))
+        dat = {}
+        dat["chats_list_detail"] = True
+        dat["list_two"] = chats_list_detail
+        dat["list"] = chats_list
+        print(dat)
+        self.queue.put(dat)
+
+
+from queue import Queue
 
 if __name__ == "__main__":
-    # o = ClientDBHandler("peter_13")
+    qu = Queue()
+    o = ClientDBHandler("alex_11", qu)
+    print(o.get_chat_details("group_one"))
     # o.get_chat_messages("group_one")
     # o.get_chat_messages("group_two")
 
-    k = ClientDatabaseConnector("alex_11")
+    # print(qu.get())
+    # print(qu.get())
+
+    # k = ClientDatabaseConnector("alex_11")
+    # print(k.get_chat_details("group_one"))
 
     # k.clear_chat_messages("group_one")
     # k.clear_chat_messages("group_two")

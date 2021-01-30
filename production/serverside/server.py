@@ -96,16 +96,15 @@ def register_new_client(client_handle):
     verify_user(wrapper)
 
 
-def try_sending_buffer_msg(head):
-    user_id = head.user_id
-    ob = head.ob
+def try_sending_buffer_msg(wrapper):
+    user_id = wrapper.user_id
+    ob = wrapper.ob
     rcv_msg_list = ob.get_messages()
 
     for group in rcv_msg_list:
         for message in rcv_msg_list[group]:
             dat = {"chat_id": group, "message": message}
-            dat = {"buffer_msg": dat}
-            head.send_data(dat, "obj")
+            wrapper.send_data({"msg_type": "chat_msg", "msg_data": dat}, "obj")
 
 
 def clear_msg_buffer(head):
@@ -155,10 +154,10 @@ def handle_client_request(key, mask):
 
 def check_for_updates():
     for i in active_client_sockets:
-        head = active_client_sockets[i][0]
+        wrapper = active_client_sockets[i][0]
         in_progress = active_client_sockets[i][1]
         if not in_progress:
-            try_sending_buffer_msg(head)
+            try_sending_buffer_msg(wrapper)
             active_client_sockets[i][1] = True
 
 

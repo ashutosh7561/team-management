@@ -22,19 +22,45 @@ except Exception as e:
 
 
 class ServerCon:
-    def __init__(self, read_queue, write_queue):
+    __instance = None
+
+    def __init__(self, read_queue, write_queue, message_queue=None):
+        print("checking for singleton")
+        if ServerCon.__instance != None:
+            print("object already exists")
+            return ServerCon.__instance
+        else:
+            print("creating new object")
+            ServerCon.__instance = self
         self.read_queue = read_queue
         self.write_queue = write_queue
+        self.message_queue = message_queue
+        self.flag = True
+
         self.SERVER_MAPPING = {
             "identify_user": self.send_credentials,
             "authentication_status": self.authentication_status,
+            "chat_msg": self.recv_chat_message,
         }
         self.CLIENT_MAPPING = {
             "chat_msg": self.send_chat_message,
             "credentials": self.pass_credentials,
+            "action": self.perform_action,
         }
         self.user_id = None
         self.password = None
+
+        print("created con obj")
+
+    def perform_action(self, msg_data):
+        self.flag = msg_data["quit"]
+
+    def recv_chat_message(self, msg_data):
+        chat_id = msg_data["chat_id"]
+        message = msg_data["message"]
+        msg_data["recv_msg"] = True
+        self.message_queue.put(msg_data)
+        self.client_db.write_chat_message(chat_id, message)
 
     def pass_credentials(self, msg_data):
         self.user_id = msg_data["user_id"]
@@ -48,7 +74,9 @@ class ServerCon:
         print(msg_data)
         self.write_queue.put(["user_authenticated", is_valid, post, user_id])
         if is_valid:
-            self.client_db = ClientDBHandler(self.user_id, self.write_queue)
+            print("workin till here")
+            self.client_db = ClientDBHandler(self.user_id, self.message_queue)
+            print("here it works")
 
     def send_credentials(self, msg_data=None):
         print("server asked for credentials")
@@ -61,10 +89,10 @@ class ServerCon:
         msg_data = msg["msg_data"]
         self.CLIENT_MAPPING[msg_type](msg_data)
 
-    def send_chat_message(self, message):
-        user_msg = message[0]
-        chat_id = message[1]
-        sender_id = message[2]
+    def send_chat_message(self, msg_data):
+        user_msg = msg_data[0]
+        chat_id = msg_data[1]
+        sender_id = msg_data[2]
 
         dat = {"chat_id": chat_id, "msg_content": user_msg, "sender_id": sender_id}
         ms = {"msg_type": "chat_msg", "msg_data": dat}
@@ -115,7 +143,7 @@ class ServerCon:
         self.wrapper = Packet(main_socket)
 
         try:
-            while True:
+            while self.flag:
                 events = self.event_handler.select(timeout=1)
                 if events:
                     for key, mask in events:
@@ -133,4 +161,21 @@ class ServerCon:
         con_thread.start()
 
     def send_some(self, msg, chat_id):
-        self.read_queue.put([msg, chat_id, self.user_id])
+        self.read_queue.put(
+            {"msg_type": "chat_msg", "msg_data": [msg, chat_id, self.user_id]}
+        )
+        # self.read_queue.put([msg, chat_id, self.user_id])
+        # sender_id = self.user_id
+        # dat = {"chat_id": chat_id, "msg_content": msg, "sender_id": sender_id}
+        # ms = {"msg_type": "chat_msg", "msg_data": dat}
+        # self.wrapper.send_data(ms, "obj")
+        # try:
+        #     self.client_db.write_chat_message(chat_id, {sender_id: msg})
+        # except Exception as e:
+        #     print(e)
+
+    def get_all_chats_list(self):
+        self.client_db.get_all_chats_list()
+
+    def get_all_chats_details(self):
+        self.client_db.get_all_chats_details()
