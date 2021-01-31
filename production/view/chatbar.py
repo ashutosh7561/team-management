@@ -33,7 +33,6 @@ class ChatDetails(QWidget):
         if type(chat_desc) == bytes:
             chat_desc = chat_desc.decode("utf-8")
         self.chat_heading.setText(self.chat_id)
-        print(chat_desc)
         self.chat_desc.setText(chat_desc)
 
     def close_tab(self):
@@ -46,9 +45,7 @@ class ChatBar(QWidget):
         self.root = root
 
     def mousePressEvent(self, event):
-        # print(self.parent())
         chat_id = self.parent().chat_heading.text()
-        # chat_id = "group_one"
         self.root.show_chat_details(chat_id)
 
 

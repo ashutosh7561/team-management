@@ -41,6 +41,8 @@ class ServerCon(metaclass=Singleton):
             "identify_user": self.send_credentials,
             "authentication_status": self.authentication_status,
             "chat_msg": self.recv_chat_message,
+            "ticket_list": self.pass_ticket_list,
+            "ticket_response": self.pass_ticket_response,
         }
         self.CLIENT_MAPPING = {
             "chat_msg": self.send_chat_message,
@@ -48,9 +50,30 @@ class ServerCon(metaclass=Singleton):
             "action": self.perform_action,
             "chats_list": self.fetch_all_chats_list,
             "chats_details": self.fetch_all_chats_details,
+            "ticket_list": self.fetch_ticket_list,
+            "create_ticket": self.create_ticket,
+            "pick_ticket": self.pick_ticket,
         }
         self.user_id = None
         self.password = None
+
+    def pass_ticket_response(self, msg_data):
+        pass
+        # self.write_queue.put(["ticket_id", msg_data["ticket_id"]])
+
+    def pass_ticket_list(self, msg_data):
+        self.write_queue.put(["ticket_list", msg_data])
+
+    def create_ticket(self, msg_data):
+        self.wrapper.send_data(
+            {"msg_type": "create_ticket", "msg_data": msg_data}, "obj"
+        )
+
+    def pick_ticket(self, msg_data):
+        self.wrapper.send_data({"msg_type": "pick_ticket", "msg_data": msg_data}, "obj")
+
+    def fetch_ticket_list(self, msg_data):
+        self.wrapper.send_data({"msg_type": "ticket_list", "msg_data": msg_data}, "obj")
 
     def fetch_all_chats_list(self, msg_data):
         self.client_db.get_all_chats_list()

@@ -13,6 +13,7 @@ except:
 from validator import Validator
 from databaseconnector import DatabaseConnector
 from chatdbconnector import ChatDatabaseConnector, UserStandard
+from ticketdbconnector import TicketDBHandler
 
 HOST = "192.168.1.6"
 HOST = "127.0.0.1"
@@ -79,7 +80,8 @@ def verify_credentials(msg_data, wrapper):
     if not (is_valid_user):
         return
     ob = UserStandard(user_id)
-    wrapper.bind_socket(user_id, ob)
+    tickets_db = TicketDBHandler(user_id)
+    wrapper.bind_socket(user_id, ob, tickets_db)
 
     in_progress = False
     active_client_sockets[user_id] = [wrapper, in_progress]
@@ -118,17 +120,45 @@ def clear_msg_buffer(head):
 
 
 def delegate_message(msg, wrapper):
-    print(msg)
     MAPPING = {
         "credentials": verify_credentials,
         "chat_msg": fanout_message,
         "msg_ack": msg_ack,
+        "ticket_list": ticket_list,
+        "create_ticket": create_ticket,
+        "pick_ticket": pick_ticket,
     }
     if type(msg) is dict:
 
         msg_type = msg["msg_type"]
         msg_data = msg["msg_data"]
         MAPPING[msg_type](msg_data, wrapper)
+
+
+def ticket_list(msg_data, wrapper):
+    active = msg_data["active"]
+
+    dat = wrapper.ticket_db.get_tickets(active)
+    print(dat)
+
+    wrapper.send_data({"msg_type": "ticket_list", "msg_data": dat}, "obj")
+
+
+def create_ticket(msg_data, wrapper):
+    recepient_list = msg_data["recepient_list"]
+    ticket_creator = msg_data["ticket_creator"]
+    heading = msg_data["ticket_heading"]
+    content = msg_data["ticket_content"]
+
+    ticket_id = wrapper.ticket_db.create_ticket(recepient_list, heading, content)
+
+    wrapper.send_data({"msg_type": "ticket_response", "msg_data": {"ticket_id": ticket_id}}, "obj")
+
+
+def pick_ticket(msg_data, wrapper):
+    ticket_id = msg_data["ticket_id"]
+
+    dat = wrapper.ticket_db.pick_ticket(ticket_id)
 
 
 def handle_client_request(key, mask):

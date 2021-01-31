@@ -375,11 +375,9 @@ class Main(QWidget):
     def update_chat_details(self, chats_list):
         for i in chats_list:
             tg = ChatDetails(parent=self.central_window, root=self)
-            print(i)
             chat_id = i["chat_id"]
             chat_desc = i["chat_desc"]
             chat_icon = i["chat_icon"]
-            print(chat_desc)
             tg.initialize(
                 chat_id=chat_id, chat_desc=chat_desc, chat_icon=chat_icon
             )  # pass other details like group_desc, group_icon also.Delete this comment if done

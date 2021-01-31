@@ -21,7 +21,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
-    <widget class="ChatBar" name="chat_group_info_2" native="true">
+    <widget class="QWidget" name="chat_group_info_2" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -139,7 +139,7 @@ border-radius:3px;
     </widget>
    </item>
    <item>
-    <widget class="ChatBar" name="chat_group_info" native="true">
+    <widget class="QWidget" name="chat_group_info" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -279,7 +279,7 @@ border-radius:3px;
     </widget>
    </item>
    <item>
-    <widget class="ChatBar" name="chat_group_info_3" native="true">
+    <widget class="QWidget" name="chat_group_info_3" native="true">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -378,6 +378,26 @@ border-radius:3px;
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QLabel" name="chat_heading_6">
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+             <weight>75</weight>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(30, 59, 81);	</string>
+           </property>
+           <property name="text">
+            <string>SAVE</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </item>
@@ -386,14 +406,6 @@ border-radius:3px;
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>ChatBar</class>
-   <extends>QWidget</extends>
-   <header>view.chatbar</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

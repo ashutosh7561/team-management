@@ -44,8 +44,22 @@ class ControllerHandler:
             "admin_add_new_user": self.admin_add_new_user,
             "chat_msg": self.send_chat_msg,
             "message_queue": self.store_message_queue,
+            "ticket_list": self.pass_ticket_list,
         }
         self.message_dict[message[0]](*message[1:])
+
+    def pass_ticket_list(self, msg_data):
+        print(msg_data)
+        dat = {
+            "recepient_list": ["adam_12"],
+            "ticket_creator": "alex_11",
+            "ticket_heading": "message",
+            "ticket_content": "hi",
+        }
+        # self.server_queue.put({"msg_type": "create_ticket", "msg_data": dat})
+        self.server_queue.put({"msg_type": "pick_ticket", "msg_data": {"ticket_id": 9}})
+        pass
+        # self.view_queue.put(["ticket_list", msg_data])
 
     def store_message_queue(self, queue):
         # self.message_queue = self.message_queue
@@ -71,6 +85,9 @@ class ControllerHandler:
     def authentication_status(self, is_valid, post, user_id):
         if is_valid:
             self.view_queue.put(["valid_user", post, user_id])
+            self.server_queue.put(
+                {"msg_type": "ticket_list", "msg_data": {"active": True}}
+            )
         else:
             self.view_queue.put(["invalid_user"])
 
@@ -104,7 +121,7 @@ class ControllerHandler:
         #     self.view_queue.put(["load_status", i * 10, f"Loading {msg[i]}"])
         print("load complete")
         self.view_queue.put(["load_complete"])
-        self.validate_credentials("adam_12", "adam")
+        # self.validate_credentials("adam_12", "adam")
 
     def admin_get_users_data(self, *args):
         self.model_queue.put(["admin_get_users_data", *args])

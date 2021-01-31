@@ -25,9 +25,10 @@ class Packet:
         self.data_threshold = self.packet_threshold - self.header_threshold
         self.encoding = "utf-8"
 
-    def bind_socket(self, user_id, ob):
+    def bind_socket(self, user_id, ob, ticket_db):
         self.user_id = user_id
         self.ob = ob
+        self.ticket_db = ticket_db
 
     def send_data(self, data, data_type):
         packet_list = self.make_packets(data, data_type)

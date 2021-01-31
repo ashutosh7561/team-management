@@ -420,11 +420,20 @@ class Dashboard(QWidget):
 
         self.msg_widget = None
 
+        self.ticket_list = []
+        self.ticket_response = []
+
     # @message_queue.setter
     # def message_queue(self, message_queue):
     #     self.message_queue = message_queue
     # self.msg_widget = Main(self.message_queue, self.con, parent=self)
     # self.stacked_action_pannel.addWidget(self.msg_widget)
+
+    def store_ticket_list(self, data):
+        self.ticket_list = data
+
+    def store_ticket_response(self, data):
+        self.ticket_response.append(data)
 
     def initialize(self, user_id):
         self.user_id = user_id
@@ -507,6 +516,7 @@ class ViewHandler:
             "valid_user": self.valid_user,
             "invalid_user": self.invalid_user,
             "connection_obj": self.store_connection_obj,
+            "ticket_list": self.dashboard_window.store_ticket_list,
         }
 
         self.message_dict[message[0]](*message[1:])
