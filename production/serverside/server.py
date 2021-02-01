@@ -39,6 +39,7 @@ def fanout_message(msg_data, wrapper):
     chat_id = msg_data["chat_id"]
     msg_content = msg_data["msg_content"]
     sender_id = msg_data["sender_id"]
+    print(msg_data)
 
     try:
         ob = wrapper.ob
@@ -152,7 +153,9 @@ def create_ticket(msg_data, wrapper):
 
     ticket_id = wrapper.ticket_db.create_ticket(recepient_list, heading, content)
 
-    wrapper.send_data({"msg_type": "ticket_response", "msg_data": {"ticket_id": ticket_id}}, "obj")
+    wrapper.send_data(
+        {"msg_type": "ticket_response", "msg_data": {"ticket_id": ticket_id}}, "obj"
+    )
 
 
 def pick_ticket(msg_data, wrapper):

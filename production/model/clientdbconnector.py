@@ -113,26 +113,57 @@ class ClientDatabaseConnector:
             print(e)
             return arr
 
-    def get_chat_details(self, chat_id):
-        self.rbac_connection.text_factory = bytes
-        query = f'SELECT chat_icon, chat_desc FROM "{self.user_chat_details_table}" WHERE chat_id = (?);'
-
-        arr = []
+    def details_table_exists(self):
+        query = "SELECT name FROM sqlite_master WHERE type='table' AND name= (?);"
         try:
-            self.cursor.execute(
-                query,
-                (chat_id,),
-            )
+            self.cursor.execute(query, (self.user_chat_details_table,))
             rows = self.cursor.fetchall()
+            arr = []
             for i in rows:
-                arr.append(i)
-            self.rbac_connection.text_factory = str
-            return arr[0]
-
-        except Exception as e:
-            self.rbac_connection.text_factory = str
-            print(e)
+                arr.append(i[0])
             return arr
+        except Exception as e:
+            print(e)
+            return []
+
+    def get_chat_details(self, chat_id):
+        # query_two = f'CREATE TABLE IF NOT EXISTS "{self.user_chat_details_table}" ("chat_id" TEXT, "chat_desc" TEXT, "chat_icon" BLOB, PRIMARY KEY("chat_id"));'
+        # query_three = f'INSERT INTO "{self.user_chat_details_table}" (chat_id, chat_desc, chat_icon) VALUES (?, ?, ?);'
+        # if self.details_table_exists() == []:
+        #     try:
+        #         self.cursor.execute(
+        #             query_three,
+        #             (
+        #                 "empty",
+        #                 "empty",
+        #                 "empty",
+        #             ),
+        #         )
+        #         self.cursor.execute(query_two)
+        #         self.rbac_connection.commit()
+        #     except Exception as e:
+        #         print(e)
+
+        # self.rbac_connection.text_factory = bytes
+        # query_one = f'SELECT chat_icon, chat_desc FROM "{self.user_chat_details_table}" WHERE chat_id = (?);'
+
+        # arr = []
+        # try:
+        #     self.cursor.execute(
+        #         query_one,
+        #         (chat_id,),
+        #     )
+        #     rows = self.cursor.fetchall()
+        #     for i in rows:
+        #         arr.append(i)
+        #     self.rbac_connection.text_factory = str
+        #     return arr[0]
+
+        # except Exception as e:
+        #     self.rbac_connection.text_factory = str
+        #     print(e)
+        #     return arr
+        return ["id", "desc", b"icon"]
 
     def update_chat_icon(self, chat_id, chat_icon):
         query = f'UPDATE "{self.user_chat_details_table}" SET chat_icon = (?) WHERE chat_id = (?);'
@@ -180,6 +211,7 @@ class ClientDatabaseConnector:
                 old_data.append(data)
                 new_binary_data = pickle.dumps(old_data)
                 self.cursor.execute(query_two, (new_binary_data, chat_id))
+                # self.cursor.execute(query_two, (chat_id, new_binary_data))
                 self.rbac_connection.commit()
             except Exception as e:
                 print(e)
@@ -211,10 +243,10 @@ class ClientDBHandler:
         self.queue = queue
 
     def get_chat_messages(self, chat_id):
-        chat_messages = pickle.loads(self.clientdb.get_chat_messages(chat_id))
+        dat = self.clientdb.get_chat_messages(chat_id)
+        chat_messages = pickle.loads(dat)
 
         for message in chat_messages:
-            # print(message)
             for i in message.keys():
                 message_sender = i
                 msg = message[i]
@@ -272,18 +304,19 @@ from queue import Queue
 
 if __name__ == "__main__":
     qu = Queue()
-    o = ClientDBHandler("alex_11", qu)
-    print(o.get_chat_details("group_one"))
-    # o.get_chat_messages("group_one")
+    o = ClientDBHandler("adam_12", qu)
+    o.get_chat_messages("group_one")
     # o.get_chat_messages("group_two")
+    # print(o.get_chat_details("group_one"))
+    # o.write_chat_message("group_one", {"alex_11": "actual message"})
 
     # print(qu.get())
     # print(qu.get())
 
     # k = ClientDatabaseConnector("alex_11")
-    # print(k.get_chat_details("group_one"))
-
     # k.clear_chat_messages("group_one")
+
+    # print(k.get_chat_details("group_one"))
     # k.clear_chat_messages("group_two")
     # mm = pickle.dumps({"adam_12": "message from adam_12"})
 

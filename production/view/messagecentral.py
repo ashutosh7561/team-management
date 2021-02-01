@@ -321,8 +321,8 @@ class Main(QWidget):
                         wg = self.chat_list_widgets[chat_id][0]
                         wg.load_send_message(msg_text)
                         # wg.recieve_message(msg_text)
-                    except:
-                        pass
+                    except Exception as e:
+                        print(e)
                 elif "recv_msg" in message:
                     chat_id = message["chat_id"]
                     msg_text = message["message"]
@@ -333,8 +333,8 @@ class Main(QWidget):
                         wg = self.chat_list_widgets[chat_id][0]
                         wg.load_recieve_message(msg_text)
                         # wg.recieve_message(msg_text)
-                    except:
-                        pass
+                    except Exception as e:
+                        print(e)
                 elif "chats_list" in message:
                     chats_list = message["list"]
                     self.message_sidebar.add_group(chats_list)
@@ -343,7 +343,7 @@ class Main(QWidget):
                     chats_list = message["list"]
                     chats_list_details = message["list_two"]
                     self.populate_chat_widgets(chats_list)
-                    self.update_chat_details(chats_list_details)
+                    # self.update_chat_details(chats_list_details)
             except Exception as e:
                 print(e)
 
@@ -371,6 +371,7 @@ class Main(QWidget):
             self.chat_list_widgets[i] = [None, None]
             self.chat_list_widgets[i][0] = wg
             self.central_window.addWidget(wg)
+        self.servcon.load_local_message()
 
     def update_chat_details(self, chats_list):
         for i in chats_list:

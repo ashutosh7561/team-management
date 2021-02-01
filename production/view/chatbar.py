@@ -33,6 +33,7 @@ class ChatDetails(QWidget):
         if type(chat_desc) == bytes:
             chat_desc = chat_desc.decode("utf-8")
         self.chat_heading.setText(self.chat_id)
+        # self.chat_heading2.set_message_receive_size
         self.chat_desc.setText(chat_desc)
 
     def close_tab(self):

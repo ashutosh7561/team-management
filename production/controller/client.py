@@ -53,9 +53,13 @@ class ServerCon(metaclass=Singleton):
             "ticket_list": self.fetch_ticket_list,
             "create_ticket": self.create_ticket,
             "pick_ticket": self.pick_ticket,
+            "load_local_message": self.load_message,
         }
         self.user_id = None
         self.password = None
+
+    def load_message(self, msg_data):
+        self.client_db.get_all_chat_messages()
 
     def pass_ticket_response(self, msg_data):
         pass
@@ -80,6 +84,7 @@ class ServerCon(metaclass=Singleton):
 
     def fetch_all_chats_details(self, msg_data):
         self.client_db.get_all_chats_details()
+        pass
 
     def perform_action(self, msg_data):
         self.flag = msg_data["quit"]
@@ -89,7 +94,8 @@ class ServerCon(metaclass=Singleton):
         message = msg_data["message"]
         msg_data["recv_msg"] = True
         self.message_queue.put(msg_data)
-        self.client_db.write_chat_message(chat_id, message)
+        self.client_db.write_chat_message(chat_id, {" ": message})
+        self.wrapper.send_data({"msg_type": "msg_ack", "msg_data": None}, "obj")
 
     def pass_credentials(self, msg_data):
         self.user_id = msg_data["user_id"]
@@ -103,6 +109,7 @@ class ServerCon(metaclass=Singleton):
         self.write_queue.put(["user_authenticated", is_valid, post, user_id])
         if is_valid:
             self.client_db = ClientDBHandler(self.user_id, self.message_queue)
+            # self.client_db.get_all_chat_messages()
 
     def send_credentials(self, msg_data=None):
         if self.user_id is not None:
@@ -204,6 +211,9 @@ class ServerCon(metaclass=Singleton):
 
     def get_all_chats_details(self):
         self.read_queue.put({"msg_type": "chats_details", "msg_data": None})
+
+    def load_local_message(self):
+        self.read_queue.put({"msg_type": "load_local_message", "msg_data": None})
 
 
 if __name__ == "__main__":

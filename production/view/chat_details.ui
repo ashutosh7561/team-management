@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>467</width>
-    <height>700</height>
+    <width>468</width>
+    <height>659</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -271,8 +271,8 @@ border-radius:3px;
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>443</width>
-        <height>284</height>
+        <width>444</width>
+        <height>243</height>
        </rect>
       </property>
      </widget>
@@ -319,7 +319,7 @@ border-radius:3px;
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QLabel" name="chat_heading_3">
+          <widget class="QLabel" name="add_btn">
            <property name="font">
             <font>
              <pointsize>12</pointsize>
@@ -339,7 +339,7 @@ border-radius:3px;
           </widget>
          </item>
          <item>
-          <widget class="QLabel" name="chat_heading_4">
+          <widget class="QLabel" name="remove_btn">
            <property name="font">
             <font>
              <pointsize>12</pointsize>
