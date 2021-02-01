@@ -2,8 +2,8 @@ import sqlite3
 import pickle
 import os
 
-PATH_ONE = r"./clientdb.db"
-PATH_TWO = r"./production/model/clientdb.db"
+PATH_ONE = r"./production/model/clientdb.db"
+PATH_TWO = r"C:/Users/Asus/Desktop/team-management/production/model/clientdb.db"
 
 
 class ClientDatabaseConnector:

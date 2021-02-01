@@ -3,8 +3,8 @@ import pickle
 import os
 import random
 
-PATH_ONE = r"./chats.db"
-PATH_TWO = r"./production/serverside/servermodel/tickets.db"
+PATH_ONE = r"./production/serverside/servermodel/tickets.db"
+PATH_TWO = r"C:/Users/Asus/Desktop/team-management/production/serverside/tickets.db"
 
 
 class TicketDatabaseConnector:

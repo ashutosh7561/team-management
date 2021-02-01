@@ -160,10 +160,10 @@ class ServerCon(metaclass=Singleton):
                 print("closed socket")
 
     def start_connection(self):
-        HOST = "111.118.242.44"
-        HOST = "127.0.0.1"
-        PORT = 50000
-        PORT = 1030
+        HOST = "111.118.242.56"
+        # HOST = "127.0.0.1"
+        PORT = 15000
+        # PORT = 1030
 
         self.event_handler = selectors.DefaultSelector()
 

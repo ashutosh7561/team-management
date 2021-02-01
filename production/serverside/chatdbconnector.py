@@ -2,8 +2,10 @@ import sqlite3
 import pickle
 import os
 
-PATH_ONE = r"./chats.db"
-PATH_TWO = r"./production/serverside/servermodel/chats.db"
+PATH_ONE = r"./production/serverside/servermodel/chats.db"
+PATH_TWO = (
+    r"C:/Users/Asus/Desktop/team-management/production/serverside/servermodel/chats.db"
+)
 
 
 class ChatDatabaseConnector:
